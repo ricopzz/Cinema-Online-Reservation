@@ -7,6 +7,7 @@ package pkgfinal.project.attempt.pkg1.views.admin;
 
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.Time;
 import javax.swing.JFileChooser;
 import pkgfinal.project.attempt.pkg1.model.Movie;
 
@@ -16,6 +17,8 @@ import pkgfinal.project.attempt.pkg1.model.Movie;
  */
 public class AdminView_AddMovie extends javax.swing.JFrame {
 
+    private File choosenFilePoster = null;
+   
     /**
      * Creates new form AddMovie
      */
@@ -26,7 +29,86 @@ public class AdminView_AddMovie extends javax.swing.JFrame {
     public void addAddMoviesActionListeners(ActionListener a){
         btnAddMovie.addActionListener(a);
     }
+    
+    public void addChooseFileListener(ActionListener a){
+        this.btnPoster.addActionListener(a);
+    }
+    
+    public Movie getMovie() {
+        String name = txtMovieName.getText();
+        String genre1 = (String) cbxGenre1.getSelectedItem();
+        String genre2 = (String) cbxGenre2.getSelectedItem();
+        String genre3 = (String) cbxGenre3.getSelectedItem();
+        String allGenre = genre1 +","+ genre2 + ","+genre3;
+        String director = txtDirector.getText();
+       
+        Time duration = new Time((Integer) sprHours.getValue(),(Integer) sprMinutes.getValue(),0);
+        
+      
+        String trailer_url = txtTrailerUrl.getText();
+        File poster = choosenFilePoster;
+        int rating =  (Integer) sprRating.getValue();
+        Movie m = new Movie(name,genre1,genre2,genre3,duration,director,trailer_url,poster,rating);
+        return m;
+    }
 
+    public boolean complete() {
+        Movie m = getMovie();
+        if (m.getName().equals("")) return false;
+        if (m.getGenre1().equals("")) return false;
+        if (m.getGenre2().equals("")) return false;
+        if (m.getGenre3().equals("")) return false;
+        if (m.getDirector().equals("")) return false;
+        if (m.getDuration().equals("")) return false;
+        if (m.getTrailerurl().equals("")) return false;
+        if (m.getPoster() == null) return false;
+        if (m.getRating() < 0) return false;
+        else return true;
+    }
+
+
+    public File getChoosenFilePoster() {
+        return choosenFilePoster;
+    }
+
+    public void setChoosenFilePoster(File choosenFilePoster) {
+        this.choosenFilePoster = choosenFilePoster;
+    }
+    
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AdminView_AddMovie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AdminView_AddMovie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AdminView_AddMovie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AdminView_AddMovie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AdminView_AddMovie().setVisible(true);
+            }
+        });
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,18 +147,12 @@ public class AdminView_AddMovie extends javax.swing.JFrame {
         lblRating = new javax.swing.JLabel();
         sprRating = new javax.swing.JSpinner();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel3.setText("CINEMA 21");
 
         lblMovieName.setText("Movie Name: ");
-
-        txtMovieName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMovieNameActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 2, 13)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 200));
@@ -93,11 +169,6 @@ public class AdminView_AddMovie extends javax.swing.JFrame {
         jLabel8.setText("Genre 2:");
 
         cbxGenre2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Action ", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family ", "Fantasy", "Film-noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-fi", "Sport", "Thriller", "War", "Western" }));
-        cbxGenre2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxGenre2ActionPerformed(evt);
-            }
-        });
 
         jLabel9.setText("Genre 3:");
 
@@ -113,27 +184,11 @@ public class AdminView_AddMovie extends javax.swing.JFrame {
 
         lblTrailerUrl.setText("Trailer URL:");
 
-        txtTrailerUrl.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTrailerUrlActionPerformed(evt);
-            }
-        });
-
         lblPoster.setText("Poster:       ");
 
         btnPoster.setText("Choose File");
-        btnPoster.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPosterActionPerformed(evt);
-            }
-        });
 
         btnAddMovie.setText("Add movie");
-        btnAddMovie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddMovieActionPerformed(evt);
-            }
-        });
 
         lblRating.setText("Rating");
 
@@ -200,9 +255,11 @@ public class AdminView_AddMovie extends javax.swing.JFrame {
                                             .addComponent(txtMovieName, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGap(13, 13, 13)
-                                                .addComponent(jLabel3))))))
-                            .addComponent(btnAddMovie))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)))
+                                                .addComponent(jLabel3)))))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAddMovie)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -280,69 +337,13 @@ public class AdminView_AddMovie extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtTrailerUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTrailerUrlActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTrailerUrlActionPerformed
-
-    private void cbxGenre2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxGenre2ActionPerformed
-      
-    }//GEN-LAST:event_cbxGenre2ActionPerformed
-
-    private void txtMovieNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMovieNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMovieNameActionPerformed
-
-    private void btnAddMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMovieActionPerformed
-        
-    }//GEN-LAST:event_btnAddMovieActionPerformed
-
-    private void btnPosterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPosterActionPerformed
-        
-        JFileChooser c = new JFileChooser();
-        if (c.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-            choosenFilePoster = c.getSelectedFile();
-        }
-      
-    }//GEN-LAST:event_btnPosterActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminView_AddMovie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminView_AddMovie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminView_AddMovie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminView_AddMovie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AdminView_AddMovie().setVisible(true);
-            }
-        });
-    }
-    private File choosenFilePoster = null;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMovie;
     private javax.swing.JButton btnPoster;
@@ -374,34 +375,4 @@ public class AdminView_AddMovie extends javax.swing.JFrame {
     private javax.swing.JTextField txtTrailerUrl;
     // End of variables declaration//GEN-END:variables
 
-    public Movie getMovie() {
-        String name = txtMovieName.getText();
-        String genre1 = (String) cbxGenre1.getSelectedItem();
-        String genre2 = (String) cbxGenre2.getSelectedItem();
-        String genre3 = (String) cbxGenre3.getSelectedItem();
-        String allGenre = genre1 +","+ genre2 + ","+genre3;
-        String director = txtDirector.getText();
-        String hour = (String) sprHours.getValue().toString();
-        String minute = (String) sprMinutes.getValue().toString();
-        String duration = hour + ":"+ minute + ":00.000000";
-        String trailer_url = txtTrailerUrl.getText();
-        File poster = choosenFilePoster;
-        int rating =  (Integer) sprRating.getValue();
-        Movie m = new Movie(name,genre1,genre2,genre3,duration,director,trailer_url,poster,rating);
-        return m;
-    }
-
-    public boolean complete() {
-        Movie m = getMovie();
-        if (m.getName().equals("")) return false;
-        if (m.getGenre1().equals("")) return false;
-        if (m.getGenre2().equals("")) return false;
-        if (m.getGenre3().equals("")) return false;
-        if (m.getDirector().equals("")) return false;
-        if (m.getDuration().equals("")) return false;
-        if (m.getTrailerurl().equals("")) return false;
-        if (m.getPoster() == null) return false;
-        if (m.getRating() < 0) return false;
-        else return true;
-    }
 }

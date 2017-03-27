@@ -5,7 +5,9 @@
  */
 package pkgfinal.project.attempt.pkg1.views.admin;
 
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
@@ -75,19 +77,39 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
         tblMovies.addMouseListener(a);
     }
     public String getSelectedIDMovies(){
-        return tblMovies.getValueAt(tblMovies.getSelectedRow(), 0).toString();
+        int row =  tblMovies.getSelectedRow();
+        if (row >= 0){
+            return tblMovies.getValueAt(row, 0).toString();
+        }else{
+            return null;
+        } 
     }
     
     public String getSelectedIDLocations(){
-        return jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString();
+        int row = jTable2.getSelectedRow();
+        if (row >= 0){
+            return jTable2.getValueAt(row, 0).toString();
+        }else{
+            return null;
+        }
     }
     
     public String getSelectedIDSchedules(){
-        return jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString();
+        int row = jTable3.getSelectedRow();
+        if (row >= 0){
+            return jTable3.getValueAt(row, 0).toString();
+        }else{
+            return null;
+        }
     }
 
     public String getSelectedIDAccounts(){
-        return jTable4.getValueAt(jTable4.getSelectedRow(), 0).toString();
+        int row = jTable4.getSelectedRow();
+        if (row >= 0){
+            return jTable4.getValueAt(row, 0).toString();
+        }else{
+            return null;
+        }
     }
     
     public void addMovieSearchKeyListenerer(KeyAdapter a){
@@ -136,6 +158,8 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAutoRequestFocus(false);
+        setLocationByPlatform(true);
 
         tblMovies.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -362,6 +386,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
         jTabbedPane1.getAccessibleContext().setAccessibleName("Manage Movies");
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblMoviesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMoviesMouseClicked

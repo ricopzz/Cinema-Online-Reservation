@@ -75,7 +75,7 @@ public class AdminModel {
             return new DefaultTableModel(data, columnNames);
 
         } catch (SQLException ex) {
-            //Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
     }
@@ -179,6 +179,35 @@ public class AdminModel {
         }
     }
     
+    public void editMovies(int ID, Movie m){
+        try {
+           
+            establishConnection();
+            String sql = "UPDATE Movies SET Name = ?, G1 = ?, G2 = ?, G3 = ? , Duration = ?, Director = ?, Trailer_URL = ?, Poster = ?, Rating = ? WHERE ID = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, m.getName());
+            stmt.setString(2, m.getGenre1());
+            stmt.setString(3, m.getGenre2());
+            stmt.setString(4, m.getGenre3());
+            stmt.setObject(5, m.getDuration());
+            stmt.setString(6, m.getDirector());
+            stmt.setString(7, m.getTrailerurl());
+            File image = m.getPoster();
+            FileInputStream   fis = new FileInputStream(image);
+            stmt.setBinaryStream(8, fis, (int) image.length());
+            
+            
+            stmt.setDouble(9, m.getRating());
+            stmt.setInt(10, ID);
+            stmt.execute();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminModel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AdminModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     // Locations
     
     public ResultSet getLocationsResultSet(){
@@ -193,14 +222,14 @@ public class AdminModel {
         }
     }
     
-    public void addLocation(Location l){
+    public void addLocation(String name, String address, int theater_no){
         try{
             establishConnection();
-            String query = "INSERT INTO Location (Name, Address, theater_amount) VALUES ('"+l.getName()+"','"+l.getAddress()+"',"+l.getNumberOfTheater()+")";
+            String query = "INSERT INTO Location (Name, Address, theater_amount) VALUES ('"+name+"','"+address+"',"+theater_no+")";
             System.out.println(query);
             stmt.executeUpdate(query);
         }catch(SQLException ex){
-            System.out.println(ex);
+            ex.printStackTrace();
         }
     }
     

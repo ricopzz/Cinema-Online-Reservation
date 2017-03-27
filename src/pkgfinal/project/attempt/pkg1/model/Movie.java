@@ -6,6 +6,7 @@
 package pkgfinal.project.attempt.pkg1.model;
 
 import java.io.File;
+import java.sql.Time;
 
 /**
  *
@@ -16,13 +17,13 @@ public class Movie {
     private String genre1;
     private String genre2;
     private String genre3;
-    private String duration;
+    private Time duration;
     private String director;
     private String trailerurl;
     private File poster;
     private double rating;
 
-    public Movie(String name, String genre1, String genre2, String genre3, String duration, String director, String trailerurl, File poster, double rating) {
+    public Movie(String name, String genre1, String genre2, String genre3, Time duration, String director, String trailerurl, File poster, double rating) {
         this.name = name;
         this.genre1 = genre1;
         this.genre2 = genre2;
@@ -66,11 +67,11 @@ public class Movie {
         this.genre3 = genre3;
     }
 
-    public String getDuration() {
+    public Time getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(Time duration) {
         this.duration = duration;
     }
 

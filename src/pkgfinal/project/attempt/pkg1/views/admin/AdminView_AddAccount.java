@@ -6,6 +6,7 @@
 package admin;
 
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import pkgfinal.project.attempt.pkg1.model.Account;
 
 /**
@@ -71,6 +72,12 @@ public class AdminView_AddAccount extends javax.swing.JFrame {
         lblName.setText("Name");
 
         lblPhoneNumber.setText("Phone Number");
+
+        spinnerDay.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+
+        spinnerMonth.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+
+        spinnerYear.setModel(new javax.swing.SpinnerNumberModel(1900, 1900, 9999, 1));
 
         btnAddAccount.setText("Add Account");
         btnAddAccount.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +181,7 @@ public class AdminView_AddAccount extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAccountActionPerformed
@@ -231,11 +239,9 @@ public class AdminView_AddAccount extends javax.swing.JFrame {
     public String getPassword(){
         return txtPassword.getText();
     }
-    public String getDateOfBirth(){
-        String date = spinnerDay.getValue().toString() + "-"+ 
-                      spinnerMonth.getValue().toString() + "-"+ 
-                      spinnerYear.getValue().toString();
-        return date;
+    public Date getDateOfBirth(){
+        Date d = new Date((Integer)spinnerDay.getValue(),(Integer)spinnerMonth.getValue(),(Integer)spinnerYear.getValue());
+        return d;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAccount;

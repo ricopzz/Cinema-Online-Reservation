@@ -110,6 +110,7 @@ public class AdminView_AddLocation extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -117,13 +118,16 @@ public class AdminView_AddLocation extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnAddActionPerformed
    
-    
-    public Location getLocations(){
-        Location myLocation = new Location();
-        myLocation.setName(jTextField1.getText());
-        myLocation.setAddress(txtAddress.getText());
-        myLocation.setNumberOfTheater((int) jSpinner1.getValue());
-        return myLocation;
+    public String getLocationName() {
+        return jTextField1.getText();
+    }
+
+    public String getAddress() {
+        return txtAddress.getText();
+    }
+
+    public int getTheater_No() {
+        return (int) jSpinner1.getValue();
     }
     /**
      * @param args the command line arguments
@@ -170,4 +174,6 @@ public class AdminView_AddLocation extends javax.swing.JFrame {
     private javax.swing.JLabel lblAddress;
     private javax.swing.JTextField txtAddress;
     // End of variables declaration//GEN-END:variables
+
+   
 }
