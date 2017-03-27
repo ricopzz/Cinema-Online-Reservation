@@ -13,6 +13,7 @@ public class Location {
     
     String name;
     int numberOfTheater;
+    String address;
 
     public String getName() {
         return name;
@@ -28,6 +29,14 @@ public class Location {
 
     public void setNumberOfTheater(int numberOfTheater) {
         this.numberOfTheater = numberOfTheater;
+    }
+    
+    public void setAddress(String address){
+        this.address = address;
+    }
+    
+    public String getAddress(){
+        return this.address;
     }
 
     @Override

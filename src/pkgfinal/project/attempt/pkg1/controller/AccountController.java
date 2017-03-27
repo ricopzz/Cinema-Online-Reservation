@@ -17,9 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import pkgfinal.project.attempt.pkg1.model.AccountModel;
 import pkgfinal.project.attempt.pkg1.views.*;
-
+import pkgfinal.project.attempt.pkg1.SendEmail;
 /**
  *
  * @author Yosua
@@ -30,15 +31,21 @@ public class AccountController {
     private AccountView_Login theLogin;
     private AccountView_SignUp theSignUp;
     private AccountView_ForgetPassword theForgetPassword;
+    private SendEmail emailSender = new SendEmail();
 
-    private final String DB_URL = "jdbc:mysql://localhost/";
-    private final String USER = "root";
-    private final String PASS = "";
-
-    private Connection conn = null;
-    private Statement stmt = null;
+   
     
     
+    public static void main(String[] args){
+        try{
+         UIManager.setLookAndFeel(
+            UIManager.getSystemLookAndFeelClassName());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        AccountController myAccountController = new AccountController(new AccountModel(),
+               new AccountView_Login(), new AccountView_SignUp(), new AccountView_ForgetPassword());
+    }
     public AccountController(AccountModel theModel, AccountView_Login theLogin, AccountView_SignUp theSignUp, AccountView_ForgetPassword theForgetPassword) {
         this.theModel = theModel;
         this.theLogin = theLogin;
@@ -47,37 +54,14 @@ public class AccountController {
         start();
     }
     public void start(){
-        establishConnection();
+        theModel.establishConnection();
         buildLoginActionListeners();
         buildSignUpActionListeners();
         buildForgetPasswordActionListeners();
         theLogin.setVisible(true);
     }
-    public void login(){
-        try {
-            String username = theLogin.getUsername();
-            String password = theLogin.getPassword();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Accounts WHERE Username='" + username +
-                    "' AND Password = '" + password + "'");
-            if (rs.next()){
-                JOptionPane.showMessageDialog(null, "Login succesful");
-            }else{
-                JOptionPane.showMessageDialog(null, "Login failed");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    public void establishConnection(){
-        try {
-            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
-            stmt = (Statement) conn.createStatement();
-            stmt.executeQuery("USE final_project_programming_languages_db");
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error establishing connection to database");
-        }
-    }
+    
+    
     public void buildLoginActionListeners(){
         theLogin.addSignUpListener(new ActionListener() {
             @Override
@@ -90,13 +74,21 @@ public class AccountController {
         theLogin.addLoginListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                login();
+                String username = theLogin.getUsername();
+                String password = theLogin.getPassword();
+                if(theModel.login(username,password)){
+                    JOptionPane.showMessageDialog(null, "Login Succesful");
+                    theLogin.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Login failed");
+                };
+                
             }
         });
         theLogin.addForgetPasswordListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                theForgetPassword = new AccountView_ForgetPassword();
+              
                 theForgetPassword.setVisible(true);
             }
         });
@@ -111,38 +103,52 @@ public class AccountController {
                 String username = theSignUp.getUsername();
                 String password = theSignUp.getPassword();
                 int balance = 0;
-                try {
-                    String query = "INSERT INTO Accounts (`Username`,`Password`,`Name`,`Email`,`DOB`,`Balance`) VALUES (" +
-                            "'"+ username +"', "+"'"+ password +"', "+"'"+ name+"', "+"'"+email +"', "+"'"+ dateOfBirth +"', "+
-                            balance+")";
-                    System.out.println(query);
-                    stmt.executeUpdate(query);
-                } catch (SQLException ex) {
-                    Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+                if(theModel.signUp(name,email,dateOfBirth,username,password,balance)){
+                    
+                    JOptionPane.showMessageDialog(null, "Sign up succesful");
+                    theSignUp.setVisible(false);
+                    theSignUp.dispose();
+                }else{
                     JOptionPane.showMessageDialog(null, "Username or Email already exists");
                 }
-                theSignUp.setVisible(false);
-                theSignUp.dispose();
+                
             }
         });
     }
     public void buildForgetPasswordActionListeners(){
         theForgetPassword.addContinueActionListener(new ActionListener() {
+           
             @Override
             public void actionPerformed(ActionEvent e) {
+                 String email = theForgetPassword.getText();
+                System.out.println("hahahah");
+                theModel.setRandomCode(emailSender.sendEmailRegister(email, theModel.getFullname(email))); 
+          
                 theForgetPassword.getBtnContinue().setVisible(false);
                 theForgetPassword.remove(theForgetPassword.getBtnContinue());
                 theForgetPassword.getLblEmail().setText("Verification Code");
         
-                theForgetPassword.setVerifyButton(new JButton("Authorize"));
+                theForgetPassword.getVerifyButton().setText("Authorize");
                 theForgetPassword.getVerifyButton().setBounds(148, 172, 111, 36);
                 theForgetPassword.add(theForgetPassword.getVerifyButton());
-                theForgetPassword.getVerifyButton().addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e){
-                        theForgetPassword.dispose();
-                    }
-                });
+                theForgetPassword.resetText();
+            }
+            
+        });
+        theForgetPassword.addVerifyActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String code = theModel.getRandomCode();
+                if (theForgetPassword.getText().equals(code)){
+                    JOptionPane.showMessageDialog(null, "Code verified");
+                    theForgetPassword.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Code entered is incorect");
+                    theForgetPassword.dispose();
+                }
+                
             }
         });
+        
     }
 }

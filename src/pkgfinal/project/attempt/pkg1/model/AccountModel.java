@@ -5,87 +5,95 @@
  */
 package pkgfinal.project.attempt.pkg1.model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import pkgfinal.project.attempt.pkg1.controller.AccountController;
+
 /**
  *
  * @author Enrico
  */
 public class AccountModel {
-    private String name;
-    private String email;
-    private String username;
-    private String password;
+    private final String DB_URL = "jdbc:mysql://localhost/";
+    private final String USER = "root";
+    private final String PASS = "";
+
+    private Connection conn = null;
+    private Statement stmt = null;
+    
+    private String randomCode = null;
+
+    public String getRandomCode() {
+        return randomCode;
+    }
+
+    public void setRandomCode(String randomCode) {
+        this.randomCode = randomCode;
+    }
+    
+
+    public void establishConnection() {
+        try {
+            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = (Statement) conn.createStatement();
+            stmt.executeQuery("USE final_project_programming_languages_db");
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error establishing connection to database");
+        }
+    }
+    public boolean login(String username, String password){
+        try {
    
-    private int birthDay;
-    private int birthMonth;
-    private int birthYear;
-    
-    private int type;
-
-    public String getName() {
-        return name;
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Accounts WHERE Username='" + username +
+                    "' AND Password = '" + password + "'");
+            if (rs.next()){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
+    public boolean signUp(String name,String email,String dateOfBirth,String username,String password,int balance){
+        try {
+            String query = "INSERT INTO Accounts (`Username`,`Password`,`Name`,`Email`,`DOB`,`Balance`) VALUES (" +
+                "'"+ username +"', "+"'"+ password +"', "+"'"+ name+"', "+"'"+email +"', "+"'"+ dateOfBirth +"', "+
+                balance+")";
+            System.out.println(query);
+            stmt.executeUpdate(query);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(int birthDay) {
-        this.birthDay = birthDay;
-    }
-
-    public int getBirthMonth() {
-        return birthMonth;
-    }
-
-    public void setBirthMonth(int birthMonth) {
-        this.birthMonth = birthMonth;
-    }
-
-    public int getBirthYear() {
-        return birthYear;
-    }
-
-    public void setBirthYear(int birthYear) {
-        this.birthYear = birthYear;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
+        }
     }
     
-    public String toString(){
-        return this.getName()+" "+this.getEmail()+" "+this.getUsername()+" "+this.getPassword()+" "+this.getBirthDay();
+    public String getFullname(String email) {
+        ResultSet rs = null;
+        try {
+            System.out.println(email);
+            rs = stmt.executeQuery("SELECT Name FROM Accounts WHERE Email = '" + email +"'");
+            System.out.println("ha");
+            if (!rs.next()) System.out.println("empty rs");;
+            System.out.println(rs.getString("Name"));
+            return rs.getString("Name");
+        } catch (SQLException ex) {
+            //Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Cannot access database for Fullname");
+            return null;
+        }
     }
+    
+    
 }

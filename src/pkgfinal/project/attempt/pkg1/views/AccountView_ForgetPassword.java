@@ -91,7 +91,14 @@ public class AccountView_ForgetPassword extends javax.swing.JFrame {
     public void addVerifyActionListener(ActionListener a){
         verifyButton.addActionListener(a);
     }
+    public String getText(){
+        return txtEmail.getText();
+    }
+    public void resetText(){
+        txtEmail.setText("");
+    }
     public void addContinueActionListener(ActionListener a){
+        System.out.println("added");
         btnContinue.addActionListener(a);
     }
 
@@ -141,5 +148,5 @@ public class AccountView_ForgetPassword extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTextField txtEmail;
     // End of variables declaration//GEN-END:variables
-    private JButton verifyButton;
+    private JButton verifyButton = new JButton();
 }

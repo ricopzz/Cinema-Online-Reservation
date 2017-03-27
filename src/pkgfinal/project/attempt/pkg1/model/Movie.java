@@ -13,12 +13,27 @@ import java.io.File;
  */
 public class Movie {
     private String name;
-    private String genre;
+    private String genre1;
+    private String genre2;
+    private String genre3;
     private String duration;
     private String director;
     private String trailerurl;
     private File poster;
+    private double rating;
 
+    public Movie(String name, String genre1, String genre2, String genre3, String duration, String director, String trailerurl, File poster, double rating) {
+        this.name = name;
+        this.genre1 = genre1;
+        this.genre2 = genre2;
+        this.genre3 = genre3;
+        this.duration = duration;
+        this.director = director;
+        this.trailerurl = trailerurl;
+        this.poster = poster;
+        this.rating = rating;
+    }
+    
     public String getName() {
         return name;
     }
@@ -27,12 +42,28 @@ public class Movie {
         this.name = name;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getGenre1() {
+        return genre1;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setGenre1(String genre) {
+        this.genre1 = genre;
+    }
+
+    public String getGenre2() {
+        return genre2;
+    }
+
+    public void setGenre2(String genre2) {
+        this.genre2 = genre2;
+    }
+
+    public String getGenre3() {
+        return genre3;
+    }
+
+    public void setGenre3(String genre3) {
+        this.genre3 = genre3;
     }
 
     public String getDuration() {
@@ -69,7 +100,15 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{" + "name=" + name + ", genre=" + genre + ", duration=" + duration + ", director=" + director + ", trailerurl=" + trailerurl + ", poster=" + poster + '}';
+        return "Movie{" + "name=" + name + ", genre=" + genre1 + ", duration=" + getDuration() + ", director=" + director + ", trailerurl=" + trailerurl + ", poster=" + poster + '}';
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
     
     
