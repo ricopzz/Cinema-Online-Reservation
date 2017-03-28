@@ -4,14 +4,21 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_AddMovie.java</file>
+            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/SendEmail.java</file>
+            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/controller/CustomerController.java</file>
             <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_AddAccount.java</file>
             <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_AddSchedule.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/controller/CashierController.java</file>
             <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/model/AdminModel.java</file>
             <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_EditMovie.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/controller/AdminController.java</file>
             <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_MainScreen.java</file>
             <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_AddLocation.java</file>
+            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/model/Movie.java</file>
+            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/controller/CashierController.java</file>
+            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/customer/CustomerView_HistoryOfPurchase.java</file>
+            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/model/AccountModel.java</file>
+            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/model/CustomerModel.java</file>
+            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/controller/AdminController.java</file>
+            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/controller/AccountController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -3,21 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pkgfinal.project.attempt.pkg1.controller.Customer;
+package pkgfinal.project.attempt.pkg1.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import pkgfinal.project.attempt.pkg1.controller.AccountController;
+import pkgfinal.project.attempt.pkg1.model.CustomerModel;
 import pkgfinal.project.attempt.pkg1.views.AccountView_Login;
-import pkgfinal.project.attempt.pkg1.views.m.CustomerView_HistoryOfPurchase;
+import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_HistoryOfPurchase;
 import pkgfinal.project.attempt.pkg1.views.m.*;
+import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Interface;
 
 /**
  *
@@ -28,52 +33,47 @@ public class CustomerController
     
     
     private CustomerView_Interface theInterface;
-    private CustomerView_ChangeInformation theEditInformation;
+    private CustomerView_ChangeEmail theEditEmail;
     private CustomerView_ChangePassword theEditPassword;
     private CustomerView_AddBalance theAddBalance;
     private CustomerView_ChooseSeat theChooseSeat;
     private CustomerView_HistoryOfPurchase theHistory;
+    private CustomerModel theModel;
+    private AccountView_Login theLogin;
     
-    private final String DB_URL = "jdbc:mysql://localhost/";
-    private final String USER = "root";
-    private final String PASS = "";
-
     private Connection conn = null;
     private Statement stmt = null;
     public static void main(String[] args){
-        CustomerController m = new CustomerController(new CustomerView_Interface() ,new CustomerView_ChangeInformation() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() ,new CustomerView_HistoryOfPurchase() );
+        CustomerController m = new CustomerController(new CustomerView_Interface() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() ,new CustomerView_HistoryOfPurchase(), new CustomerModel() );
     }
-    public CustomerController(CustomerView_Interface theInterface, CustomerView_ChangeInformation theEditInformation, CustomerView_ChangePassword theEditPassword, CustomerView_AddBalance theAddBalance, CustomerView_ChooseSeat theChooseSeat, CustomerView_HistoryOfPurchase theHistory){
+    public CustomerController(CustomerView_Interface theInterface, CustomerView_ChangeEmail theEditEmail, CustomerView_ChangePassword theEditPassword, CustomerView_AddBalance theAddBalance, CustomerView_ChooseSeat theChooseSeat, CustomerView_HistoryOfPurchase theHistory, CustomerModel theModel){
         this.theInterface = theInterface;
-        this.theEditInformation = theEditInformation;
+        this.theEditEmail = theEditEmail;
         this.theEditPassword = theEditPassword;
         this.theAddBalance = theAddBalance;
         this.theChooseSeat = theChooseSeat;
         this.theHistory = theHistory;
+        this.theModel = theModel;
         start();
     }
     
     public void start(){
-        establishConnection();
+        theModel.establishConnection();
         buildInterfaceActionListener();
         buildChooseSeatActionListener();
         buildAddBalanceActionListener();
-        buildChangeInformationActionListener();
+        buildChangeEmailActionListener();
         buildChangePasswordActionListener();
         buildHistoryActionListener();
         theInterface.setVisible(true);
+        theInterface.txtName.setText(theModel.getName("yosuatest"));
+        theInterface.txtDOB.setText(theModel.getDOB("yosuatest").toString());
+        theInterface.txtEmail.setText(theModel.getEmail("yosuatest"));
+        theInterface.txtBalance.setText(Integer.toString(theModel.getBalance("yosuatest")));
+        
+        theInterface.locationBox.setModel(new DefaultComboBoxModel<>(theModel.getCurrentShowingLocation()));
     }
-    
-    public void establishConnection(){
-        try {
-            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
-            stmt = (Statement) conn.createStatement();
-            stmt.executeQuery("USE final_project_programming_languages_db");
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error establishing connection to database");
-        }
-    }
+       
     
     public void buildInterfaceActionListener(){
         theInterface.addChooseSeatListener(new ActionListener(){
@@ -97,14 +97,16 @@ public class CustomerController
                theEditPassword = new CustomerView_ChangePassword();
                buildChangePasswordActionListener();
                theEditPassword.setVisible(true);
+               theModel.changePassword(theEditPassword.getOldPassword(), theEditPassword.getNewPassword());
            } 
         });
         
         theInterface.addChangeInformationListener(new ActionListener(){
            public void actionPerformed(ActionEvent e){
-               theEditInformation = new CustomerView_ChangeInformation();
-               buildChangeInformationActionListener();
-               theEditInformation.setVisible(true);
+               theEditEmail = new CustomerView_ChangeEmail();
+               buildChangeEmailActionListener();
+               theEditEmail.setVisible(true);
+               theModel.changeEmail(theEditEmail.getOldEmail(), theEditEmail.getNewEmail());
            } 
         });
         
@@ -118,6 +120,26 @@ public class CustomerController
             public void actionPerformed(ActionEvent e){
                 theInterface.dispose();
                 theHistory.setVisible(true);
+            }
+        });
+        
+        
+        theInterface.addLocationListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theInterface.movieBox.setModel(new DefaultComboBoxModel<>(theModel.getCurrentShowingMovies(theInterface.getSelectedLocation())));
+            }
+        });
+        theInterface.addMovieListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theInterface.timeBox.setModel(new DefaultComboBoxModel<>(theModel.getCurrentShowingTime(theInterface.getSelectedMovie(), theInterface.getSelectedLocation())));
+            }
+        });
+        theInterface.addTimeListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theInterface.btnChooseSeat.enable();
             }
         });
     }
@@ -152,17 +174,17 @@ public class CustomerController
         });
     }
     
-    public void buildChangeInformationActionListener(){
-        theEditInformation.addChangeListener(new ActionListener(){
+    public void buildChangeEmailActionListener(){
+        theEditEmail.addChangeListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                theEditInformation.dispose();
+                theEditEmail.dispose();
                 theInterface.setVisible(true);
             }
         });
         
-        theEditInformation.addBackListener(new ActionListener(){
+        theEditEmail.addBackListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                theEditInformation.dispose();
+                theEditEmail.dispose();
                 theInterface.setVisible(true);
             }
         });

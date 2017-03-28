@@ -38,18 +38,14 @@
                               <Component id="btnChange" min="-2" pref="86" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblPhone" pref="71" max="32767" attributes="0"/>
-                                  <Component id="lblEmail" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="lblEmail" pref="71" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtEmail" alignment="1" min="-2" pref="229" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="txtPhone" min="-2" pref="229" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="txtEmail" min="-2" pref="229" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblOldEmail" pref="71" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtOldEmail" min="-2" pref="229" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -63,17 +59,17 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Component id="lblTitle" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblOldEmail" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="txtOldEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblEmail" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="txtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblPhone" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="txtPhone" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnBack" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                   <Component id="btnChange" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
@@ -84,19 +80,12 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="lblPhone">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="New Phone"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblEmail">
       <Properties>
         <Property name="text" type="java.lang.String" value="New Email"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtEmail">
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtPhone">
     </Component>
     <Component class="javax.swing.JButton" name="btnBack">
       <Properties>
@@ -115,6 +104,13 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Edit Information"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblOldEmail">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Old Email"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtOldEmail">
     </Component>
   </SubComponents>
 </Form>

@@ -20,6 +20,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
+import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -257,6 +259,19 @@ public class AdminModel {
         }
     }
     
+    public void addSchedules(Date date, Time time, int location ,int movie, int theater ) {
+        try {
+            String query = "INSERT INTO Schedule (Date,Time,Location_ID,Movie_ID,Theater_Number) VALUES ('" + date.toString()+ "','" +time.toString()+"',"+location+"," + movie+","+theater+")";
+            System.out.println(query);
+            stmt.executeUpdate(query);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "An error occurred (Please check that all fields have been filled)");
+           
+        }
+    }
+    
     public void deleteSchedules(String ID){
         try{
             establishConnection();
@@ -304,6 +319,17 @@ public class AdminModel {
             JOptionPane.showMessageDialog(null, "An error occurred (Please check that all fields have been filled)");
             return false;
         }
+    }
+
+    public ResultSet getLocationSearchResultSet(String searchKey) {
+        try {
+            ResultSet rs = null;
+            rs =  stmt.executeQuery("SELECT ID, Name, Address, theater_amount Rating FROM Location WHERE ID LIKE '%" + searchKey + "%' OR Name LIKE '" + searchKey +"%'");
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     

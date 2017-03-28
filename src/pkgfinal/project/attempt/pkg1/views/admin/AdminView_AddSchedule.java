@@ -6,6 +6,8 @@
 package admin;
 
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.sql.Time;
 
 /**
  *
@@ -18,15 +20,52 @@ public class AdminView_AddSchedule extends javax.swing.JFrame {
      */
     public AdminView_AddSchedule() {
         initComponents();
+        pnlRepeat.setVisible(false);
     }
     
     public void addAddScheduleActionListeners(ActionListener a){
-        btnAdd.addActionListener(a);
+        btnAddSchedule.addActionListener(a);
     }
-    
     public void addCancelScheduleActionListeners(ActionListener a){
         btnCancel.addActionListener(a);
     }
+    public void addRepeatActionListener(ActionListener a){
+        boxRepeat.addActionListener(a);
+    }
+    public void addTimeButtonActionListener(ActionListener a){
+        btnTime.addActionListener(a);
+    }
+    public void addMovieActionListener(ActionListener a){
+        cbxMovie.addActionListener(a);
+    }
+    public void addLocationActionListener(ActionListener a){
+        cbxLocation.addActionListener(a);
+    }
+    
+    
+    public void setRepeatPanelVisible(boolean a){
+        pnlRepeat.setVisible(a);
+    }
+    
+    public void setMovieComboBoxModel(String[] a){
+        cbxMovie.setModel(new javax.swing.DefaultComboBoxModel<>(a));
+    }
+    public void setLocationComboBoxModel(String[] a){
+        cbxLocation.setModel(new javax.swing.DefaultComboBoxModel<>(a));
+    }
+    
+    
+    public boolean isPM(){
+        return btnTime.isSelected();
+    }
+    public boolean isRepeat() {
+        return boxRepeat.isSelected();
+    }
+
+    public void timeButtonSetText(String am) {
+        btnTime.setText(am);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,39 +76,215 @@ public class AdminView_AddSchedule extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnAdd = new javax.swing.JButton();
+        btnAddSchedule = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        pnlRepeat = new javax.swing.JPanel();
+        lblRepeatFor = new javax.swing.JLabel();
+        sprRepeatFor = new javax.swing.JSpinner();
+        sprIntervalHour = new javax.swing.JSpinner();
+        jLabel7 = new javax.swing.JLabel();
+        sprIntervalMinutes = new javax.swing.JSpinner();
+        jLabel8 = new javax.swing.JLabel();
+        lblEvery = new javax.swing.JLabel();
+        lblMovie = new javax.swing.JLabel();
+        cbxMovie = new javax.swing.JComboBox<>();
+        lblLocation = new javax.swing.JLabel();
+        cbxLocation = new javax.swing.JComboBox<>();
+        lblDate = new javax.swing.JLabel();
+        sprYear = new javax.swing.JSpinner();
+        sprDate = new javax.swing.JSpinner();
+        sprMonth = new javax.swing.JSpinner();
+        lblDMY = new javax.swing.JLabel();
+        lblTime = new javax.swing.JLabel();
+        sprTimeHour = new javax.swing.JSpinner();
+        sprTimeMinutes = new javax.swing.JSpinner();
+        btnTime = new javax.swing.JToggleButton();
+        boxRepeat = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        sprTheaterNumber = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnAdd.setText("Add Schedule");
+        btnAddSchedule.setText("Add Schedule");
 
         btnCancel.setText("Cancel");
+
+        lblRepeatFor.setText("Repeat for:");
+
+        jLabel7.setText("h");
+
+        jLabel8.setText("m");
+
+        lblEvery.setText("Every:");
+
+        javax.swing.GroupLayout pnlRepeatLayout = new javax.swing.GroupLayout(pnlRepeat);
+        pnlRepeat.setLayout(pnlRepeatLayout);
+        pnlRepeatLayout.setHorizontalGroup(
+            pnlRepeatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRepeatLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlRepeatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblRepeatFor)
+                    .addComponent(lblEvery))
+                .addGap(12, 12, 12)
+                .addGroup(pnlRepeatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sprRepeatFor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlRepeatLayout.createSequentialGroup()
+                        .addComponent(sprIntervalHour, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(sprIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)))
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+        pnlRepeatLayout.setVerticalGroup(
+            pnlRepeatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRepeatLayout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addGroup(pnlRepeatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRepeatFor)
+                    .addComponent(sprRepeatFor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlRepeatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sprIntervalHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(sprIntervalMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(lblEvery))
+                .addContainerGap())
+        );
+
+        lblMovie.setText("Movie:");
+
+        cbxMovie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--" }));
+
+        lblLocation.setText("Location:");
+
+        cbxLocation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--", " " }));
+
+        lblDate.setText("Date:");
+
+        sprYear.setModel(new javax.swing.SpinnerNumberModel(2017, 1900, 9999, 1));
+
+        sprDate.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+
+        sprMonth.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+
+        lblDMY.setText("dd/mm/yyyy");
+
+        lblTime.setText("Time:");
+
+        sprTimeHour.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+
+        sprTimeMinutes.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 5));
+
+        btnTime.setText("AM");
+        btnTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimeActionPerformed(evt);
+            }
+        });
+
+        boxRepeat.setText("Repeat");
+
+        jLabel1.setText("Theater:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnCancel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
-                .addComponent(btnAdd)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlRepeat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCancel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAddSchedule, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblMovie)
+                            .addComponent(lblLocation)
+                            .addComponent(lblDate)
+                            .addComponent(lblTime)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(cbxLocation, 0, 309, Short.MAX_VALUE)
+                                .addComponent(cbxMovie, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(lblDMY)
+                                .addGap(29, 29, 29)
+                                .addComponent(sprDate, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sprMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sprYear, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(sprTheaterNumber, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(sprTimeHour, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sprTimeMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnTime)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(boxRepeat)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(266, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd)
-                    .addComponent(btnCancel))
-                .addContainerGap())
+                    .addComponent(lblMovie)
+                    .addComponent(cbxMovie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLocation)
+                    .addComponent(cbxLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sprYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDate)
+                    .addComponent(sprDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sprMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDMY))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sprTimeHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sprTimeMinutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTime)
+                    .addComponent(lblTime)
+                    .addComponent(boxRepeat))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAddSchedule)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(sprTheaterNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(pnlRepeat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTimeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -107,7 +322,67 @@ public class AdminView_AddSchedule extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
+    private javax.swing.JCheckBox boxRepeat;
+    private javax.swing.JButton btnAddSchedule;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JToggleButton btnTime;
+    private javax.swing.JComboBox<String> cbxLocation;
+    private javax.swing.JComboBox<String> cbxMovie;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel lblDMY;
+    private javax.swing.JLabel lblDate;
+    private javax.swing.JLabel lblEvery;
+    private javax.swing.JLabel lblLocation;
+    private javax.swing.JLabel lblMovie;
+    private javax.swing.JLabel lblRepeatFor;
+    private javax.swing.JLabel lblTime;
+    private javax.swing.JPanel pnlRepeat;
+    private javax.swing.JSpinner sprDate;
+    private javax.swing.JSpinner sprIntervalHour;
+    private javax.swing.JSpinner sprIntervalMinutes;
+    private javax.swing.JSpinner sprMonth;
+    private javax.swing.JSpinner sprRepeatFor;
+    private javax.swing.JSpinner sprTheaterNumber;
+    private javax.swing.JSpinner sprTimeHour;
+    private javax.swing.JSpinner sprTimeMinutes;
+    private javax.swing.JSpinner sprYear;
     // End of variables declaration//GEN-END:variables
+
+    public String getMovie() {
+        return cbxMovie.getSelectedItem().toString();
+    }
+    public String getLocations(){
+        return cbxLocation.getSelectedItem().toString();
+    }
+
+    public Date getDate() {
+        Date d = new Date((Integer)sprYear.getValue() ,(Integer) sprMonth.getValue() ,(Integer) sprDate.getValue());
+        System.out.println("--");
+        System.out.println((Integer)sprYear.getValue());
+        System.out.println(d.getYear());
+        System.out.println("---");
+        return d;
+    }
+
+    public Time getTime() {
+        Time t = new Time((Integer)sprTimeHour.getValue(), (Integer)sprTimeMinutes.getValue(), 0);
+        return t;
+    }
+    
+    public int getTheaterNumber(){
+        return (Integer) sprTheaterNumber.getValue();
+    }
+    public int getRepeatFor() {
+        return (Integer) sprRepeatFor.getValue();
+    }
+
+    public Time getInterval() {
+        Time t = new Time((Integer) sprIntervalHour.getValue(), (Integer)sprIntervalMinutes.getValue(), 0);
+        return t;
+    }
+
+    
+    
 }

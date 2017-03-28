@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pkgfinal.project.attempt.pkg1.views.m;
+package pkgfinal.project.attempt.pkg1.views.customer;
 
 import java.awt.event.ActionListener;
 

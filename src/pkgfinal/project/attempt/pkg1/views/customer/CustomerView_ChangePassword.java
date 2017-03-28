@@ -32,6 +32,14 @@ public class CustomerView_ChangePassword extends javax.swing.JFrame {
     public void addBackListener(ActionListener a){
         btnBack.addActionListener(a);
     }
+    
+    public String getOldPassword(){
+        return txtOldPassword.getText();
+    }
+    
+    public String getNewPassword(){
+        return txtNewPassword.getText();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

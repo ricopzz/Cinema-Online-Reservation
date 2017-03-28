@@ -1,16 +1,16 @@
 /*
  * Sign Out dan Order Now belum jadi
  */
-package pkgfinal.project.attempt.pkg1.views.m;
+package pkgfinal.project.attempt.pkg1.views.customer;
 
 import ignoreThis.LoginForm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.Timer;
-import pkgfinal.project.attempt.pkg1.controller.Customer.CustomerController;
 import pkgfinal.project.attempt.pkg1.views.AccountView_Login;
 
 /**
@@ -38,7 +38,7 @@ public class CustomerView_Interface extends javax.swing.JFrame{
     }
     
     public void addChooseSeatListener(ActionListener a){
-        btnSeat.addActionListener(a);
+        btnChooseSeat.addActionListener(a);
     }
     
     public void addAddBalanceListener(ActionListener a){
@@ -65,6 +65,28 @@ public class CustomerView_Interface extends javax.swing.JFrame{
         btnHistory.addActionListener(a);
     }
     
+    
+    
+    public void addLocationListener(ActionListener a){
+        locationBox.addActionListener (a);
+    }
+    public void addMovieListener(ActionListener  a){
+        movieBox.addActionListener(a);
+    }
+    public void addTimeListener(ActionListener  a){
+        timeBox.addActionListener(a);
+    }
+    
+    
+    public String getSelectedLocation(){
+        return locationBox.getSelectedItem().toString();
+    }
+    public String getSelectedMovie(){
+        return movieBox.getSelectedItem().toString();
+    }
+   public String getSelectedTime(){
+        return timeBox.getSelectedItem().toString();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,24 +101,22 @@ public class CustomerView_Interface extends javax.swing.JFrame{
         panel1 = new java.awt.Panel();
         AIMenu = new javax.swing.JLayeredPane();
         lblName = new javax.swing.JLabel();
-        lblAge = new javax.swing.JLabel();
+        lblDOB = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        txtAge = new javax.swing.JTextField();
+        txtDOB = new javax.swing.JTextField();
         lblEmail = new javax.swing.JLabel();
-        txtAge1 = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         lblBalance = new javax.swing.JLabel();
         txtBalance = new javax.swing.JTextField();
-        lblPhone = new javax.swing.JLabel();
-        txtPhoneNum = new javax.swing.JTextField();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         movieBox = new javax.swing.JComboBox<>();
         lblMovie = new javax.swing.JLabel();
         lblSeat = new javax.swing.JLabel();
-        btnSeat = new javax.swing.JButton();
+        btnChooseSeat = new javax.swing.JButton();
         lblTime = new javax.swing.JLabel();
         timeBox = new javax.swing.JComboBox<>();
         lblTime1 = new javax.swing.JLabel();
-        LocationBox = new javax.swing.JComboBox<>();
+        locationBox = new javax.swing.JComboBox<>();
         btnOrder = new javax.swing.JButton();
         lblClock = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
@@ -121,34 +141,28 @@ public class CustomerView_Interface extends javax.swing.JFrame{
 
         lblName.setText("Name");
 
-        lblAge.setText("Age");
+        lblDOB.setText("Birth Date");
 
         txtName.setEnabled(false);
 
-        txtAge.setEnabled(false);
+        txtDOB.setEnabled(false);
 
         lblEmail.setText("Email");
 
-        txtAge1.setEnabled(false);
+        txtEmail.setEnabled(false);
 
         lblBalance.setText("Balance");
 
         txtBalance.setEnabled(false);
 
-        lblPhone.setText("Phone");
-
-        txtPhoneNum.setEnabled(false);
-
         AIMenu.setLayer(lblName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        AIMenu.setLayer(lblAge, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        AIMenu.setLayer(lblDOB, javax.swing.JLayeredPane.DEFAULT_LAYER);
         AIMenu.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        AIMenu.setLayer(txtAge, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        AIMenu.setLayer(txtDOB, javax.swing.JLayeredPane.DEFAULT_LAYER);
         AIMenu.setLayer(lblEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        AIMenu.setLayer(txtAge1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        AIMenu.setLayer(txtEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
         AIMenu.setLayer(lblBalance, javax.swing.JLayeredPane.DEFAULT_LAYER);
         AIMenu.setLayer(txtBalance, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        AIMenu.setLayer(lblPhone, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        AIMenu.setLayer(txtPhoneNum, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout AIMenuLayout = new javax.swing.GroupLayout(AIMenu);
         AIMenu.setLayout(AIMenuLayout);
@@ -157,63 +171,68 @@ public class CustomerView_Interface extends javax.swing.JFrame{
             .addGroup(AIMenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AIMenuLayout.createSequentialGroup()
-                        .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblName)
-                            .addComponent(lblAge)
-                            .addComponent(lblEmail))
-                        .addGap(28, 28, 28)
-                        .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtAge, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                            .addComponent(txtName)
-                            .addComponent(txtAge1)))
-                    .addGroup(AIMenuLayout.createSequentialGroup()
-                        .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblBalance)
-                            .addComponent(lblPhone))
-                        .addGap(18, 18, 18)
-                        .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPhoneNum)
-                            .addComponent(txtBalance))))
+                    .addComponent(lblName)
+                    .addComponent(lblDOB)
+                    .addComponent(lblEmail)
+                    .addComponent(lblBalance))
+                .addGap(28, 28, 28)
+                .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtBalance)
+                    .addComponent(txtDOB, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                    .addComponent(txtName)
+                    .addComponent(txtEmail))
                 .addGap(18, 18, 18))
         );
         AIMenuLayout.setVerticalGroup(
             AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AIMenuLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(25, 25, 25)
                 .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblName)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAge)
-                    .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDOB)
+                    .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmail)
-                    .addComponent(txtAge1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBalance)
                     .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPhoneNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPhone))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Order Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+
+        movieBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--" }));
 
         lblMovie.setText("Movie");
 
         lblSeat.setText("Seat");
 
-        btnSeat.setText("Choose Seat");
+        btnChooseSeat.setText("Choose Seat");
+        btnChooseSeat.setEnabled(false);
 
         lblTime.setText("Time");
 
+        timeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--" }));
+
         lblTime1.setText("Location");
+
+        locationBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--" }));
+        locationBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                locationBoxMouseClicked(evt);
+            }
+        });
+        locationBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                locationBoxActionPerformed(evt);
+            }
+        });
 
         btnOrder.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnOrder.setText("Order Now !");
@@ -221,56 +240,60 @@ public class CustomerView_Interface extends javax.swing.JFrame{
         jLayeredPane1.setLayer(movieBox, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(lblMovie, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(lblSeat, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnSeat, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnChooseSeat, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(lblTime, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(timeBox, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(lblTime1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(LocationBox, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(locationBox, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnOrder, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMovie)
-                    .addComponent(lblSeat)
-                    .addComponent(lblTime)
-                    .addComponent(lblTime1))
-                .addGap(18, 18, 18)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSeat)
-                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(timeBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(movieBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(LocationBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(404, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(121, 121, 121))
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblMovie)
+                            .addComponent(lblSeat)
+                            .addComponent(lblTime))
+                        .addGap(35, 35, 35)
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnChooseSeat)
+                            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(timeBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(movieBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addComponent(lblTime1)
+                        .addGap(18, 18, 18)
+                        .addComponent(locationBox, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(376, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(27, 27, 27)
+                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTime1)
+                    .addComponent(locationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMovie)
                     .addComponent(movieBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSeat)
-                    .addComponent(btnSeat))
                 .addGap(18, 18, 18)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTime)
                     .addComponent(timeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTime1)
-                    .addComponent(LocationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblSeat)
+                    .addComponent(btnChooseSeat))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -290,7 +313,12 @@ public class CustomerView_Interface extends javax.swing.JFrame{
 
         menuEdit.setText("Edit");
 
-        btnChangeInfo.setText("Change Information");
+        btnChangeInfo.setText("Change Email");
+        btnChangeInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeInfoActionPerformed(evt);
+            }
+        });
         menuEdit.add(btnChangeInfo);
 
         btnChangePass.setText("Change Password");
@@ -334,9 +362,9 @@ public class CustomerView_Interface extends javax.swing.JFrame{
                         .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AIMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
+                        .addGap(51, 51, 51)
                         .addComponent(lblClock, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 38, Short.MAX_VALUE))
+                        .addGap(0, 23, Short.MAX_VALUE))
                     .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -344,44 +372,55 @@ public class CustomerView_Interface extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnChangeInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeInfoActionPerformed
+        // TODO add your handling code here:
+        System.out.println("action performed");
+    }//GEN-LAST:event_btnChangeInfoActionPerformed
+
+    private void locationBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_locationBoxMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_locationBoxMouseClicked
+
+    private void locationBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_locationBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_locationBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane AIMenu;
-    private javax.swing.JComboBox<String> LocationBox;
     private javax.swing.JMenuItem btnAddBalance;
     private javax.swing.JMenuItem btnChangeInfo;
     private javax.swing.JMenuItem btnChangePass;
+    public javax.swing.JButton btnChooseSeat;
     private javax.swing.JMenuItem btnHistory;
     private javax.swing.JButton btnOrder;
-    private javax.swing.JButton btnSeat;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblBalance;
     public javax.swing.JLabel lblClock;
+    private javax.swing.JLabel lblDOB;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblMovie;
     private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblPhone;
     private javax.swing.JLabel lblSeat;
     private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblTime1;
+    public javax.swing.JComboBox<String> locationBox;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuEdit;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenu menuSignOut;
-    private javax.swing.JComboBox<String> movieBox;
+    public javax.swing.JComboBox<String> movieBox;
     private java.awt.Panel panel1;
-    private javax.swing.JComboBox<String> timeBox;
-    private javax.swing.JTextField txtAge;
-    private javax.swing.JTextField txtAge1;
-    private javax.swing.JTextField txtBalance;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPhoneNum;
+    public javax.swing.JComboBox<String> timeBox;
+    public javax.swing.JTextField txtBalance;
+    public javax.swing.JTextField txtDOB;
+    public javax.swing.JTextField txtEmail;
+    public javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }

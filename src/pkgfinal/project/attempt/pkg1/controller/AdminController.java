@@ -7,30 +7,21 @@ package pkgfinal.project.attempt.pkg1.controller;
 
 import admin.AdminView_AddAccount;
 import admin.AdminView_AddSchedule;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.table.TableModel;
-import pkgfinal.project.attempt.pkg1.model.AccountModel;
 import pkgfinal.project.attempt.pkg1.model.AdminModel;
-import pkgfinal.project.attempt.pkg1.model.Location;
-import pkgfinal.project.attempt.pkg1.views.AccountView_ForgetPassword;
-import pkgfinal.project.attempt.pkg1.views.AccountView_Login;
-import pkgfinal.project.attempt.pkg1.views.AccountView_SignUp;
 import pkgfinal.project.attempt.pkg1.views.admin.*;
 
 /**
@@ -52,6 +43,7 @@ public class AdminController {
     }
 
     public AdminController(AdminView_MainScreen theInterface, AdminView_AddLocation theAddLocation, AdminView_AddMovie theAddMovie, AdminView_EditMovie theEditMovie, AdminView_AddSchedule theAddSchedule, AdminView_AddAccount theAddAccount, AdminModel theModel) {
+        
         this.theInterface = theInterface;
         this.theAddLocation = theAddLocation;
         this.theAddMovie = theAddMovie;
@@ -59,22 +51,26 @@ public class AdminController {
         this.theAddSchedule = theAddSchedule;
         this.theAddAccount = theAddAccount;
         this.theModel = theModel;
+        
         start();
     }
     
     
     public void start(){
         theModel.establishConnection();
+        
         buildIntefaceListeners();
         buildAddMovieListeners();
         buildEditMovieListeners();
         buildAddLocationListeners();
         buildAddScheduleListeners();
         buildAddAccountListeners();
+        
         theInterface.tblMovies.setModel(theModel.buildTableModel(theModel.getMoviesResultSet()));
         theInterface.jTable2.setModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
         theInterface.jTable3.setModel(theModel.buildTableModel(theModel.getSchedulesResultSet()));
         theInterface.jTable4.setModel(theModel.buildTableModel(theModel.getAccountsResultSet()));
+        
         makePosters();
         theInterface.setVisible(true);
     }
@@ -142,7 +138,6 @@ public class AdminController {
                 theAddLocation.setVisible(true);
             }
         });
-        
         theInterface.addDeleteLocationActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 String index = theInterface.getSelectedIDLocations();
@@ -154,7 +149,6 @@ public class AdminController {
                 }   
             }   
         });
-        
         theInterface.addEditLocationActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                
@@ -164,11 +158,35 @@ public class AdminController {
         
         theInterface.addAddScheduleActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                theInterface.dispose();
-                theAddSchedule.setVisible(true);
+                try {
+                    theAddSchedule = new AdminView_AddSchedule();
+                    buildAddScheduleListeners();
+                    ResultSet rs = theModel.getMoviesResultSet();
+                    
+                    ArrayList<String> movies = new ArrayList<String>();
+                    while(rs.next()){
+                        movies.add(rs.getString("Name"));
+                    }
+                    
+                    rs = theModel.getLocationsResultSet();
+                    
+                    ArrayList<String> locations = new ArrayList<String>();
+                    while(rs.next()){
+                        locations.add(rs.getString("Name"));
+                    }
+                    
+                    
+                    theAddSchedule.setMovieComboBoxModel(movies.toArray(new String[0]));
+                    theAddSchedule.setLocationComboBoxModel(locations.toArray(new String[0]));
+                    theAddSchedule.setVisible(true);
+               
+                
+                
+                } catch (SQLException ex) {
+                    Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
-        
         theInterface.addDeleteScheduleActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 String index = theInterface.getSelectedIDSchedules();
@@ -187,7 +205,6 @@ public class AdminController {
                 theAddAccount.setVisible(true);
             }
         });
-        
         theInterface.addDeleteAccountActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 String index = theInterface.getSelectedIDAccounts();
@@ -281,10 +298,96 @@ public class AdminController {
     }
     
     public void buildAddScheduleListeners(){
+        System.out.println("test");
         theAddSchedule.addAddScheduleActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                theAddSchedule.dispose();
-                theInterface.setVisible(true);
+                try {
+                    System.out.println("test 2");
+                    String movie = theAddSchedule.getMovie();
+                    String location = theAddSchedule.getLocations();
+                    Date date = theAddSchedule.getDate();
+                    
+                    System.out.println("opopop"  +date.getYear());
+                    System.out.println(date.toString());
+                    
+                    Time time = theAddSchedule.getTime();
+                    int theaterNumber = theAddSchedule.getTheaterNumber();
+                    
+                    boolean isPM = theAddSchedule.isPM();
+                    if (isPM){
+                        time.setHours(time.getHours() + 12);
+                    }
+                    boolean isRepeat = theAddSchedule.isRepeat();
+                    
+                    int repeatFor = theAddSchedule.getRepeatFor();
+                    Time interval = theAddSchedule.getInterval();
+                    Time []repetition = null;
+                    if (isRepeat){
+                        System.out.println("is repeat");
+                        Time buffer = new Time(0,0,0);
+                        buffer.setHours(time.getHours());
+                        buffer.setMinutes(time.getMinutes());
+                                
+                        repetition = new Time[repeatFor];
+                        for (int x=0;x<repeatFor;x++){
+                            int newHour = buffer.getHours() + interval.getHours();
+                            if (newHour > 24){
+                                newHour = newHour -24;
+                            }
+                            buffer.setHours(newHour);
+                            
+                            int newMinute =  buffer.getMinutes() + interval.getMinutes();
+                            if (newMinute > 59){
+                                newMinute = newMinute - 60;
+                            }
+                            buffer.setMinutes(newMinute);
+                            
+                            repetition[x] = new Time(0,0,0);
+                            repetition[x].setHours(buffer.getHours());
+                            repetition[x].setMinutes(buffer.getMinutes());
+                                    
+                            
+                            System.out.println(repetition[x].toString() + x);
+                        }
+                        for (int x=0;x<repeatFor;x++){
+                            System.out.println(repetition[x].toString() + " this is");
+                        }
+                    }
+                    ResultSet rs = theModel.getMoviesSearchResultSet(movie);
+                    
+                    int movieID = -1;
+                    if (rs.next()){
+                        movieID = rs.getInt("ID");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No such movie");
+                    }
+                    
+                    rs = theModel.getLocationSearchResultSet(location);
+                    int locationID = -1;
+                    if (rs.next()){
+                        locationID = rs.getInt("ID");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No such location");
+                    }
+                    
+                    if (locationID >= 0 || movieID >= 0){
+                        System.out.println("hahahhaa");
+                        theModel.addSchedules(date, time, locationID, movieID, theaterNumber );
+                        if (isRepeat){
+                            for(int x=0;x<repeatFor;x++){
+                                theModel.addSchedules(date, repetition[x], locationID, movieID, theaterNumber);
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "An error occured, please checkk input");
+                    }
+                    System.out.println("success");
+                    theInterface.jTable3.setModel(theModel.buildTableModel(theModel.getSchedulesResultSet()));
+                    theAddSchedule.dispose();
+                    theInterface.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         
@@ -292,6 +395,22 @@ public class AdminController {
             public void actionPerformed(ActionEvent e){
                 theAddSchedule.dispose();
                 theInterface.setVisible(true);
+            }
+        });
+        theAddSchedule.addRepeatActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theAddSchedule.setRepeatPanelVisible(theAddSchedule.isRepeat());
+            }
+        });
+        theAddSchedule.addTimeButtonActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (theAddSchedule.isPM()){
+                    theAddSchedule.timeButtonSetText("PM");
+                }else{
+                    theAddSchedule.timeButtonSetText("AM");
+                }
             }
         });
     }

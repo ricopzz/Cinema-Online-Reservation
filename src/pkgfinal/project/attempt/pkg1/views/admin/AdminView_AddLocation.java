@@ -43,7 +43,7 @@ public class AdminView_AddLocation extends javax.swing.JFrame {
         lblAddress = new javax.swing.JLabel();
         txtAddress = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Location");
 
