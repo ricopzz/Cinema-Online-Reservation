@@ -57,87 +57,96 @@ public class CustomerModel {
     public CustomerModel(){
         
     }
-    public String[] getCurrentShowingTime(String movie, String location){
+    
+    public void addPurchase(int schedule_id, String username, Date date_of_purchase, Time time_of_purchase, String seat){
+        try {
+            String query = "INSERT INTO Purchase_History (`Schedule_ID`, `Username`, `Date_Of_Purchase`, `Time_Of_Purchase`, `Seat_No`, `Claimed`) "
+                    + "VALUES (" + schedule_id + ",'" + username + "','" + date_of_purchase.toString() + "','" + time_of_purchase.toString() +"','" + seat+"',"+"0)";
+            System.out.println(query);
+            stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public ResultSet getCurrentShowingTime(int movie_id,int location_id){
         ArrayList<String> time = new ArrayList<String>();
         try{
-            
-            String query = "SELECT ID FROM Movies WHERE Name = '" + movie  + "'";
+            String query = "SELECT Time FROM Schedule WHERE Movie_ID = '" + movie_id + "' AND Location_ID ='" + location_id+"'";
             ResultSet rs = stmt.executeQuery(query);
-            int movie_id = -1;
-            if(rs.next())  movie_id = rs.getInt("ID");
-            
-             query = "SELECT ID FROM Location WHERE Name = '" + location  + "'";
-             rs = stmt.executeQuery(query);
-            int location_id = -1;
-            if(rs.next())  location_id = rs.getInt("ID");
-            
-            query = "SELECT Time FROM Schedule WHERE Movie_ID = '" + movie_id + "' AND Location_ID ='" + location_id+"'";
-            rs = stmt.executeQuery(query);
-            while(rs.next()){
-                Time t = rs.getTime("Time");
-                time.add(t.toString());
-            }
-            
+            return rs;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
-        return time.toArray(new String[0]);
+        
     }
-    public String[] getCurrentShowingMovies(String location){
-        ArrayList<String> movies = new ArrayList<String>();
+    public ResultSet getCurrentShowingMovieIDResultSet(int location_id){
         try{
-            
-            String query = "SELECT ID FROM Location WHERE Name = '" + location + "'";
+            String query = "SELECT Movie_ID FROM Schedule WHERE Location_ID = '" + location_id + "'";
             ResultSet rs = stmt.executeQuery(query);
-            int location_id = -1;
-            if(rs.next())  location_id = rs.getInt("ID");
-            
-            ArrayList<Integer> movie_id = new ArrayList<Integer>();
-            query = "SELECT Movie_ID FROM Schedule WHERE Location_ID = '" + location_id + "'";
-            rs = stmt.executeQuery(query);
-            while(rs.next()){
-                int id = rs.getInt("Movie_ID");
-                if (!movie_id.contains(id)) movie_id.add(id);
-            }
-            
-            for (int x=0;x<movie_id.size();x++){
-                query = "SELECT * FROM Movies WHERE ID = " + movie_id.get(x);
-                rs = stmt.executeQuery(query);
-                if (rs.next())
-                    movies.add(rs.getString("Name"));
-            }
-            
+            return rs;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
-        return movies.toArray(new String[0]);
     }
-    public String[] getCurrentShowingLocation(){
-        ArrayList<String> movies = new ArrayList<String>();
+    public ResultSet getCurrentShowingLocationIDResultSet(){
         try{
-            ArrayList<Integer> movie_id = new ArrayList<Integer>();
             String query = "SELECT Location_ID FROM Schedule";
             ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()){
-                int id = rs.getInt("Location_ID");
-                if (!movie_id.contains(id)) movie_id.add(id);
-            }
-            
-            for (int x=0;x<movie_id.size();x++){
-                query = "SELECT * FROM Location WHERE ID = " + movie_id.get(x);
-                rs = stmt.executeQuery(query);
-                if (rs.next())
-                    movies.add(rs.getString("Name"));
-            }
-            
+            return rs;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
-        return movies.toArray(new String[0]);
     }
+    public ResultSet getCurrentShowingTheater(int location_id, int movie_id, String time) {
+        ArrayList<String> theater = new ArrayList<String>();
+        try{
+            String query = "SELECT Theater_Number FROM Schedule WHERE Movie_ID = '" + movie_id + "' AND Location_ID ='" + location_id+"' AND Time ='"+time+"'";
+            ResultSet rs = stmt.executeQuery(query);
+            return rs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    public int getScheduleID(int location_id, int movie_id, String time, int theater_number){
+        try {
+            String query = "SELECT ID FROM Schedule WHERE Movie_ID = '" + movie_id + "' AND Location_ID ='" + location_id+"' AND Time ='"+time+"' AND Theater_Number='" + theater_number+"'";
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next())
+                return rs.getInt("ID");
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public String getMovieNames(Integer index) {
+        try {
+            String query = "SELECT * FROM Movies WHERE ID = " + index;
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next())
+                return rs.getString("Name");
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    public String getLocationNames(Integer index) {
+        try {
+            String query = "SELECT * FROM Location WHERE ID = " + index;
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next())
+                return rs.getString("Name");
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public String getName(String username){
         try{
             String query = "SELECT * FROM Accounts WHERE Username = '" + username +"'";
@@ -149,7 +158,6 @@ public class CustomerModel {
             return null;
         }
     }
-    
     public Date getDOB(String username){
         try{
             String query = "SELECT * FROM Accounts WHERE Username = '" + username+ "'";
@@ -162,7 +170,6 @@ public class CustomerModel {
             return null;
         }
     }
-    
     public String getEmail(String username){
         try{
             String query = "SELECT * FROM Accounts WHERE Username = '" + username +"'";
@@ -175,7 +182,6 @@ public class CustomerModel {
             return null;
         }
     }
-    
     public int getBalance(String username){
         try{
             String query = "SELECT * FROM Accounts WHERE Username = '" + username +"'";
@@ -198,7 +204,6 @@ public class CustomerModel {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-    
     public void changePassword(String oldPassword, String newPassword){
         try{
             String query = "UPDATE Accounts SET Email='"+oldPassword+"' WHERE Email='"+newPassword+"'";
@@ -218,5 +223,22 @@ public class CustomerModel {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
+
+    public ArrayList<String> getTakenSeats(int schedule_id) {
+        try {
+            ArrayList<String> seats = new ArrayList<String>();
+            String query = "SELECT Seat_No FROM Purchase_History WHERE Schedule_ID = " + schedule_id;
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next()){
+               seats.add(rs.getString("Seat_No"));
+            }
+            return seats;
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     
+
 }
+ 

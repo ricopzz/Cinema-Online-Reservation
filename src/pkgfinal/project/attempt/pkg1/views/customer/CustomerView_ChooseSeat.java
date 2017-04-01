@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pkgfinal.project.attempt.pkg1.views.m;
+package pkgfinal.project.attempt.pkg1.views.customer;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 /**
@@ -21,12 +25,16 @@ public class CustomerView_ChooseSeat extends javax.swing.JFrame {
      * Creates new form ChooseSeat
      */
     public CustomerView_ChooseSeat() {
+        
         initComponents();
         
     }
-
-    ArrayList<JToggleButton> alist_button = new ArrayList<JToggleButton>();
-
+    
+   
+    public void checkButtons(){
+      
+        
+    }
     public void addContinueListener(ActionListener a){
         btnContinue.addActionListener(a);
     }
@@ -1003,18 +1011,240 @@ public class CustomerView_ChooseSeat extends javax.swing.JFrame {
 
     private void checkSelected(JToggleButton butt){
         if (butt.isSelected()){
-            butt.setBackground(Color.red);
-            alist_button.add(butt);
+            butt.setBackground(Color.yellow);
+            butt.setForeground(Color.yellow);
+            butt.setOpaque(true);
         }
         else{
             butt.setBackground(Color.green);
-            alist_button.remove(butt);
+            butt.setForeground(Color.green);
+            butt.setOpaque(true);
         }
     }
+    private ArrayList<JToggleButton> a = new ArrayList<JToggleButton>();
+    private ArrayList<JToggleButton> b = new ArrayList<JToggleButton>();
+    private ArrayList<JToggleButton> c = new ArrayList<JToggleButton>();
+    private ArrayList<JToggleButton> d = new ArrayList<JToggleButton>();
+    private ArrayList<JToggleButton> e = new ArrayList<JToggleButton>();
+    private ArrayList<JToggleButton> f = new ArrayList<JToggleButton>();
+    private ArrayList<JToggleButton> g = new ArrayList<JToggleButton>();
+    private ArrayList<JToggleButton> h = new ArrayList<JToggleButton>();
     
+    private ArrayList<ArrayList<JToggleButton>> allSeats = new ArrayList<ArrayList<JToggleButton>>();
+    private int scheduleID;
+
+    public int getScheduleID() {
+        return scheduleID;
+    }
+
+    public void setScheduleID(int scheduleID) {
+        this.scheduleID = scheduleID;
+    }
+    
+    public ArrayList<String> getSelectedSeats(){
+        ArrayList<String> seats = new ArrayList<String>();
+        System.out.println("all seats size " + allSeats.size());
+        for(int x=0;x<allSeats.size();x++){
+            for (int y=0;y<allSeats.get(x).size();y++){
+                if (allSeats.get(x).get(y).isSelected()){
+                    String letter = null;
+                    switch (x){
+                        case 0:
+                            letter = "A";
+                            break;
+                        case 1:
+                            letter = "B";
+                            break;
+                        case 2:
+                            letter = "C";
+                            break;
+                        case 3:
+                            letter = "D";
+                            break;
+                        case 4:
+                            letter = "E";
+                            break;
+                        case 5:
+                            letter = "F";
+                            break;
+                        case 6:
+                            letter = "G";
+                            break;
+                        case 7:
+                            letter = "H";
+                            break;
+                        
+                        
+                    }
+                    System.out.println((y+1) + letter + "   " + x);
+                    seats.add( (y+1) + letter );
+                }
+                
+            }
+        }
+        return seats;
+    }
+    public void setSeats (ArrayList<String> seats ){
+       a.clear();
+       a.add(btnA1);
+       a.add(btnA2);
+       a.add(btnA3);
+       a.add(btnA4);
+       a.add(btnA5);
+       a.add(btnA6);
+       a.add(btnA7);
+       a.add(btnA8);
+       
+       b.clear();
+       b.add(btnB1);
+       b.add(btnB2);
+       b.add(btnB3);
+       b.add(btnB4);
+       b.add(btnB5);
+       b.add(btnB6);
+       b.add(btnB7);
+       b.add(btnB8);
+       
+       c.clear();
+       c.add(btnC1);
+       c.add(btnC2);
+       c.add(btnC3);
+       c.add(btnC4);
+       c.add(btnC5);
+       c.add(btnC6);
+       c.add(btnC7);
+       c.add(btnC8);
+       
+       d.clear();
+       d.add(btnD1);
+       d.add(btnD2);
+       d.add(btnD3);
+       d.add(btnD4);
+       d.add(btnD5);
+       d.add(btnD6);
+       d.add(btnD7);
+       d.add(btnD8);
+       
+       
+       e.clear();
+       e.add(btnE1);
+       e.add(btnE2);
+       e.add(btnE3);
+       e.add(btnE4);
+       e.add(btnE5);
+       e.add(btnE6);
+       e.add(btnE7);
+       e.add(btnE8);
+      
+       
+       f.clear();
+       f.add(btnF1);
+       f.add(btnF2);
+       f.add(btnF3);
+       f.add(btnF4);
+       f.add(btnF5);
+       f.add(btnF6);
+       f.add(btnF7);
+       f.add(btnF8);
+       
+       
+       g.clear();
+       g.add(btnG1);
+       g.add(btnG2);
+       g.add(btnG3);
+       g.add(btnG4);
+       g.add(btnG5);
+       g.add(btnG6);
+       g.add(btnG7);
+       g.add(btnG8);
+       
+       
+       h.clear();
+       h.add(btnH1);
+       h.add(btnH2);
+       h.add(btnH3);
+       h.add(btnH4);
+       h.add(btnH5);
+       h.add(btnH6);
+       h.add(btnH7);
+       h.add(btnH8);
+      
+       for (int x=0;x<seats.size();x++){
+           String currentSeats = seats.get(x);
+           System.out.println("current seat " + currentSeats);
+           int number = Integer.parseInt(currentSeats.substring(0,1));
+           String letter = currentSeats.substring(1);
+           
+           
+           System.out.println(seats.get(x));
+           System.out.println(number);
+           System.out.println(letter);
+           switch(letter.toLowerCase()){
+                case "a":
+                    a.get(number-1).setSelected(true);
+                    a.get(number-1).setEnabled(false);
+                    break;
+                case "b":
+                   b.get(number-1).setSelected(true);
+                   b.get(number-1).setEnabled(false);
+                   break;
+                case "c":
+                   c.get(number-1).setSelected(true);
+                   c.get(number-1).setEnabled(false);
+                   break;
+                case "d":
+                   d.get(number-1).setSelected(true);
+                   d.get(number-1).setEnabled(false);
+                   break;
+                case "e":
+                   e.get(number-1).setSelected(true);
+                   e.get(number-1).setEnabled(false);
+                   break;
+                case "f":
+                   f.get(number-1).setSelected(true);
+                   f.get(number-1).setEnabled(false);
+                   break;
+                case "g":
+                   g.get(number-1).setSelected(true);  
+                   g.get(number-1).setEnabled(false);
+                   break;
+                case "h":
+                   h.get(number-1).setSelected(true);
+                   g.get(number-1).setEnabled(false);
+                   break;
+           }
+       }
+        allSeats.add(a);
+       allSeats.add(b);
+       allSeats.add(c);
+       allSeats.add(d);
+       allSeats.add(e);
+       allSeats.add(f);
+       allSeats.add(g);
+       allSeats.add(h);
+       for(int x=0;x<allSeats.size();x++){
+           for (int y=0;y<allSeats.get(x).size();y++){
+               JToggleButton butt = allSeats.get(x).get(y);
+               if (butt.isSelected()){
+                    butt.setBackground(Color.red);
+                    butt.setForeground(Color.red);
+                    butt.setOpaque(true);
+                }
+                else{
+                    butt.setBackground(Color.green);
+                    butt.setForeground(Color.green);
+                    butt.setOpaque(true);
+                }
+           }
+       }
+    
+       
+
+    }
     private void btnA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnA1ActionPerformed
         // TODO add your handling code here:
         checkSelected(btnA1);
+        System.out.println("hahahaha");
     }//GEN-LAST:event_btnA1ActionPerformed
 
     private void btnA2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnA2ActionPerformed
