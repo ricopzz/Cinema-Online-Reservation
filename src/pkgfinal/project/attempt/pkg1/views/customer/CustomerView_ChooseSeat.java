@@ -1210,7 +1210,7 @@ public class CustomerView_ChooseSeat extends javax.swing.JFrame {
                    break;
                 case "h":
                    h.get(number-1).setSelected(true);
-                   g.get(number-1).setEnabled(false);
+                   h.get(number-1).setEnabled(false);
                    break;
            }
        }

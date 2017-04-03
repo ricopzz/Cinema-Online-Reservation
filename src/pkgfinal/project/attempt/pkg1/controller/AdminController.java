@@ -51,7 +51,6 @@ public class AdminController {
         this.theAddSchedule = theAddSchedule;
         this.theAddAccount = theAddAccount;
         this.theModel = theModel;
-        
         start();
     }
     

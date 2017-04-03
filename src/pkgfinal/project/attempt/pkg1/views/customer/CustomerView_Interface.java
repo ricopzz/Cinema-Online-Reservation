@@ -4,14 +4,17 @@
 package pkgfinal.project.attempt.pkg1.views.customer;
 
 import ignoreThis.LoginForm;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import pkgfinal.project.attempt.pkg1.views.AccountView_Login;
 
@@ -132,11 +135,11 @@ public class CustomerView_Interface extends javax.swing.JFrame{
         txtEmail = new javax.swing.JTextField();
         lblBalance = new javax.swing.JLabel();
         txtBalance = new javax.swing.JTextField();
+        lblClock = new javax.swing.JLabel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         movieBox = new javax.swing.JComboBox<>();
         lblMovie = new javax.swing.JLabel();
         lblSeat = new javax.swing.JLabel();
-        btnChooseSeat = new javax.swing.JButton();
         lblTime = new javax.swing.JLabel();
         timeBox = new javax.swing.JComboBox<>();
         lblTime1 = new javax.swing.JLabel();
@@ -144,7 +147,10 @@ public class CustomerView_Interface extends javax.swing.JFrame{
         btnOrder = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         cbxTheater = new javax.swing.JComboBox<>();
-        lblClock = new javax.swing.JLabel();
+        btnChooseSeat = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         btnAddBalance = new javax.swing.JMenuItem();
@@ -181,6 +187,8 @@ public class CustomerView_Interface extends javax.swing.JFrame{
 
         txtBalance.setEnabled(false);
 
+        lblClock.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         AIMenu.setLayer(lblName, javax.swing.JLayeredPane.DEFAULT_LAYER);
         AIMenu.setLayer(lblDOB, javax.swing.JLayeredPane.DEFAULT_LAYER);
         AIMenu.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -189,6 +197,7 @@ public class CustomerView_Interface extends javax.swing.JFrame{
         AIMenu.setLayer(txtEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
         AIMenu.setLayer(lblBalance, javax.swing.JLayeredPane.DEFAULT_LAYER);
         AIMenu.setLayer(txtBalance, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        AIMenu.setLayer(lblClock, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout AIMenuLayout = new javax.swing.GroupLayout(AIMenu);
         AIMenu.setLayout(AIMenuLayout);
@@ -197,38 +206,49 @@ public class CustomerView_Interface extends javax.swing.JFrame{
             .addGroup(AIMenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblName)
-                    .addComponent(lblDOB)
-                    .addComponent(lblEmail)
-                    .addComponent(lblBalance))
-                .addGap(28, 28, 28)
-                .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtBalance)
-                    .addComponent(txtDOB, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                    .addComponent(txtName)
-                    .addComponent(txtEmail))
+                    .addGroup(AIMenuLayout.createSequentialGroup()
+                        .addComponent(lblBalance)
+                        .addGap(43, 43, 43)
+                        .addComponent(txtBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
+                    .addGroup(AIMenuLayout.createSequentialGroup()
+                        .addComponent(lblEmail)
+                        .addGap(56, 56, 56)
+                        .addComponent(txtEmail))
+                    .addGroup(AIMenuLayout.createSequentialGroup()
+                        .addComponent(lblName)
+                        .addGap(54, 54, 54)
+                        .addComponent(txtName))
+                    .addGroup(AIMenuLayout.createSequentialGroup()
+                        .addComponent(lblDOB)
+                        .addGap(28, 28, 28)
+                        .addComponent(txtDOB, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)))
                 .addGap(18, 18, 18))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIMenuLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblClock, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
         );
         AIMenuLayout.setVerticalGroup(
             AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AIMenuLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblClock, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblName)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDOB)
                     .addComponent(txtDOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEmail)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEmail))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AIMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblBalance)
-                    .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Order Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
@@ -238,9 +258,6 @@ public class CustomerView_Interface extends javax.swing.JFrame{
         lblMovie.setText("Movie");
 
         lblSeat.setText("Seat");
-
-        btnChooseSeat.setText("Choose Seat");
-        btnChooseSeat.setEnabled(false);
 
         lblTime.setText("Time");
 
@@ -267,10 +284,17 @@ public class CustomerView_Interface extends javax.swing.JFrame{
 
         cbxTheater.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--" }));
 
+        btnChooseSeat.setText("Choose Seat");
+        btnChooseSeat.setEnabled(false);
+        btnChooseSeat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChooseSeatActionPerformed(evt);
+            }
+        });
+
         jLayeredPane1.setLayer(movieBox, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(lblMovie, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(lblSeat, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnChooseSeat, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(lblTime, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(timeBox, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(lblTime1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -278,65 +302,76 @@ public class CustomerView_Interface extends javax.swing.JFrame{
         jLayeredPane1.setLayer(btnOrder, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(cbxTheater, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btnChooseSeat, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(121, 121, 121))
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addComponent(lblTime1)
-                        .addGap(18, 18, 18)
-                        .addComponent(locationBox, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblMovie)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(movieBox, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addComponent(lblTime)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(timeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbxTheater, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMovie)
-                            .addComponent(lblSeat)
-                            .addComponent(lblTime)
-                            .addComponent(jLabel1))
-                        .addGap(25, 25, 25)
-                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnChooseSeat)
-                            .addComponent(timeBox, 0, 213, Short.MAX_VALUE)
-                            .addComponent(movieBox, 0, 213, Short.MAX_VALUE)
-                            .addComponent(cbxTheater, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(376, Short.MAX_VALUE))
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addComponent(lblTime1)
+                                .addGap(18, 18, 18)
+                                .addComponent(locationBox, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addComponent(lblSeat)
+                                .addGap(46, 46, 46)
+                                .addComponent(btnChooseSeat)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnOrder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTime1)
                     .addComponent(locationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMovie)
                     .addComponent(movieBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTime)
                     .addComponent(timeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(cbxTheater, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSeat)
                     .addComponent(btnChooseSeat))
-                .addGap(48, 48, 48)
-                .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        lblClock.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Watch Trailer");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("jLabel3");
 
         menuFile.setText("File");
 
@@ -379,34 +414,48 @@ public class CustomerView_Interface extends javax.swing.JFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(AIMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblClock, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)))
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(22, 22, Short.MAX_VALUE))
+                        .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(AIMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(jButton1)))
+                .addGap(0, 306, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AIMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
-                        .addComponent(lblClock, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 23, Short.MAX_VALUE))
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel3)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnChangeInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeInfoActionPerformed
@@ -422,6 +471,14 @@ public class CustomerView_Interface extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_locationBoxActionPerformed
 
+    private void btnChooseSeatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseSeatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnChooseSeatActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -435,8 +492,11 @@ public class CustomerView_Interface extends javax.swing.JFrame{
     private javax.swing.JMenuItem btnHistory;
     private javax.swing.JButton btnOrder;
     private javax.swing.JComboBox<String> cbxTheater;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblBalance;
@@ -482,6 +542,16 @@ public class CustomerView_Interface extends javax.swing.JFrame{
 
     public int getSelectedTheater() {
         return Integer.parseInt(cbxTheater.getSelectedItem().toString());
+    }
+    public void setPoster(int index) {
+        String path = "/pkgfinal/project/attempt/pkg1/resources/buffer" + index+".jpg";
+        File someFile = new File("/Users/User/NetBeansProjects/Final Project - Attempt 1/src/pkgfinal/project/attempt/pkg1/resources/buffer"+index+ ".jpg");
+        if ((someFile.exists() && !someFile.isDirectory())){
+            System.out.println("file found");
+            jLabel2.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(270, 400, Image.SCALE_DEFAULT)));
+        }else{
+            System.out.println("File not found");
+        }
     }
     
 }

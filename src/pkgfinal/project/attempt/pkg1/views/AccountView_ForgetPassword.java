@@ -25,6 +25,7 @@ public class AccountView_ForgetPassword extends javax.swing.JFrame {
     
     public AccountView_ForgetPassword() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,59 +36,68 @@ public class AccountView_ForgetPassword extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblEmail = new javax.swing.JLabel();
-        lblTitle = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         btnContinue = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        lblText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("FORGET PASSWORD");
+        setTitle("Forget Password");
 
-        lblEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblEmail.setText("E-Mail :");
-
-        lblTitle.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblTitle.setText("FORGET PASSWORD");
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
 
         btnContinue.setText("Continue");
         btnContinue.setMargin(new java.awt.Insets(1, 14, 2, 14));
+
+        jLabel2.setText("Please enter your email below and we'll send you ");
+
+        lblText.setText("A verification code to change your password");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnContinue, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(130, 130, 130))
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblTitle)
-                        .addGap(98, 98, 98))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(lblText))
+                            .addComponent(jLabel2))
+                        .addGap(36, 36, 36))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(87, 87, 87))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(lblTitle)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnContinue, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblText)
+                .addGap(18, 18, 18)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(btnContinue)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
     public void addVerifyActionListener(ActionListener a){
         verifyButton.addActionListener(a);
     }
@@ -110,22 +120,12 @@ public class AccountView_ForgetPassword extends javax.swing.JFrame {
         this.btnContinue = btnContinue;
     }
 
-    public JLabel getLblEmail() {
-        return lblEmail;
+
+    public void setLabelText(String a ) {
+        this.lblText.setText(a);
     }
 
-    public void setLblEmail(JLabel lblEmail) {
-        this.lblEmail = lblEmail;
-    }
-
-    public JLabel getLblTitle() {
-        return lblTitle;
-    }
-
-    public void setLblTitle(JLabel lblTitle) {
-        this.lblTitle = lblTitle;
-    }
-
+    
     public JTextField getTxtEmail() {
         return txtEmail;
     }
@@ -144,8 +144,8 @@ public class AccountView_ForgetPassword extends javax.swing.JFrame {
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnContinue;
-    private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblText;
     private javax.swing.JTextField txtEmail;
     // End of variables declaration//GEN-END:variables
     private JButton verifyButton = new JButton();

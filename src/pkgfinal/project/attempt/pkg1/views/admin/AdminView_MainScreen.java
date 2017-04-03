@@ -475,7 +475,6 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
         }else{
             System.out.println("File not found");
         }
-        
     }
 
 }

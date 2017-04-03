@@ -28,7 +28,6 @@ public class CashierController {
     private CashierModel theModel;
     private SendEmail emailSender = new SendEmail();
    
-    
     public static void main(String[] args){
         try{
          UIManager.setLookAndFeel(
@@ -55,7 +54,7 @@ public class CashierController {
     }
     
     public void buildCashierInterfaceListener(){
-           theInterface.addPrintListener(new ActionListener(){
+        theInterface.addPrintListener(new ActionListener(){
            public void actionPerformed(ActionEvent e) {
                 String username = theInterface.getSelectedUsername();
                 if (!theInterface.isPrintQueueEmpty()){

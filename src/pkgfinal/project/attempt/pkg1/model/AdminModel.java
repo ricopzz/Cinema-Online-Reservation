@@ -97,7 +97,7 @@ public class AdminModel {
     }
     
     public void makeMoviePoster(int index){
-      //  ClassLoader classLoader = getClass().getClassLoader();
+        //  ClassLoader classLoader = getClass().getClassLoader();
         File someFile = new File("/Users/User/NetBeansProjects/Final Project - Attempt 1/src/pkgfinal/project/attempt/pkg1/resources/buffer"+index+ ".jpg");
     
         if(!(someFile.exists() && !someFile.isDirectory())) { 

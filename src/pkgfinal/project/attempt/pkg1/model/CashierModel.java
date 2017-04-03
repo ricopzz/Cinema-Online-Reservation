@@ -40,6 +40,7 @@ public class CashierModel {
             JOptionPane.showMessageDialog(null, "Error establishing connection to database");
         }
     }
+    // gets data from database
     public String getEmailFromUsername(String username){
         ResultSet rs = null;
         

@@ -65,9 +65,9 @@ public class AccountModel {
     }
     public boolean signUp(String name,String email,String dateOfBirth,String username,String password,int balance){
         try {
-            String query = "INSERT INTO Accounts (`Username`,`Password`,`Name`,`Email`,`DOB`,`Balance`) VALUES (" +
+            String query = "INSERT INTO Accounts (`Username`,`Password`,`Name`,`Email`,`DOB`,`Balance`, Type) VALUES (" +
                 "'"+ username +"', "+"'"+ password +"', "+"'"+ name+"', "+"'"+email +"', "+"'"+ dateOfBirth +"', "+
-                balance+")";
+                balance+", 'User')";
             System.out.println(query);
             stmt.executeUpdate(query);
             return true;
@@ -94,6 +94,19 @@ public class AccountModel {
             return null;
         }
     }
-    
+    public String getType(String username){
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery("SELECT Type FROM Accounts WHERE Username = '" + username +"'");
+            
+            rs.next();
+            return rs.getString("Type");
+        } catch (SQLException ex) {
+            //Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Cannot access database for Fullname");
+            return null;
+        }
+    }
     
 }

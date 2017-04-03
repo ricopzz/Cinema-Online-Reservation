@@ -61,6 +61,7 @@ public class AccountView_SignUp extends JFrame{
         setTitle("SIGN UP");
         setSize(420,380);
         setLayout(null);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
          
         signTitle = new JLabel("SIGN UP");

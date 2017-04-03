@@ -41,11 +41,10 @@ public class AccountView_Login extends JFrame {
         setVisible(true);
         setSize(400,300);
         setLayout(null);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
         LoginTitle = new JLabel("CINEMA 21");
-        LoginTitle.setForeground(Color.blue);
-        LoginTitle.setFont(new Font("Lucida", Font.BOLD, 20));
  
         lblUserName = new JLabel("Username :");
         lblPassword = new JLabel("Password :");

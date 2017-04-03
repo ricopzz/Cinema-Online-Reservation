@@ -6,6 +6,8 @@
 package pkgfinal.project.attempt.pkg1.controller;
 
 
+import admin.AdminView_AddAccount;
+import admin.AdminView_AddSchedule;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -21,6 +23,21 @@ import javax.swing.UIManager;
 import pkgfinal.project.attempt.pkg1.model.AccountModel;
 import pkgfinal.project.attempt.pkg1.views.*;
 import pkgfinal.project.attempt.pkg1.SendEmail;
+import pkgfinal.project.attempt.pkg1.model.AdminModel;
+import pkgfinal.project.attempt.pkg1.model.CashierModel;
+import pkgfinal.project.attempt.pkg1.model.CustomerModel;
+import pkgfinal.project.attempt.pkg1.views.admin.AdminView_AddLocation;
+import pkgfinal.project.attempt.pkg1.views.admin.AdminView_AddMovie;
+import pkgfinal.project.attempt.pkg1.views.admin.AdminView_EditMovie;
+import pkgfinal.project.attempt.pkg1.views.admin.AdminView_MainScreen;
+import pkgfinal.project.attempt.pkg1.views.cashier.CashierView_Interface;
+import pkgfinal.project.attempt.pkg1.views.cashier.CashierView_VerifyPrint;
+import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_ChooseSeat;
+import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_HistoryOfPurchase;
+import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Interface;
+import pkgfinal.project.attempt.pkg1.views.m.CustomerView_AddBalance;
+import pkgfinal.project.attempt.pkg1.views.m.CustomerView_ChangeEmail;
+import pkgfinal.project.attempt.pkg1.views.m.CustomerView_ChangePassword;
 /**
  *
  * @author Yosua
@@ -79,6 +96,15 @@ public class AccountController {
                 if(theModel.login(username,password)){
                     JOptionPane.showMessageDialog(null, "Login Succesful");
                     theLogin.dispose();
+                    String type = theModel.getType(username);
+                    if (type.equals("User")){
+                        CustomerController m = new CustomerController(username,new CustomerView_Interface() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() ,new CustomerView_HistoryOfPurchase(), new CustomerModel() );
+                    }else if (type.equals("Admin")){
+                        AdminController myAdminController = new AdminController(new AdminView_MainScreen(), new AdminView_AddLocation(), new AdminView_AddMovie(),new AdminView_EditMovie(), new AdminView_AddSchedule(), new AdminView_AddAccount(), new AdminModel());   
+                    }else{
+                        CashierController myCashier = new CashierController(new CashierView_Interface(),new CashierView_VerifyPrint(), new CashierModel());                                
+
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, "Login failed");
                 };
@@ -103,15 +129,17 @@ public class AccountController {
                 String username = theSignUp.getUsername();
                 String password = theSignUp.getPassword();
                 int balance = 0;
-                if(theModel.signUp(name,email,dateOfBirth,username,password,balance)){
-                    
-                    JOptionPane.showMessageDialog(null, "Sign up succesful");
-                    theSignUp.setVisible(false);
-                    theSignUp.dispose();
+                if (!(name.equals("") || email.equals("") || dateOfBirth.equals("") || username.equals("") || password.equals(""))){
+                    if(theModel.signUp(name,email,dateOfBirth,username,password,balance)){
+                        JOptionPane.showMessageDialog(null, "Sign up succesful");
+                        theSignUp.setVisible(false);
+                        theSignUp.dispose();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Username or Email already exists");
+                    }
                 }else{
-                    JOptionPane.showMessageDialog(null, "Username or Email already exists");
+                    JOptionPane.showMessageDialog(null, "Please fill all fields");
                 }
-                
             }
         });
     }
@@ -126,7 +154,7 @@ public class AccountController {
           
                 theForgetPassword.getBtnContinue().setVisible(false);
                 theForgetPassword.remove(theForgetPassword.getBtnContinue());
-                theForgetPassword.getLblEmail().setText("Verification Code");
+                theForgetPassword.setLabelText("Verification Code");
         
                 theForgetPassword.getVerifyButton().setText("Authorize");
                 theForgetPassword.getVerifyButton().setBounds(148, 172, 111, 36);
