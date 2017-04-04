@@ -179,7 +179,7 @@ public class CustomerModel {
         return null;
     }
     
-    public ResultSet getMoviesResultSet(int ID){
+    public ResultSet getMoviesData(int ID){
         try{
             establishConnection();
             String query = "SELECT  Name, G1, G2, G3, Duration, Director, Trailer_URL, Rating  FROM Movies WHERE ID = " + ID;
@@ -190,10 +190,9 @@ public class CustomerModel {
             return null;
         }
     }
-
-    public String getLocationNames(Integer index) {
+    public String getLocationNames(int id) {
         try {
-            String query = "SELECT * FROM Location WHERE ID = " + index;
+            String query = "SELECT * FROM Location WHERE ID = " + id;
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next())
                 return rs.getString("Name");
@@ -250,22 +249,24 @@ public class CustomerModel {
         }
     }
     // change email and password
-    public void changeEmail(String oldEmail, String newEmail){
+    public boolean changeEmail(String oldEmail, String newEmail){
         try{
             String query = "UPDATE Accounts SET Email='"+oldEmail+"' WHERE Email='"+newEmail+"'";
             stmt.executeUpdate(query);
+            return true;
         } catch(SQLException ex){
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, ex);
+            return false;
         }
     }
-    public void changePassword(String oldPassword, String newPassword){
+    public boolean changePassword(String oldPassword,String newPassword, String username){
         try{
-            String query = "UPDATE Accounts SET Email='"+oldPassword+"' WHERE Email='"+newPassword+"'";
-            stmt.executeUpdate(query);
+            String query = "UPDATE Accounts SET Password='"+newPassword+"' WHERE Username ='"+ username +"' AND Password = '" + oldPassword+ "'";
+            if (!(stmt.executeUpdate(query) > 0)) return false;
+            return true;
         } catch(SQLException ex){
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, ex);
+            return false;
         }
     }
     // etc
@@ -312,7 +313,9 @@ public class CustomerModel {
     }
     public DefaultTableModel buildTableModel(ResultSet rs) {
         try {
+            
             DefaultTableModel dtm = new DefaultTableModel();
+            if (rs == null) return dtm;
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();
             // get column names
@@ -324,7 +327,7 @@ public class CustomerModel {
             Vector<Vector<Object>> data = new Vector<Vector<Object>>();
             while (rs.next()) {
                 Vector<Object> vector = new Vector<Object>();
-                for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+               for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
                     vector.add(rs.getObject(columnIndex));
                 }
                 data.add(vector);

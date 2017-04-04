@@ -8,6 +8,7 @@ package pkgfinal.project.attempt.pkg1.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import pkgfinal.project.attempt.pkg1.SendEmail;
@@ -58,7 +59,7 @@ public class CashierController {
            public void actionPerformed(ActionEvent e) {
                 String username = theInterface.getSelectedUsername();
                 if (!theInterface.isPrintQueueEmpty()){
-                    //JOptionPane.showMessageDialog(theInterface, "Sending Email....");
+                    JOptionPane.showMessageDialog(theInterface, "Sending Email....");
                     String code = emailSender.sendEmailBooking(theModel.getEmailFromUsername(username), theModel.getFullnameFromUsername(username), theInterface.getSeatNumbers());
                     if (!code.equals(null)){ 
                         System.out.println(code);
@@ -67,6 +68,8 @@ public class CashierController {
                         theVerify.setVerificationCode(code);
                         theVerify.setUsername(username);
                         theVerify.setVisible(true);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Failed to send email");
                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "Print queue empty");
@@ -75,7 +78,6 @@ public class CashierController {
         });
         theInterface.addPrintQueueListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-               
                theInterface.addPrintQueue();
             }
         });
@@ -83,7 +85,6 @@ public class CashierController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theInterface.resetPrintQueue();
-          
                 theInterface.setPurchaseTabelModel(theModel.getTableModelPurchase(theInterface.getSelectedUsername()));
                 theInterface.resetPrintQueue();
             }
@@ -107,7 +108,11 @@ public class CashierController {
                 if (theVerify.getVerificationCode().equals(theVerify.getText())){
                     String username = theVerify.getUsername();
                     JOptionPane.showMessageDialog(theInterface, "Verification succesful");
-                    theModel.setClaimedFromUsername(username);
+                    ArrayList<String> seats = theInterface.getSeatNumbers();
+                    for (int x=0;x<seats.size();x++){
+                        theModel.setClaimedFromUsername(username,seats.get(x));
+                    }
+                    
                     theVerify.setVisible(false);
                     theVerify.dispose();
                 }else{

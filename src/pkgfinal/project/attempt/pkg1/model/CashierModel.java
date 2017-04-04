@@ -70,9 +70,9 @@ public class CashierModel {
             return null;
         }
     }
-    public void setClaimedFromUsername(String username){
+    public void setClaimedFromUsername(String username, String seat){
         try {
-            stmt.executeUpdate("UPDATE `Purchase_History` SET `Claimed` = '1' WHERE  Username ='" + username +"'");
+            stmt.executeUpdate("UPDATE `Purchase_History` SET `Claimed` = '1' WHERE  Username ='" + username +"' AND WHERE Seat_No = '" + seat + "'");
         } catch (SQLException ex) {
             Logger.getLogger(CashierModel.class.getName()).log(Level.SEVERE, null, ex);
         }

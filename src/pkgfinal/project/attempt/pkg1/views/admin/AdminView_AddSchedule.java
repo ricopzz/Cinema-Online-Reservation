@@ -262,7 +262,6 @@ public class AdminView_AddSchedule extends javax.swing.JFrame {
                     .addComponent(btnTime)
                     .addComponent(lblTime)
                     .addComponent(boxRepeat))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)

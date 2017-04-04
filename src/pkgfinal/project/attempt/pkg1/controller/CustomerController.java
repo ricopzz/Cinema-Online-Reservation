@@ -40,7 +40,6 @@ import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Accounts;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_BookTicket;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_ChooseSeat;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Cinemas;
-import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_HistoryOfPurchase;
 import pkgfinal.project.attempt.pkg1.views.m.*;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Interface;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Interface_V2;
@@ -54,45 +53,41 @@ public class CustomerController
 {
     
     //old
-    private CustomerView_Interface theInterface;
+    //private CustomerView_Interface theInterface;
+    //new
     private CustomerView_ChangeEmail theEditEmail;
     private CustomerView_ChangePassword theEditPassword;
     private CustomerView_AddBalance theAddBalance;
     private CustomerView_ChooseSeat theChooseSeat;
-    private CustomerView_HistoryOfPurchase theHistory;
     private CustomerModel theModel;
-    //new
+    
     private CustomerView_Interface_V2 theInterface2 = new CustomerView_Interface_V2();
     private CustomerView_Movies theMovie = new CustomerView_Movies();
     private CustomerView_Cinemas theCinema = new CustomerView_Cinemas();
     private CustomerView_BookTicket theTicket = new CustomerView_BookTicket();
     private CustomerView_Accounts theAccount = new CustomerView_Accounts();
     
-    private String currentUser = "yosuatest19";
+    private String currentUser = "";
     public static void main(String[] args){
-        CustomerController m = new CustomerController("yosuatest19",new CustomerView_Interface() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() ,new CustomerView_HistoryOfPurchase(), new CustomerModel() );
+        CustomerController m = new CustomerController("yosuatest19",new CustomerView_Interface() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() , new CustomerModel() );
     }
-    public CustomerController(String currentUser, CustomerView_Interface theInterface, CustomerView_ChangeEmail theEditEmail, CustomerView_ChangePassword theEditPassword, CustomerView_AddBalance theAddBalance, CustomerView_ChooseSeat theChooseSeat, CustomerView_HistoryOfPurchase theHistory, CustomerModel theModel){
+    public CustomerController(String currentUser, CustomerView_Interface theInterface, CustomerView_ChangeEmail theEditEmail, CustomerView_ChangePassword theEditPassword, CustomerView_AddBalance theAddBalance, CustomerView_ChooseSeat theChooseSeat, CustomerModel theModel){
         this.currentUser = currentUser;
-        this.theInterface = theInterface;
+        //this.theInterface = theInterface;
         this.theEditEmail = theEditEmail;
         this.theEditPassword = theEditPassword;
         this.theAddBalance = theAddBalance;
         this.theChooseSeat = theChooseSeat;
-        this.theHistory = theHistory;
         this.theModel = theModel;
         start();
-        
     }
     
     public void start(){
         theModel.establishConnection();
-        buildInterfaceActionListener();
         buildChooseSeatActionListener();
         buildAddBalanceActionListener();
         buildChangeEmailActionListener();
         buildChangePasswordActionListener();
-        buildHistoryActionListener();
         
         // new
         buildInterface2ActionListener();
@@ -102,315 +97,7 @@ public class CustomerController
         
     }
        
-    public String[] toArray (ArrayList<String> a){
-        String[] b = new String[a.size()];
-        for (int x=0;x<a.size();x++){
-            b[x] = a.get(x);
-        }
-        return b;
-    }
-    // old
-    public void buildInterfaceActionListener(){
-        theInterface.addChooseSeatListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                theChooseSeat = new CustomerView_ChooseSeat();
-                int location_id = theInterface.getCurrentLocationID().get(theInterface.getSelectedLocation());
-                int movie_id = theInterface.getCurrentMovieID().get(theInterface.getSelectedMovie());
-                String time = theInterface.getSelectedTime();
-                int theater = theInterface.getSelectedTheater();
-                
-                int schedule_id = theModel.getScheduleID(location_id, movie_id, time, theater);         
-                System.out.println("schedule id" + schedule_id);
-                ArrayList<String> seats = theModel.getTakenSeats(schedule_id);
-                theChooseSeat.setScheduleID(schedule_id);
-                
-                theChooseSeat.setSeats(seats);
-                buildChooseSeatActionListener();
-                
-                theChooseSeat.setVisible(true);
-                
-            }
-        });
-        
-        theInterface.addAddBalanceListener(new ActionListener(){
-           public void actionPerformed(ActionEvent e){
-               theAddBalance = new CustomerView_AddBalance();
-               buildAddBalanceActionListener();
-               theAddBalance.setVisible(true);
-           } 
-        });
-        
-        theInterface.addChangePasswordListener(new ActionListener(){
-           public void actionPerformed(ActionEvent e){
-               theEditPassword = new CustomerView_ChangePassword();
-               buildChangePasswordActionListener();
-               theEditPassword.setVisible(true);
-               theModel.changePassword(theEditPassword.getOldPassword(), theEditPassword.getNewPassword());
-           } 
-        });
-        
-        theInterface.addChangeInformationListener(new ActionListener(){
-           public void actionPerformed(ActionEvent e){
-               theEditEmail = new CustomerView_ChangeEmail();
-               buildChangeEmailActionListener();
-               theEditEmail.setVisible(true);
-               theModel.changeEmail(theEditEmail.getOldEmail(), theEditEmail.getNewEmail());
-           } 
-        });
-        
-        theInterface.addSignOutListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                theInterface.dispose();
-            }
-        });
-        
-        theInterface.addHistoryListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                theInterface.dispose();
-                theHistory.setVisible(true);
-            }
-        });
-        
-        
-        theInterface.addLocationListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // resets all the boxes
-                
-                theInterface.setMovieComboBoxModel(new DefaultComboBoxModel<>(new String[]{"--"}));
-                theInterface.setTimeComboBoxModel(new DefaultComboBoxModel<>(new String[]{"--"}));
-                theInterface.setTheaterComboBoxModel(new DefaultComboBoxModel<>(new String[]{"--"}));
-                theInterface.enableChooseSeat(false);
-                
-                try {
-                    int index  = theInterface.getSelectedLocation();
-                    int location_id = theInterface.getCurrentLocationID().get(index);
-                    ResultSet rs = theModel.getCurrentShowingMovieIDResultSet(location_id);
-                    ArrayList<Integer> movie_id = new ArrayList<Integer>();
-                    while (rs.next()){
-                        int id = rs.getInt("Movie_ID");
-                        if (!movie_id.contains(id)){
-                            movie_id.add(id);
-                            theModel.makeMoviePoster(id);
-                        }
-                    }
-                    
-                    theInterface.setCurrentMovieID(movie_id);
-                    ArrayList<String> movie_name = new ArrayList<String>();
-                    for (int x=0;x<movie_id.size();x++){
-                        String name = theModel.getMovieNames(movie_id.get(x));
-                        System.out.println(name);
-                        movie_name.add(name);
-                    }
-                    
-                    theInterface.setMovieComboBoxModel(new DefaultComboBoxModel<>(toArray(movie_name)));
-                } catch (SQLException ex) {
-                    Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-}
-        });
-        theInterface.addMovieListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                try {
-                    theInterface.setTimeComboBoxModel(new DefaultComboBoxModel<>(new String[]{"--"}));
-                    theInterface.setTheaterComboBoxModel(new DefaultComboBoxModel<>(new String[]{"--"}));
-                    theInterface.enableChooseSeat(false);
-                    int location_id = theInterface.getCurrentLocationID().get(theInterface.getSelectedLocation());
-                    int movie_id = theInterface.getCurrentMovieID().get(theInterface.getSelectedMovie());
-                    
-                    theInterface.setPoster(movie_id);
-                    ResultSet rs = theModel.getCurrentShowingTime(movie_id, location_id);
-                    ArrayList<String> times = new ArrayList<String>();
-                    while (rs.next()){
-                        String b = rs.getTime("Time").toString();
-                        
-                        times.add(b);
-                    }
-                    theInterface.setTimeComboBoxModel(new DefaultComboBoxModel<>(toArray(times)));
-                } catch (SQLException ex) {
-                    Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            }
-        });
-        theInterface.addTimeListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    theInterface.setTheaterComboBoxModel(new DefaultComboBoxModel<>(new String[]{"--"}));
-                    theInterface.enableChooseSeat(false);
-                    
-                    int location_id = theInterface.getCurrentLocationID().get(theInterface.getSelectedLocation());
-                    int movie_id = theInterface.getCurrentMovieID().get(theInterface.getSelectedMovie());
-                    String time = theInterface.getSelectedTime();
-                    
-                    ResultSet rs = theModel.getCurrentShowingTheater(location_id, movie_id, time);
-                    ArrayList<String> theater = new ArrayList<String>();
-                    
-                    while(rs.next()){
-                        int theater_no = rs.getInt("Theater_Number");
-                        System.out.println(theater_no);
-                        theater.add(Integer.toString(theater_no));
-                    }
-                    theInterface.setTheaterComboBoxModel(new DefaultComboBoxModel<>(toArray(theater)));
-                } catch (SQLException ex) {
-                    Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        theInterface.addTheaterListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                theInterface.enableChooseSeat(true);
-                
-            }
-        });
-    }
-    public void buildAddBalanceActionListener(){
-        theAddBalance.addContinueListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                theAddBalance.dispose();
-                theInterface.setVisible(true);
-            }
-        });
-        
-        theAddBalance.addCancelListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                theAddBalance.dispose();
-            }
-        });
-    }
-    public void buildChangeEmailActionListener(){
-        theEditEmail.addChangeListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                theEditEmail.dispose();
-                theInterface.setVisible(true);
-            }
-        });
-        
-        theEditEmail.addBackListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                theEditEmail.dispose();
-            }
-        });
-    }
-    public void buildChangePasswordActionListener(){
-        theEditPassword.addChangeListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                theEditPassword.dispose();
-                theInterface.setVisible(true);
-            }
-        });
-        
-        theEditPassword.addBackListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                theEditPassword.dispose();
-            }
-        });
-    }
-    public void buildHistoryActionListener(){
-        theHistory.addContinueListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                theHistory.dispose();
-                theInterface.setVisible(true);
-            }
-        });
-    }
-    // new
-    public void buildCinemasActionListeners(){
-        theCinema.addCinemasListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                theCinema = new CustomerView_Cinemas();
-                theCinema.setCinemaTableModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
-                buildCinemasActionListeners();
-                theCinema.setVisible(true);
-                theCinema.dispose();
-            }
-        });
-        theCinema.addMoviesListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    theMovie = new CustomerView_Movies();
-                    ResultSet rs = theModel.getCurrentShowingMovieIDResultSet();
-                    ArrayList<Integer> id_list = new ArrayList<Integer>();
-                    while(rs.next()){
-                        int id = rs.getInt("Movie_ID");
-                        if (!id_list.contains(id))
-                            id_list.add(id);
-                    }
-                    System.out.println(id_list.toString());
-                    Vector<Vector<String>> data = new Vector<Vector<String>>();
-                    
-                    for (int x=0;x<id_list.size();x++){
-                        Vector<String> entry = new Vector<String>();
-                        entry.add(theModel.getMovieNames(id_list.get(x)));
-                        entry.add(theModel.getMovieDuration(id_list.get(x)));
-                        data.add(entry);
-                    }
-                    
-                    Vector<String> columnNames = new Vector<String>();
-                    columnNames.add("Name");
-                    columnNames.add("Duration");
-                    theMovie.setMovieTableModel(new DefaultTableModel(data, columnNames));
-                    
-                    buildMoviesActionListener();
-                    theMovie.setVisible(true);
-                    
-                    theCinema.dispose();
-                    } catch (SQLException ex) {
-                    Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        theCinema.addTicketsListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                theTicket = new CustomerView_BookTicket();
-                buildTicketsActionListeners();
-                try {
-                    ResultSet rs = theModel.getCurrentShowingLocationIDResultSet();
-                    ArrayList<Integer> location_id = new ArrayList<Integer>();
-                    while(rs.next()){
-                        int id = rs.getInt("Location_ID");
-                        if (!location_id.contains(id))
-                            location_id.add(id);
-                    }
-
-                    ArrayList<String> location_name = new ArrayList<String>();
-                    for (int x=0;x<location_id.size();x++){
-                        location_name.add(theModel.getLocationNames(location_id.get(x)));
-                    }
-                    theTicket.setLocationComboBoxModel(new DefaultComboBoxModel<>(location_name.toArray(new String[0])));
-                    theTicket.setCurrentLocationID(location_id);
-                } catch (SQLException ex) {
-                    Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                theTicket.setVisible(true);
-                
-                theCinema.dispose();
-            }
-
-            
-        });
-        theInterface2.addAccountListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                theInterface2.dispose();
-                buildAccountActionListener();
-                theAccount.setVisible(true);
-                theAccount.setTxtName(theModel.getName(currentUser));
-                theAccount.setTxtBirthDate(theModel.getDOB(currentUser).toString());
-                theAccount.setTxtEmail(theModel.getEmail(currentUser));
-                theAccount.setTxtBalance(Integer.toString(theModel.getBalance(currentUser)));
-            }
-        });
-    }
+   
     public void buildInterface2ActionListener(){
         theInterface2.addCinemasListener(new ActionListener() {
             @Override
@@ -492,10 +179,11 @@ public class CustomerController
         theInterface2.addAccountListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                theAccount.setHistoryTableModel(theModel.buildTableModel(theModel.getHistoryOfPurchase(currentUser)));
+                System.out.println(currentUser);
                 theInterface2.dispose();
                 buildAccountActionListener();
                 theAccount.setVisible(true);
+                theAccount.setHistoryTableModel(theModel.buildTableModel(theModel.getHistoryOfPurchase(currentUser)));
                 theAccount.setTxtName(theModel.getName(currentUser));
                 theAccount.setTxtBirthDate(theModel.getDOB(currentUser).toString());
                 theAccount.setTxtEmail(theModel.getEmail(currentUser));
@@ -503,6 +191,7 @@ public class CustomerController
             }
         });
     }
+    
     public void buildTicketsActionListeners() {
         theTicket.addLocationListener(new ActionListener() {
             @Override
@@ -590,7 +279,7 @@ public class CustomerController
                     int index = theTicket.getSelectedMovieIndex();
                     theTicket.setPoster(id_list.get(index));
                     
-                    rs = theModel.getMoviesResultSet(id_list.get(index));
+                    rs = theModel.getMoviesData(id_list.get(index));
                     rs.next();
                     String movieName = rs.getString("Name");
                     String director = rs.getString("Director");
@@ -626,7 +315,7 @@ public class CustomerController
                     int index = theTicket.getSelectedMovieIndex();
                     theTicket.setPoster(id_list.get(index));
                     
-                    rs = theModel.getMoviesResultSet(id_list.get(index));
+                    rs = theModel.getMoviesData(id_list.get(index));
                     rs.next();
                     
                     String url = rs.getString("Trailer_URL");
@@ -818,19 +507,35 @@ public class CustomerController
 
             
         });
-        theInterface2.addAccountListener(new ActionListener() {
+        theTicket.addAccountListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                theInterface2.dispose();
                 buildAccountActionListener();
+                theAccount.setHistoryTableModel(theModel.buildTableModel(theModel.getHistoryOfPurchase(currentUser)));
                 theAccount.setVisible(true);
                 theAccount.setTxtName(theModel.getName(currentUser));
                 theAccount.setTxtBirthDate(theModel.getDOB(currentUser).toString());
                 theAccount.setTxtEmail(theModel.getEmail(currentUser));
                 theAccount.setTxtBalance(Integer.toString(theModel.getBalance(currentUser)));
+                theTicket.dispose();
+
             }
         });
+        
     }
+    public void buildChooseSeatActionListener(){
+        theChooseSeat.addContinueListener(new ActionListener(){
+           public void actionPerformed(ActionEvent e){
+               theChooseSeat.setVisible(false);
+           } 
+        });
+        theChooseSeat.addCancelActionListener(new ActionListener(){
+           public void actionPerformed(ActionEvent e){
+               theChooseSeat.dispose();
+           } 
+        });
+    }
+    
     public void buildMoviesActionListener(){
         theMovie.addViewTrailerListener(new MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -845,7 +550,7 @@ public class CustomerController
                     int index = theMovie.getSelectedMovieIndex();
                     theMovie.setPoster(id_list.get(index));
                     
-                    rs = theModel.getMoviesResultSet(id_list.get(index));
+                    rs = theModel.getMoviesData(id_list.get(index));
                     rs.next();
                     
                     String url = rs.getString("Trailer_URL");
@@ -871,7 +576,7 @@ public class CustomerController
                     int index = theMovie.getSelectedMovieIndex();
                     theMovie.setPoster(id_list.get(index));
                     
-                    rs = theModel.getMoviesResultSet(id_list.get(index));
+                    rs = theModel.getMoviesData(id_list.get(index));
                     rs.next();
                     String movieName = rs.getString("Name");
                     String director = rs.getString("Director");
@@ -906,6 +611,7 @@ public class CustomerController
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    theMovie.dispose();
                     theMovie = new CustomerView_Movies();
                     ResultSet rs = theModel.getCurrentShowingMovieIDResultSet();
                     ArrayList<Integer> id_list = new ArrayList<Integer>();
@@ -931,8 +637,6 @@ public class CustomerController
                     
                     buildMoviesActionListener();
                     theMovie.setVisible(true);
-                    
-                    theMovie.dispose();
                     } catch (SQLException ex) {
                     Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -969,32 +673,118 @@ public class CustomerController
 
             
         });
-        theInterface2.addAccountListener(new ActionListener() {
+        theMovie.addAccountListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                theInterface2.dispose();
+                theAccount = new CustomerView_Accounts();
+                                theAccount.setHistoryTableModel(theModel.buildTableModel(theModel.getHistoryOfPurchase(currentUser)));
+
+                theAccount.setVisible(true);
+                theAccount.setTxtName(theModel.getName(currentUser));
+                theAccount.setTxtBirthDate(theModel.getDOB(currentUser).toString());
+                theAccount.setTxtEmail(theModel.getEmail(currentUser));
+                theAccount.setTxtBalance(Integer.toString(theModel.getBalance(currentUser)));
+                buildAccountActionListener();
+                theMovie.dispose();
+            }
+        });
+    }
+    
+    public void buildCinemasActionListeners(){
+        theCinema.addCinemasListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theCinema = new CustomerView_Cinemas();
+                theCinema.setCinemaTableModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
+                buildCinemasActionListeners();
+                theCinema.setVisible(true);
+                theCinema.dispose();
+            }
+        });
+        theCinema.addMoviesListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    theMovie = new CustomerView_Movies();
+                    ResultSet rs = theModel.getCurrentShowingMovieIDResultSet();
+                    ArrayList<Integer> id_list = new ArrayList<Integer>();
+                    while(rs.next()){
+                        int id = rs.getInt("Movie_ID");
+                        if (!id_list.contains(id))
+                            id_list.add(id);
+                    }
+                    System.out.println(id_list.toString());
+                    Vector<Vector<String>> data = new Vector<Vector<String>>();
+                    
+                    for (int x=0;x<id_list.size();x++){
+                        Vector<String> entry = new Vector<String>();
+                        entry.add(theModel.getMovieNames(id_list.get(x)));
+                        entry.add(theModel.getMovieDuration(id_list.get(x)));
+                        data.add(entry);
+                    }
+                    
+                    Vector<String> columnNames = new Vector<String>();
+                    columnNames.add("Name");
+                    columnNames.add("Duration");
+                    theMovie.setMovieTableModel(new DefaultTableModel(data, columnNames));
+                    
+                    buildMoviesActionListener();
+                    theMovie.setVisible(true);
+                    
+                    theCinema.dispose();
+                    } catch (SQLException ex) {
+                    Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        theCinema.addTicketsListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theCinema.dispose();
+                theTicket = new CustomerView_BookTicket();
+                buildTicketsActionListeners();
+                try {
+                    ResultSet rs = theModel.getCurrentShowingLocationIDResultSet();
+                    ArrayList<Integer> location_id = new ArrayList<Integer>();
+                    while(rs.next()){
+                        int id = rs.getInt("Location_ID");
+                        if (!location_id.contains(id))
+                            location_id.add(id);
+                    }
+
+                    ArrayList<String> location_name = new ArrayList<String>();
+                    for (int x=0;x<location_id.size();x++){
+                        location_name.add(theModel.getLocationNames(location_id.get(x)));
+                    }
+                    theTicket.setLocationComboBoxModel(new DefaultComboBoxModel<>(location_name.toArray(new String[0])));
+                    theTicket.setCurrentLocationID(location_id);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                theTicket.setVisible(true);
+            }
+
+            
+        });
+        theCinema.addAccountListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                theAccount = new CustomerView_Accounts();
+                                theAccount.setHistoryTableModel(theModel.buildTableModel(theModel.getHistoryOfPurchase(currentUser)));
+
                 buildAccountActionListener();
                 theAccount.setVisible(true);
                 theAccount.setTxtName(theModel.getName(currentUser));
                 theAccount.setTxtBirthDate(theModel.getDOB(currentUser).toString());
                 theAccount.setTxtEmail(theModel.getEmail(currentUser));
                 theAccount.setTxtBalance(Integer.toString(theModel.getBalance(currentUser)));
+                theCinema.dispose();
+
             }
         });
-    }
+    } 
     
-    public void buildChooseSeatActionListener(){
-        theChooseSeat.addContinueListener(new ActionListener(){
-           public void actionPerformed(ActionEvent e){
-               theChooseSeat.setVisible(false);
-           } 
-        });
-        theChooseSeat.addCancelActionListener(new ActionListener(){
-           public void actionPerformed(ActionEvent e){
-               theChooseSeat.dispose();
-           } 
-        });
-    }
     public void buildAccountActionListener(){
         theAccount.addCinemasListener(new ActionListener() {
             @Override
@@ -1003,7 +793,7 @@ public class CustomerController
                 theCinema.setCinemaTableModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
                 buildCinemasActionListeners();
                 theCinema.setVisible(true);
-                theInterface2.dispose();
+                theAccount.dispose();
             }
         });
         theAccount.addMoviesListener(new ActionListener() {
@@ -1036,7 +826,7 @@ public class CustomerController
                     buildMoviesActionListener();
                     theMovie.setVisible(true);
                     
-                    theInterface2.dispose();
+                    theAccount.dispose();
                     } catch (SQLException ex) {
                     Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -1068,29 +858,98 @@ public class CustomerController
                 }
                 theTicket.setVisible(true);
                 
-                theInterface2.dispose();
+                theAccount.dispose();
             }
 
             
         });
+        
         theAccount.addChangePasswordListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                theEditPassword =  new CustomerView_ChangePassword();
+                buildChangePasswordActionListener();
                 theEditPassword.setVisible(true);
             }
         });
         theAccount.addChangeEmailListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                theEditEmail = new CustomerView_ChangeEmail();
+                buildChangeEmailActionListener();
                 theEditEmail.setVisible(true);
             }
         });
         theAccount.addTopUpListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                theAddBalance = new CustomerView_AddBalance();
+                buildAddBalanceActionListener();
                 theAddBalance.setVisible(true);
             }
         });
+    }
+    public void buildAddBalanceActionListener(){
+        theAddBalance.addContinueListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                theAddBalance.dispose();
+            }
+        });
+        
+        theAddBalance.addCancelListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                theAddBalance.dispose();
+            }
+        });
+    }
+    public void buildChangeEmailActionListener(){
+        theEditEmail.addChangeListener(new ActionListener(){
+           public void actionPerformed(ActionEvent e){
+                String currentEmail = theEditEmail.getOldEmail();
+                String newEmail = theEditEmail.getNewEmail();
+                if (theModel.changeEmail(currentEmail, newEmail)){
+                    theEditEmail.dispose();
+                    JOptionPane.showMessageDialog(null, "Email successfully changed !");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Email entered exists");
+                }
+            }
+        });
+        
+        theEditEmail.addBackListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                theEditEmail.dispose();
+            }
+        });
+    }
+    public void buildChangePasswordActionListener(){
+        theEditPassword.addChangeListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                String currentPassword = theEditPassword.getOldPassword();
+                String newPassword = theEditPassword.getNewPassword();
+                if (theModel.changePassword(currentPassword, newPassword, currentUser)){
+                    System.out.println("password change success");
+                    JOptionPane.showMessageDialog(null, "Password succesfully changed !");
+                    theEditPassword.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Incorrect entry for old password");
+                }
+            }
+        });
+        
+        theEditPassword.addBackListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                theEditPassword.dispose();
+            }
+        });
+    }
+    
+    public String[] toArray (ArrayList<String> a){
+        String[] b = new String[a.size()];
+        for (int x=0;x<a.size();x++){
+            b[x] = a.get(x);
+        }
+        return b;
     }
     public void makePosters(){
         try {
@@ -1118,7 +977,6 @@ public class CustomerController
             }
         }
     }
-
     public void openWebpage(URL url) {
         try {
             openWebpage(url.toURI());

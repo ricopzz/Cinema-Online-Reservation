@@ -36,13 +36,14 @@ public class AdminController {
     private AdminView_EditMovie theEditMovie;
     private AdminView_AddSchedule theAddSchedule;
     private AdminView_AddAccount theAddAccount;
+    private AdminView_AddVoucher theAddVoucher;
     private AdminModel theModel;
     
     public static void main(String[] args){
-        AdminController myAdminController = new AdminController(new AdminView_MainScreen(), new AdminView_AddLocation(), new AdminView_AddMovie(),new AdminView_EditMovie(), new AdminView_AddSchedule(), new AdminView_AddAccount(), new AdminModel());   
+        AdminController myAdminController = new AdminController(new AdminView_MainScreen(), new AdminView_AddLocation(), new AdminView_AddMovie(),new AdminView_EditMovie(), new AdminView_AddSchedule(), new AdminView_AddAccount(),new AdminView_AddVoucher(), new AdminModel());   
     }
 
-    public AdminController(AdminView_MainScreen theInterface, AdminView_AddLocation theAddLocation, AdminView_AddMovie theAddMovie, AdminView_EditMovie theEditMovie, AdminView_AddSchedule theAddSchedule, AdminView_AddAccount theAddAccount, AdminModel theModel) {
+    public AdminController(AdminView_MainScreen theInterface, AdminView_AddLocation theAddLocation, AdminView_AddMovie theAddMovie, AdminView_EditMovie theEditMovie, AdminView_AddSchedule theAddSchedule, AdminView_AddAccount theAddAccount, AdminView_AddVoucher theAddVoucher, AdminModel theModel) {
         
         this.theInterface = theInterface;
         this.theAddLocation = theAddLocation;
@@ -50,6 +51,7 @@ public class AdminController {
         this.theEditMovie = theEditMovie;
         this.theAddSchedule = theAddSchedule;
         this.theAddAccount = theAddAccount;
+        this.theAddVoucher = theAddVoucher;
         this.theModel = theModel;
         start();
     }
@@ -57,18 +59,17 @@ public class AdminController {
     
     public void start(){
         theModel.establishConnection();
-        
         buildIntefaceListeners();
         buildAddMovieListeners();
         buildEditMovieListeners();
         buildAddLocationListeners();
         buildAddScheduleListeners();
         buildAddAccountListeners();
-        
         theInterface.tblMovies.setModel(theModel.buildTableModel(theModel.getMoviesResultSet()));
         theInterface.jTable2.setModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
         theInterface.jTable3.setModel(theModel.buildTableModel(theModel.getSchedulesResultSet()));
         theInterface.jTable4.setModel(theModel.buildTableModel(theModel.getAccountsResultSet()));
+        theInterface.jTable1.setModel(theModel.buildTableModel(theModel.getVouchersResultSet()));
         
         makePosters();
         theInterface.setVisible(true);
@@ -83,7 +84,6 @@ public class AdminController {
     public void buildIntefaceListeners(){
         theInterface.addAddMoviesActionListeners(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                
                 theAddMovie.setVisible(true);
             }
         });
@@ -174,13 +174,10 @@ public class AdminController {
                         locations.add(rs.getString("Name"));
                     }
                     
-                    
                     theAddSchedule.setMovieComboBoxModel(movies.toArray(new String[0]));
                     theAddSchedule.setLocationComboBoxModel(locations.toArray(new String[0]));
                     theAddSchedule.setVisible(true);
                
-                
-                
                 } catch (SQLException ex) {
                     Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -212,6 +209,27 @@ public class AdminController {
                     theInterface.jTable4.setModel(theModel.buildTableModel(theModel.getAccountsResultSet()));
                 }else{
                     JOptionPane.showMessageDialog(null,"No accounts selected");
+                }
+            }
+        });
+        
+        theInterface.addAddVouchersActionListeners(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theAddVoucher = new AdminView_AddVoucher();
+                buildAddVoucherListeners();
+                theAddVoucher.setVisible(true);
+            }
+        });
+        theInterface.addDeleteVouchersActionListeners(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String code = theInterface.getSelectedCodeVoucher();
+                if (code != null){
+                    theModel.deleteVoucher(code);
+                    theInterface.jTable1.setModel(theModel.buildTableModel(theModel.getVouchersResultSet()));
+                }else{
+                    JOptionPane.showMessageDialog(null,"No voucher selected");
                 }
             }
         });
@@ -437,6 +455,30 @@ public class AdminController {
                     
             }
         });
+    }
+    
+    public void buildAddVoucherListeners(){
+        theAddVoucher.addAddVoucherActionListeners(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int amount = theAddVoucher.getAmount();
+                int nominal = theAddVoucher.getNominal();
+                for (int x=0;x<amount;x++){
+                    if (!theModel.addVoucher(theModel.generateRandomCode(10), nominal)) x--;
+                }
+                theInterface.jTable1.setModel(theModel.buildTableModel(theModel.getVouchersResultSet()));
+                JOptionPane.showMessageDialog(null, "Voucher added");
+                
+                theAddVoucher.dispose();
+            }
+        });
+        theAddVoucher.addCancelScheduleActionListeners(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theAddVoucher.dispose();
+            }
+        });
+        
     }
     
 }

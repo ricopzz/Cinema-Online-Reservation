@@ -12,6 +12,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -332,9 +334,44 @@ public class AdminModel {
         return null;
     }
     
+    // Voucher
+   
+    public String generateRandomCode(int length){
+        SecureRandom random = new SecureRandom();
+        return new BigInteger(length*5, random).toString(32).toUpperCase();
+    }
     
+    public boolean addVoucher(String code, int nominal){
+        try {
+            String query = "INSERT INTO `Vouchers`(`Code`, `Nominal`, `Claimed`) VALUES ('" + code + "'," + nominal + ", 0 )";
+            stmt.executeUpdate(query);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminModel.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
     
+    public void deleteVoucher(String code){
+        try{
+            establishConnection();
+            String query = "DELETE FROM Vouchers WHERE Code = '"+ code + "'";
+            stmt.executeUpdate(query);
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+    }
     
-
-  
+    public ResultSet getVouchersResultSet(){
+        try{
+            establishConnection();
+            String query = "SELECT * FROM Vouchers";
+            ResultSet rs = stmt.executeQuery(query);
+            return rs;
+        }catch(SQLException ex){
+            System.out.println(ex);
+            return null;
+        }
+    }
+    
 }
