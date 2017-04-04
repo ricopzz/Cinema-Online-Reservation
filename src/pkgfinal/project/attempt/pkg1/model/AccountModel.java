@@ -88,9 +88,7 @@ public class AccountModel {
             System.out.println(rs.getString("Name"));
             return rs.getString("Name");
         } catch (SQLException ex) {
-            //Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Cannot access database for Fullname");
             return null;
         }
     }
@@ -98,13 +96,10 @@ public class AccountModel {
         ResultSet rs = null;
         try {
             rs = stmt.executeQuery("SELECT Type FROM Accounts WHERE Username = '" + username +"'");
-            
             rs.next();
             return rs.getString("Type");
         } catch (SQLException ex) {
-            //Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Cannot access database for Fullname");
             return null;
         }
     }

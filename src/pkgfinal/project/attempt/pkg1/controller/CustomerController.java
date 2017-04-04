@@ -510,6 +510,8 @@ public class CustomerController
         theTicket.addAccountListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                theTicket.dispose();
+                theAccount = new CustomerView_Accounts();
                 buildAccountActionListener();
                 theAccount.setHistoryTableModel(theModel.buildTableModel(theModel.getHistoryOfPurchase(currentUser)));
                 theAccount.setVisible(true);
@@ -517,7 +519,6 @@ public class CustomerController
                 theAccount.setTxtBirthDate(theModel.getDOB(currentUser).toString());
                 theAccount.setTxtEmail(theModel.getEmail(currentUser));
                 theAccount.setTxtBalance(Integer.toString(theModel.getBalance(currentUser)));
-                theTicket.dispose();
 
             }
         });
@@ -896,6 +897,7 @@ public class CustomerController
                 int nominal = theModel.redeemVoucher(code);
                 if (nominal != 0){
                     theModel.setBalance(currentUser, theModel.getBalance(currentUser)  + nominal );
+                    JOptionPane.showMessageDialog(null, "Top up succesful");
                     
                     theAccount.setHistoryTableModel(theModel.buildTableModel(theModel.getHistoryOfPurchase(currentUser)));
                     theAccount.setTxtBalance(Integer.toString(theModel.getBalance(currentUser)));

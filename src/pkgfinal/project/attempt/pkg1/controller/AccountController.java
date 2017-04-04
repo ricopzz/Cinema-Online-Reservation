@@ -50,9 +50,6 @@ public class AccountController {
     private AccountView_ForgetPassword theForgetPassword;
     private SendEmail emailSender = new SendEmail();
 
-   
-    
-    
     public static void main(String[] args){
         try{
          UIManager.setLookAndFeel(
@@ -78,7 +75,6 @@ public class AccountController {
         theLogin.setVisible(true);
     }
     
-    
     public void buildLoginActionListeners(){
         theLogin.addSignUpListener(new ActionListener() {
             @Override
@@ -97,7 +93,7 @@ public class AccountController {
                     JOptionPane.showMessageDialog(null, "Login Succesful");
                     theLogin.dispose();
                     String type = theModel.getType(username);
-                    if (type.equals("User")){
+                    if (type.equals("Customer")){
                         CustomerController m = new CustomerController(username,new CustomerView_Interface() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() , new CustomerModel() );
                     }else if (type.equals("Admin")){
                         AdminController myAdminController = new AdminController(new AdminView_MainScreen(), new AdminView_AddLocation(), new AdminView_AddMovie(),new AdminView_EditMovie(), new AdminView_AddSchedule(), new AdminView_AddAccount(),new AdminView_AddVoucher(), new AdminModel());   
@@ -148,18 +144,23 @@ public class AccountController {
            
             @Override
             public void actionPerformed(ActionEvent e) {
-                 String email = theForgetPassword.getText();
-                System.out.println("hahahah");
-                theModel.setRandomCode(emailSender.sendEmailRegister(email, theModel.getFullname(email))); 
-          
-                theForgetPassword.getBtnContinue().setVisible(false);
-                theForgetPassword.remove(theForgetPassword.getBtnContinue());
-                theForgetPassword.setLabelText("Verification Code");
-        
-                theForgetPassword.getVerifyButton().setText("Authorize");
-                theForgetPassword.getVerifyButton().setBounds(148, 172, 111, 36);
-                theForgetPassword.add(theForgetPassword.getVerifyButton());
-                theForgetPassword.resetText();
+                String email = theForgetPassword.getText();
+                String code =emailSender.sendEmailRegister(email, theModel.getFullname(email));
+                if (code != null){
+                    theModel.setRandomCode(code); 
+
+                    theForgetPassword.getBtnContinue().setVisible(false);
+                    theForgetPassword.remove(theForgetPassword.getBtnContinue());
+                    theForgetPassword.setLabelText("Verification Code");
+
+                    theForgetPassword.getVerifyButton().setText("Authorize");
+                    theForgetPassword.getVerifyButton().setBounds(148, 172, 111, 36);
+                    theForgetPassword.add(theForgetPassword.getVerifyButton());
+                    theForgetPassword.resetText();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Invalid email");
+               }
+                    
             }
             
         });
@@ -177,6 +178,5 @@ public class AccountController {
                 
             }
         });
-        
     }
 }
