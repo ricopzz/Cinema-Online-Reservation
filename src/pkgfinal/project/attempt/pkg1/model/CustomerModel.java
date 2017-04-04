@@ -66,6 +66,21 @@ public class CustomerModel {
         this.randomCode = randomCode;
     }
     // for purchasing
+    public int redeemVoucher(String code){
+        int nominal = 0;
+        try {
+            String query = "SELECT * FROM Vouchers WHERE Code = '" + code + "' AND Claimed = 0";
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()){
+                nominal = rs.getInt("Nominal");
+                query = "UPDATE Vouchers SET Claimed= 1 WHERE Code = '" + code + "'";
+                stmt.executeUpdate(query);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nominal;
+    }
     public void addPurchase(int schedule_id, String username, Date date_of_purchase, Time time_of_purchase, String seat){
         try {
             String query = "INSERT INTO Purchase_History (`Schedule_ID`, `Username`, `Date_Of_Purchase`, `Time_Of_Purchase`, `Seat_No`, `Claimed`) "
@@ -236,6 +251,14 @@ public class CustomerModel {
             return null;
         }
     }
+    public void setBalance(String username, int balance){
+        try{
+            String query = "UPDATE Accounts SET Balance='"+ balance +"' WHERE Username='"+username+"'";
+            stmt.executeUpdate(query);
+        } catch(SQLException ex){
+            ex.printStackTrace();
+        }
+    }
     public int getBalance(String username){
         try{
             String query = "SELECT * FROM Accounts WHERE Username = '" + username +"'";
@@ -375,7 +398,11 @@ public class CustomerModel {
             return null;
         } 
     }
-   
+    
+    
+    
+    
+    
 
 }
  

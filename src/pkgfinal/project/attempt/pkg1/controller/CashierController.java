@@ -112,7 +112,8 @@ public class CashierController {
                     for (int x=0;x<seats.size();x++){
                         theModel.setClaimedFromUsername(username,seats.get(x));
                     }
-                    
+                    theInterface.resetPrintQueue();
+                    theInterface.setPurchaseTabelModel(theModel.getTableModelPurchase(theInterface.getSelectedUsername()));
                     theVerify.setVisible(false);
                     theVerify.dispose();
                 }else{

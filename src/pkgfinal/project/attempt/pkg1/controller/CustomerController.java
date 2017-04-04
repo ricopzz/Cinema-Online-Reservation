@@ -677,7 +677,7 @@ public class CustomerController
             @Override
             public void actionPerformed(ActionEvent e) {
                 theAccount = new CustomerView_Accounts();
-                                theAccount.setHistoryTableModel(theModel.buildTableModel(theModel.getHistoryOfPurchase(currentUser)));
+                theAccount.setHistoryTableModel(theModel.buildTableModel(theModel.getHistoryOfPurchase(currentUser)));
 
                 theAccount.setVisible(true);
                 theAccount.setTxtName(theModel.getName(currentUser));
@@ -892,12 +892,25 @@ public class CustomerController
     public void buildAddBalanceActionListener(){
         theAddBalance.addContinueListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                String code = theAddBalance.getCode();
+                int nominal = theModel.redeemVoucher(code);
+                if (nominal != 0){
+                    theModel.setBalance(currentUser, theModel.getBalance(currentUser)  + nominal );
+                    
+                    theAccount.setHistoryTableModel(theModel.buildTableModel(theModel.getHistoryOfPurchase(currentUser)));
+                    theAccount.setTxtBalance(Integer.toString(theModel.getBalance(currentUser)));
+                buildAccountActionListener();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Invalid redeem code");
+                }
+                    
                 theAddBalance.dispose();
             }
         });
         
         theAddBalance.addCancelListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                
                 theAddBalance.dispose();
             }
         });
@@ -936,7 +949,6 @@ public class CustomerController
                 }
             }
         });
-        
         theEditPassword.addBackListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 theEditPassword.dispose();
