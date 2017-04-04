@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -118,6 +119,22 @@ public class CashierModel {
 
         } catch (SQLException ex) {
             //Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<String> getVouchersCode(int amount, int nominal) {
+        try {
+            ArrayList<String> vouchers = new ArrayList<String>();
+            String query = "SELECT * FROM Vouchers WHERE Claimed = 0";
+            ResultSet rs = stmt.executeQuery(query);
+            for(int x=0;x<amount;x++){
+                rs.next();
+                vouchers.add(rs.getString("Code"));
+            }
+            return vouchers;
+        } catch (SQLException ex) {
+            Logger.getLogger(CashierModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

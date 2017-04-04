@@ -21,6 +21,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import pkgfinal.project.attempt.pkg1.model.AdminModel;
 import pkgfinal.project.attempt.pkg1.views.admin.*;
 
@@ -39,12 +41,13 @@ public class AdminController {
     private AdminView_AddVoucher theAddVoucher;
     private AdminModel theModel;
     
+    private String currentUser ="";
     public static void main(String[] args){
-        AdminController myAdminController = new AdminController(new AdminView_MainScreen(), new AdminView_AddLocation(), new AdminView_AddMovie(),new AdminView_EditMovie(), new AdminView_AddSchedule(), new AdminView_AddAccount(),new AdminView_AddVoucher(), new AdminModel());   
+        AdminController myAdminController = new AdminController("yosuatest19",new AdminView_MainScreen(), new AdminView_AddLocation(), new AdminView_AddMovie(),new AdminView_EditMovie(), new AdminView_AddSchedule(), new AdminView_AddAccount(),new AdminView_AddVoucher(), new AdminModel());   
     }
 
-    public AdminController(AdminView_MainScreen theInterface, AdminView_AddLocation theAddLocation, AdminView_AddMovie theAddMovie, AdminView_EditMovie theEditMovie, AdminView_AddSchedule theAddSchedule, AdminView_AddAccount theAddAccount, AdminView_AddVoucher theAddVoucher, AdminModel theModel) {
-        
+    public AdminController(String currentUser, AdminView_MainScreen theInterface, AdminView_AddLocation theAddLocation, AdminView_AddMovie theAddMovie, AdminView_EditMovie theEditMovie, AdminView_AddSchedule theAddSchedule, AdminView_AddAccount theAddAccount, AdminView_AddVoucher theAddVoucher, AdminModel theModel) {
+        this.currentUser = currentUser;
         this.theInterface = theInterface;
         this.theAddLocation = theAddLocation;
         this.theAddMovie = theAddMovie;
@@ -84,6 +87,8 @@ public class AdminController {
     public void buildIntefaceListeners(){
         theInterface.addAddMoviesActionListeners(new ActionListener() {
             public void actionPerformed(ActionEvent e){
+                theAddMovie = new AdminView_AddMovie();
+                buildAddMovieListeners();
                 theAddMovie.setVisible(true);
             }
         });
@@ -99,12 +104,37 @@ public class AdminController {
         });
         theInterface.addDeleteMovieActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                String index = theInterface.getSelectedIDMovies();
-                if (!(index == null)){
-                    theModel.deleteMovies(index);
-                    theInterface.tblMovies.setModel(theModel.buildTableModel(theModel.getMoviesResultSet()));
-                }else{
-                    JOptionPane.showMessageDialog(null,"No movie selected");
+                try{
+                    String movie_id = theInterface.getSelectedIDMovies();
+                    if (!(movie_id == null)){
+                        ResultSet rs = theModel.getScheduleFromMovie(Integer.parseInt(movie_id));
+                        if (rs.next()){
+                            int choice = JOptionPane.showOptionDialog(null, 
+                                        "Schedule found with the selected movie, delete those schedule as well ?", 
+                                        "Movie still used", 
+                                        JOptionPane.YES_NO_OPTION, 
+                                        JOptionPane.QUESTION_MESSAGE, 
+                                        null, null, null);
+                            if (choice == JOptionPane.YES_OPTION){
+                                ArrayList<Integer> schedule_ids = new ArrayList<Integer>();
+                                schedule_ids.add(rs.getInt("ID"));
+                                while(rs.next()){
+                                    schedule_ids.add(rs.getInt("ID"));
+                                }
+                                for (int x=0;x<schedule_ids.size();x++){
+                                    theModel.deleteSchedules(schedule_ids.get(x).toString());
+                                }        
+                                theModel.deleteMovies(movie_id);
+                                theInterface.tblMovies.setModel(theModel.buildTableModel(theModel.getMoviesResultSet()));
+                            }else{
+                                JOptionPane.showMessageDialog(null, "No movie deleted");
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null,"No movie selected");
+                    }
+                }catch(Exception ex){
+                    ex.printStackTrace();
                 }
             }
         });
@@ -118,8 +148,9 @@ public class AdminController {
         });
         theInterface.addEditMovieActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                theEditMovie = new AdminView_EditMovie();
+                buildEditMovieListeners();
                 String index = theInterface.getSelectedIDMovies();
-                
                 if (!(index == null)){
                     theEditMovie.setMovie(theModel.getMoviesSearchResultSet(Integer.toString(Integer.parseInt(index))));
                     theEditMovie.setChoosenIndex(Integer.parseInt(index));
@@ -133,7 +164,8 @@ public class AdminController {
         
         theInterface.addAddLocationActionListeners(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-               
+                theAddLocation = new AdminView_AddLocation();
+                buildAddLocationListeners();
                 theAddLocation.setVisible(true);
             }
         });
@@ -148,13 +180,6 @@ public class AdminController {
                 }   
             }   
         });
-        theInterface.addEditLocationActionListeners(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-               
-                theAddLocation.setVisible(true);
-            }
-        });
-        
         theInterface.addAddScheduleActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 try {
@@ -176,6 +201,19 @@ public class AdminController {
                     
                     theAddSchedule.setMovieComboBoxModel(movies.toArray(new String[0]));
                     theAddSchedule.setLocationComboBoxModel(locations.toArray(new String[0]));
+                    
+                    rs = theModel.getLocationSearchResultSet(locations.get(0));
+                    
+                    System.out.println(locations.get(0));
+                    int max = 1;
+                    int min = 0;
+                    
+                    if(rs.next()){
+                        max = rs.getInt("ID");
+                        min = 1;
+                    }
+                    
+                    theAddSchedule.setTheaterSpinnerModel(new SpinnerNumberModel(1, min, max, 1));
                     theAddSchedule.setVisible(true);
                
                 } catch (SQLException ex) {
@@ -243,10 +281,9 @@ public class AdminController {
                 if (theAddMovie.complete()){
                     theModel.addMovie(theAddMovie.getMovie());
                     theInterface.setMovIETabelModel(theModel.buildTableModel(theModel.getMoviesResultSet()));
-                    theModel.makeMoviePoster((Integer)theInterface.tblMovies.getValueAt(theInterface.tblMovies.getRowCount(), 0));
+                    theModel.makeMoviePoster((Integer)theInterface.tblMovies.getValueAt(theInterface.tblMovies.getRowCount()-1, 0));
                     theAddMovie.dispose();
-                    theAddMovie = new AdminView_AddMovie();
-                    buildAddMovieListeners();
+                    
                 }else{
                     JOptionPane.showMessageDialog(null, "Not all fields filled");
                 }
@@ -315,7 +352,6 @@ public class AdminController {
     }
     
     public void buildAddScheduleListeners(){
-        System.out.println("test");
         theAddSchedule.addAddScheduleActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 try {
@@ -407,7 +443,25 @@ public class AdminController {
                 }
             }
         });
-        
+        theAddSchedule.addLocationActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String selectedLocation = theAddSchedule.getLocations();
+                    ResultSet rs = theModel.getLocationSearchResultSet(selectedLocation);
+                    int max = 1;
+                    int min = 0;
+                    if(rs.next()){
+                        max = rs.getInt("theater_amount");
+                        min = 0;
+                    }
+                    
+                    theAddSchedule.setTheaterSpinnerModel(new SpinnerNumberModel(1, min, max, 1));
+                } catch (SQLException ex) {
+                    Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         theAddSchedule.addCancelScheduleActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 theAddSchedule.dispose();

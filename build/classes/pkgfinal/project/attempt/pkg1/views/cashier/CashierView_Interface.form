@@ -68,10 +68,12 @@
                   <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnAddToPrintQueue" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnPrint" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="btnPrint" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="btnBuyVoucher" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnAddToPrintQueue" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -100,7 +102,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="135" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnAddToPrintQueue" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnAddToPrintQueue" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnBuyVoucher" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane3" min="-2" pref="143" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -283,6 +288,11 @@
     <Component class="javax.swing.JButton" name="btnChangeUser">
       <Properties>
         <Property name="text" type="java.lang.String" value="Change User"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnBuyVoucher">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buy Voucher"/>
       </Properties>
     </Component>
   </SubComponents>

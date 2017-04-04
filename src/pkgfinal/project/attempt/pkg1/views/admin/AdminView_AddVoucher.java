@@ -36,8 +36,10 @@ public class AdminView_AddVoucher extends javax.swing.JFrame {
         btnAddVoucher = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add Voucher");
+
+        sprAmount.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         cbxNominal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "20000", "50000", "100000" }));
 

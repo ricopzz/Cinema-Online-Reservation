@@ -10,14 +10,6 @@ import admin.AdminView_AddAccount;
 import admin.AdminView_AddSchedule;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import pkgfinal.project.attempt.pkg1.model.AccountModel;
@@ -96,9 +88,9 @@ public class AccountController {
                     if (type.equals("Customer")){
                         CustomerController m = new CustomerController(username,new CustomerView_Interface() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() , new CustomerModel() );
                     }else if (type.equals("Admin")){
-                        AdminController myAdminController = new AdminController(new AdminView_MainScreen(), new AdminView_AddLocation(), new AdminView_AddMovie(),new AdminView_EditMovie(), new AdminView_AddSchedule(), new AdminView_AddAccount(),new AdminView_AddVoucher(), new AdminModel());   
+                        AdminController myAdminController = new AdminController(username,new AdminView_MainScreen(), new AdminView_AddLocation(), new AdminView_AddMovie(),new AdminView_EditMovie(), new AdminView_AddSchedule(), new AdminView_AddAccount(),new AdminView_AddVoucher(), new AdminModel());   
                     }else{
-                        CashierController myCashier = new CashierController(new CashierView_Interface(),new CashierView_VerifyPrint(), new CashierModel());                                
+                        CashierController myCashier = new CashierController(username,new CashierView_Interface(),new CashierView_VerifyPrint(), new CashierModel());                                
 
                     }
                 }else{
@@ -110,7 +102,10 @@ public class AccountController {
         theLogin.addForgetPasswordListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              
+                theForgetPassword = new AccountView_ForgetPassword();
+                theForgetPassword.setVerificationCodePanelVisible(false);
+                theForgetPassword.setNewPasswordPanelVisible(false);
+                buildForgetPasswordActionListeners();
                 theForgetPassword.setVisible(true);
             }
         });
@@ -139,28 +134,18 @@ public class AccountController {
             }
         });
     }
+    
     public void buildForgetPasswordActionListeners(){
         theForgetPassword.addContinueActionListener(new ActionListener() {
-           
             @Override
             public void actionPerformed(ActionEvent e) {
-                String email = theForgetPassword.getText();
-                String code =emailSender.sendEmailRegister(email, theModel.getFullname(email));
+                String email = theForgetPassword.getEmail();
+                String code = emailSender.sendEmailRegister(email, theModel.getFullname(email));
                 if (code != null){
                     theModel.setRandomCode(code); 
-
-                    theForgetPassword.getBtnContinue().setVisible(false);
-                    theForgetPassword.remove(theForgetPassword.getBtnContinue());
-                    theForgetPassword.setLabelText("Verification Code");
-
-                    theForgetPassword.getVerifyButton().setText("Authorize");
-                    theForgetPassword.getVerifyButton().setBounds(148, 172, 111, 36);
-                    theForgetPassword.add(theForgetPassword.getVerifyButton());
-                    theForgetPassword.resetText();
-                }else{
-                    JOptionPane.showMessageDialog(null, "Invalid email");
-               }
-                    
+                    theForgetPassword.setEmailPanelVisible(false);
+                    theForgetPassword.setVerificationCodePanelVisible(true);
+                }
             }
             
         });
@@ -168,14 +153,22 @@ public class AccountController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String code = theModel.getRandomCode();
-                if (theForgetPassword.getText().equals(code)){
+                if (theForgetPassword.getVerificationCode().equals(code)){
                     JOptionPane.showMessageDialog(null, "Code verified");
-                    theForgetPassword.dispose();
+                    theForgetPassword.setVerificationCodePanelVisible(false);
+                    theForgetPassword.setNewPasswordPanelVisible(true);
                 }else{
                     JOptionPane.showMessageDialog(null, "Code entered is incorect");
-                    theForgetPassword.dispose();
                 }
-                
+            }
+        });
+        theForgetPassword.addFinishActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newPassword = theForgetPassword.getNewPassword();
+                String email = theForgetPassword.getEmail();
+                theModel.changePassword(newPassword, email );
+                theForgetPassword.dispose();
             }
         });
     }

@@ -404,22 +404,32 @@ public class CustomerController
                         allSelectedSeats.remove(takenSeats.get(x));
                     }
                     if (!allSelectedSeats.isEmpty()){
-                        for (int x=0;x<allSelectedSeats.size();x++){
-                           theModel.addPurchase(schedule_id, currentUser, date_of_purchase, time_of_purchase, allSelectedSeats.get(x));
-                        }
-                        theChooseSeat.dispose();
-                         // build choose seat again
-                        theChooseSeat = new CustomerView_ChooseSeat();
-                        int location_id = theTicket.getCurrentLocationID().get(theTicket.getSelectedLocation());
-                        int movie_id = theTicket.getCurrentMovieID().get(theTicket.getSelectedMovie());
-                        String time = theTicket.getSelectedTime();
-                        int theater = theTicket.getSelectedTheater();       
-                        System.out.println("schedule id" + schedule_id);
-                        ArrayList<String> seats = theModel.getTakenSeats(schedule_id);
-                        theChooseSeat.setScheduleID(schedule_id);
+                        // purchase
+                        int price = allSelectedSeats.size() * 70000;
+                        int userBalance = theModel.getBalance(currentUser) - price;
+                        if (userBalance >= 0){
+                            for (int x=0;x<allSelectedSeats.size();x++){
+                               theModel.addPurchase(schedule_id, currentUser, date_of_purchase, time_of_purchase, allSelectedSeats.get(x));
+                            }
+                            System.out.println(userBalance);
+                            theModel.setBalance(currentUser, userBalance);
+                            JOptionPane.showMessageDialog(null, "Purchase succesful, " + allSelectedSeats.size() + " were bought.\n  Total : Rp"+price);
+                            // build choose seat again
+                            theChooseSeat.dispose();
+                            theChooseSeat = new CustomerView_ChooseSeat();
+                            int location_id = theTicket.getCurrentLocationID().get(theTicket.getSelectedLocation());
+                            int movie_id = theTicket.getCurrentMovieID().get(theTicket.getSelectedMovie());
+                            String time = theTicket.getSelectedTime();
+                            int theater = theTicket.getSelectedTheater();       
+                            System.out.println("schedule id" + schedule_id);
+                            ArrayList<String> seats = theModel.getTakenSeats(schedule_id);
+                            theChooseSeat.setScheduleID(schedule_id);
 
-                        theChooseSeat.setSeats(seats);
-                        buildChooseSeatActionListener();
+                            theChooseSeat.setSeats(seats);
+                            buildChooseSeatActionListener();
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Insufficient balance");
+                        }   
                     }else{
                         JOptionPane.showMessageDialog(null, "No seats selected");
                     }
@@ -476,37 +486,7 @@ public class CustomerController
                 }
             }
         });
-        theTicket.addTicketsListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                theTicket = new CustomerView_BookTicket();
-                buildTicketsActionListeners();
-                try {
-                    ResultSet rs = theModel.getCurrentShowingLocationIDResultSet();
-                    ArrayList<Integer> location_id = new ArrayList<Integer>();
-                    while(rs.next()){
-                        int id = rs.getInt("Location_ID");
-                        if (!location_id.contains(id))
-                            location_id.add(id);
-                    }
-
-                    ArrayList<String> location_name = new ArrayList<String>();
-                    for (int x=0;x<location_id.size();x++){
-                        location_name.add(theModel.getLocationNames(location_id.get(x)));
-                    }
-                    theTicket.setLocationComboBoxModel(new DefaultComboBoxModel<>(location_name.toArray(new String[0])));
-                    theTicket.setCurrentLocationID(location_id);
-                } catch (SQLException ex) {
-                    Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                theTicket.setVisible(true);
-                
-                theTicket.dispose();
-            }
-
-            
-        });
+        
         theTicket.addAccountListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -608,41 +588,6 @@ public class CustomerController
                 theMovie.dispose();
             }
         });
-        theMovie.addMoviesListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    theMovie.dispose();
-                    theMovie = new CustomerView_Movies();
-                    ResultSet rs = theModel.getCurrentShowingMovieIDResultSet();
-                    ArrayList<Integer> id_list = new ArrayList<Integer>();
-                    while(rs.next()){
-                        int id = rs.getInt("Movie_ID");
-                        if (!id_list.contains(id))
-                            id_list.add(id);
-                    }
-                    System.out.println(id_list.toString());
-                    Vector<Vector<String>> data = new Vector<Vector<String>>();
-                    
-                    for (int x=0;x<id_list.size();x++){
-                        Vector<String> entry = new Vector<String>();
-                        entry.add(theModel.getMovieNames(id_list.get(x)));
-                        entry.add(theModel.getMovieDuration(id_list.get(x)));
-                        data.add(entry);
-                    }
-                    
-                    Vector<String> columnNames = new Vector<String>();
-                    columnNames.add("Name");
-                    columnNames.add("Duration");
-                    theMovie.setMovieTableModel(new DefaultTableModel(data, columnNames));
-                    
-                    buildMoviesActionListener();
-                    theMovie.setVisible(true);
-                    } catch (SQLException ex) {
-                    Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
         theMovie.addTicketsListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -692,16 +637,6 @@ public class CustomerController
     }
     
     public void buildCinemasActionListeners(){
-        theCinema.addCinemasListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                theCinema = new CustomerView_Cinemas();
-                theCinema.setCinemaTableModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
-                buildCinemasActionListeners();
-                theCinema.setVisible(true);
-                theCinema.dispose();
-            }
-        });
         theCinema.addMoviesListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -920,13 +855,16 @@ public class CustomerController
     public void buildChangeEmailActionListener(){
         theEditEmail.addChangeListener(new ActionListener(){
            public void actionPerformed(ActionEvent e){
-                String currentEmail = theEditEmail.getOldEmail();
                 String newEmail = theEditEmail.getNewEmail();
-                if (theModel.changeEmail(currentEmail, newEmail)){
-                    theEditEmail.dispose();
-                    JOptionPane.showMessageDialog(null, "Email successfully changed !");
+                if (!newEmail.equals("")){
+                    if (theModel.changeEmail(currentUser, newEmail)){
+                        theEditEmail.dispose();
+                        JOptionPane.showMessageDialog(null, "Email successfully changed !");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Email entered exists");
+                    }
                 }else{
-                    JOptionPane.showMessageDialog(null, "Email entered exists");
+                    JOptionPane.showMessageDialog(null, "Please fill all fields");
                 }
             }
         });
@@ -942,12 +880,16 @@ public class CustomerController
             public void actionPerformed(ActionEvent e){
                 String currentPassword = theEditPassword.getOldPassword();
                 String newPassword = theEditPassword.getNewPassword();
-                if (theModel.changePassword(currentPassword, newPassword, currentUser)){
-                    System.out.println("password change success");
-                    JOptionPane.showMessageDialog(null, "Password succesfully changed !");
-                    theEditPassword.dispose();
+                if (!(currentPassword.equals("") || newPassword.equals(""))){
+                    if (theModel.changePassword(currentPassword, newPassword, currentUser)){
+                        System.out.println("password change success");
+                        JOptionPane.showMessageDialog(null, "Password succesfully changed !");
+                        theEditPassword.dispose();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Incorrect entry for old password");
+                    }
                 }else{
-                    JOptionPane.showMessageDialog(null, "Incorrect entry for old password");
+                    JOptionPane.showMessageDialog(null, "Please fill all fields");
                 }
             }
         });

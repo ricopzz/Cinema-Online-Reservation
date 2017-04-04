@@ -77,7 +77,6 @@ public class AccountModel {
 
         }
     }
-    
     public String getFullname(String email) {
         ResultSet rs = null;
         try {
@@ -103,5 +102,15 @@ public class AccountModel {
             return null;
         }
     }
-    
+    public boolean changePassword(String newPassword, String email) {
+        try{
+            String query = "UPDATE Accounts SET Password='"+newPassword+"' WHERE Email ='"+ email +"'";
+            if (!(stmt.executeUpdate(query) > 0)) return false;
+            return true;
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }
+   

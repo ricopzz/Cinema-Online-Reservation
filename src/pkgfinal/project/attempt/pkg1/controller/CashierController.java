@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import pkgfinal.project.attempt.pkg1.SendEmail;
 import pkgfinal.project.attempt.pkg1.model.CashierModel;
+import pkgfinal.project.attempt.pkg1.views.cashier.CashierView_BuyVoucher;
 import pkgfinal.project.attempt.pkg1.views.cashier.CashierView_Interface;
 import pkgfinal.project.attempt.pkg1.views.cashier.CashierView_VerifyPrint;
 
@@ -25,9 +26,12 @@ public class CashierController {
     
     private CashierView_Interface theInterface;
     private CashierView_VerifyPrint theVerify;
+    private CashierView_BuyVoucher theBuyVoucher;
     
     private CashierModel theModel;
     private SendEmail emailSender = new SendEmail();
+    
+    private String currentUser ="";
    
     public static void main(String[] args){
         try{
@@ -36,11 +40,12 @@ public class CashierController {
         }catch(Exception e){
             e.printStackTrace();
         }
-        CashierController myCashier = new CashierController(new CashierView_Interface(),new CashierView_VerifyPrint(), new CashierModel());                                
+        CashierController myCashier = new CashierController("yosuatest19",new CashierView_Interface(),new CashierView_VerifyPrint(), new CashierModel());                                
      
     }
     
-    public CashierController(CashierView_Interface theInterface,CashierView_VerifyPrint theVerify,CashierModel theModel ){
+    public CashierController(String currentUser,CashierView_Interface theInterface,CashierView_VerifyPrint theVerify,CashierModel theModel ){
+        this.currentUser = currentUser;
         this.theInterface = theInterface;
         this.theModel = theModel;
         this.theVerify = theVerify;
@@ -100,6 +105,14 @@ public class CashierController {
                 
             }
         });
+        theInterface.addBuyVoucherListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theBuyVoucher = new CashierView_BuyVoucher();
+                buildBuyVoucherListener();
+                theBuyVoucher.setVisible(true);
+            }
+        });
     }
     public void buildVerifyPrintListener(){
         theVerify.addContinueListener(new ActionListener() {
@@ -130,6 +143,18 @@ public class CashierController {
                 String code = emailSender.sendEmailBooking(theModel.getEmailFromUsername(username), theModel.getFullnameFromUsername(username), theInterface.getSeatNumbers());
                 theVerify.setVerificationCode(code);
                 theVerify.setText("");
+            }
+        });
+    }
+    public void buildBuyVoucherListener(){
+        theBuyVoucher.addBuyButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<String> vouchers = theModel.getVouchersCode(theBuyVoucher.getAmount(), theBuyVoucher.getNominal());
+                String username =theInterface.getSelectedUsername();
+                if (emailSender.sendEmailVoucher(theModel.getEmailFromUsername(username), theModel.getFullnameFromUsername(username),vouchers )) 
+                    JOptionPane.showMessageDialog(null, "Purchase succesful !");
+                ;
             }
         });
     }

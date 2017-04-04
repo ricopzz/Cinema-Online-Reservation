@@ -82,6 +82,9 @@ public class CashierView_Interface extends javax.swing.JFrame {
     public void addChangeUserListener(ActionListener a){
         btnChangeUser.addActionListener(a);
     }
+    public void addBuyVoucherListener(ActionListener a){
+        btnBuyVoucher.addActionListener(a);
+    }
     
     public void setPurchaseTabelModel(DefaultTableModel dataModel){
         tblPurchase.setModel(dataModel);
@@ -154,6 +157,7 @@ public class CashierView_Interface extends javax.swing.JFrame {
         tblPrintQueue = new javax.swing.JTable();
         btnPrint = new javax.swing.JButton();
         btnChangeUser = new javax.swing.JButton();
+        btnBuyVoucher = new javax.swing.JButton();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -217,6 +221,8 @@ public class CashierView_Interface extends javax.swing.JFrame {
 
         btnChangeUser.setText("Change User");
 
+        btnBuyVoucher.setText("Buy Voucher");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -241,9 +247,11 @@ public class CashierView_Interface extends javax.swing.JFrame {
                     .addComponent(jScrollPane3)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAddToPrintQueue, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnPrint, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addComponent(btnPrint))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnBuyVoucher)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAddToPrintQueue)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -265,7 +273,9 @@ public class CashierView_Interface extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAddToPrintQueue)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddToPrintQueue)
+                    .addComponent(btnBuyVoucher))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -291,6 +301,7 @@ public class CashierView_Interface extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddToPrintQueue;
+    private javax.swing.JButton btnBuyVoucher;
     private javax.swing.JButton btnChangeUser;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnSignOut;

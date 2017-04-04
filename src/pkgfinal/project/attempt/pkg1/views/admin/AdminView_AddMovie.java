@@ -34,6 +34,8 @@ public class AdminView_AddMovie extends javax.swing.JFrame {
         this.btnPoster.addActionListener(a);
     }
     
+  
+    
     public Movie getMovie() {
         String name = txtMovieName.getText();
         String genre1 = (String) cbxGenre1.getSelectedItem();

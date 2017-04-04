@@ -183,6 +183,17 @@ public class AdminModel {
         }
     }
     
+    public ResultSet getScheduleFromMovie(int movieID){
+        try {
+            String query =  "SELECT * FROM Schedule WHERE Movie_ID = " + movieID;
+            ResultSet rs = stmt.executeQuery(query);
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public void editMovies(int ID, Movie m){
         try {
            
@@ -245,6 +256,17 @@ public class AdminModel {
         }catch(SQLException ex){
             System.out.println(ex);
         }
+    }
+    
+    public ResultSet getScheduleFromLocation(int locationID){
+        try {
+            String query =  "SELECT * FROM Schedule WHERE Location_ID = " + locationID;
+            ResultSet rs = stmt.executeQuery(query);
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     // Schedules

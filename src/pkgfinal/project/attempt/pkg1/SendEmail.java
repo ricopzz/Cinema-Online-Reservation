@@ -66,7 +66,7 @@ public class SendEmail{
             return code;
 
 	} catch (MessagingException e) {
-            JOptionPane.showMessageDialog(null, "Failed to send email!");
+            JOptionPane.showMessageDialog(null, "Failed to send email! (Make sure email is valid)");
             return null;
 	}
     }
@@ -82,7 +82,7 @@ public class SendEmail{
 	props.put("mail.smtp.starttls.enable", "true");
 	props.put("mail.smtp.host", "smtp.gmail.com");
 	props.put("mail.smtp.port", "587");
-	       System.out.println("2");
+	System.out.println("2");
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
 		return new PasswordAuthentication(username, password);
@@ -113,6 +113,50 @@ public class SendEmail{
             JOptionPane.showMessageDialog(null, "Failed to send email!");
             return null;
 	}
+    }
+    
+    public boolean sendEmailVoucher(String email, String fullname, ArrayList<String> vouchers){
+        System.out.println(email + "HAHAHAHAHAAHHA");
+        final String username = "cinemayosuaenrico@gmail.com";
+        final String password = "thomasisbae";
+        
+        System.out.println("1");
+	Properties props = new Properties();
+	props.put("mail.smtp.auth", "true");
+	props.put("mail.smtp.starttls.enable", "true");
+	props.put("mail.smtp.host", "smtp.gmail.com");
+	props.put("mail.smtp.port", "587");
+	       System.out.println("2");
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+		return new PasswordAuthentication(username, password);
+            }
+	 });
+        System.out.println("3");
+	try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("cinemayosuaenrico@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+		InternetAddress.parse(email));
+            
+            message.setSubject("Yosua-Enrico Cinema Verification Code");
+            message.setText("Dear " + fullname + ","
+		+ "\n\nThank you for purchasing top up vouchers "
+                + "\nHere is your voucher codes for top up: "
+                + "\n "+ vouchers.toString()
+                + "\n\n "    
+                + "\n\n\nRegards,\n Yosua-Enrico");
+            System.out.println("4");
+            Transport.send(message);
+            System.out.println("5");
+            JOptionPane.showMessageDialog(null, "Email sent !!");
+            return true;
+
+	} catch (MessagingException e) {
+            JOptionPane.showMessageDialog(null, "Failed to send email!");
+            return false;
+        }
     }
     
     public String generateRandomCode(int length){

@@ -58,6 +58,8 @@ public class AdminView_AddLocation extends javax.swing.JFrame {
             }
         });
 
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+
         lblAddress.setText("Address:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

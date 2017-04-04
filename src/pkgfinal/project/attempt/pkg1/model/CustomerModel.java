@@ -272,9 +272,9 @@ public class CustomerModel {
         }
     }
     // change email and password
-    public boolean changeEmail(String oldEmail, String newEmail){
+    public boolean changeEmail(String username, String newEmail){
         try{
-            String query = "UPDATE Accounts SET Email='"+oldEmail+"' WHERE Email='"+newEmail+"'";
+            String query = "UPDATE Accounts SET Email='"+newEmail+"' WHERE Username='"+username+"'";
             stmt.executeUpdate(query);
             return true;
         } catch(SQLException ex){

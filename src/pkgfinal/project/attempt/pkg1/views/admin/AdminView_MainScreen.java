@@ -50,9 +50,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
         btnAddLocation.addActionListener(a);
     }
     
-    public void addEditLocationActionListeners(ActionListener a){
-        btnEditLocation.addActionListener(a);
-    }
+  
     
     public void addDeleteLocationActionListeners(ActionListener a){
         btnDeleteLocation.addActionListener(a);
@@ -184,7 +182,6 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         btnAddLocation = new javax.swing.JButton();
-        btnEditLocation = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
         btnDeleteLocation = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -377,8 +374,6 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
 
         btnAddLocation.setText("Add Locations");
 
-        btnEditLocation.setText("Edit Location");
-
         btnDeleteLocation.setText("Delete Location");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -389,8 +384,6 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnAddLocation)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEditLocation)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -405,7 +398,6 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddLocation)
                     .addComponent(btnDeleteLocation)
-                    .addComponent(btnEditLocation)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -549,7 +541,6 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteMovie;
     private javax.swing.JButton btnDeleteSchedule;
     private javax.swing.JButton btnDeleteVouchers;
-    private javax.swing.JButton btnEditLocation;
     private javax.swing.JButton btnEditMovie;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

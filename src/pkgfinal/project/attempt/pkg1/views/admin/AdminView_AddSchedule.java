@@ -8,6 +8,7 @@ package admin;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.Time;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -103,7 +104,7 @@ public class AdminView_AddSchedule extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         sprTheaterNumber = new javax.swing.JSpinner();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnAddSchedule.setText("Add Schedule");
 
@@ -190,6 +191,8 @@ public class AdminView_AddSchedule extends javax.swing.JFrame {
         boxRepeat.setText("Repeat");
 
         jLabel1.setText("Theater:");
+
+        sprTheaterNumber.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -380,6 +383,12 @@ public class AdminView_AddSchedule extends javax.swing.JFrame {
     public Time getInterval() {
         Time t = new Time((Integer) sprIntervalHour.getValue(), (Integer)sprIntervalMinutes.getValue(), 0);
         return t;
+    }
+
+   
+
+    public void setTheaterSpinnerModel(SpinnerNumberModel a) {
+        sprTheaterNumber.setModel(a);
     }
 
     

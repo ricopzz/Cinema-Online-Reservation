@@ -343,8 +343,6 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnAddLocation" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnEditLocation" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jTextField2" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnDeleteLocation" min="-2" max="-2" attributes="0"/>
@@ -360,7 +358,6 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnAddLocation" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnDeleteLocation" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnEditLocation" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -395,11 +392,6 @@
             <Component class="javax.swing.JButton" name="btnAddLocation">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add Locations"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnEditLocation">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Edit Location"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField2">
