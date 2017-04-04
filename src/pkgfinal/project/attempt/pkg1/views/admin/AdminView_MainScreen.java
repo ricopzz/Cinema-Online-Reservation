@@ -90,12 +90,27 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
     
     
     
-    public void setMovIETabelModel(DefaultTableModel dataModel){
+    public void setMovieTabelModel(DefaultTableModel dataModel){
         tblMovies.setModel(dataModel);
     }
+    
+    
     public void addMovieTableClickListener(MouseAdapter a){
         tblMovies.addMouseListener(a);
     }
+    public void addLocationTableClickListener(MouseAdapter a){
+        tblLocation.addMouseListener(a);
+    }
+    public void addAccountTableClickListener(MouseAdapter a){
+        tblAccounts.addMouseListener(a);
+    }
+    public void addScheduleTableClickListener(MouseAdapter a){
+        tblSchedule.addMouseListener(a);
+    }
+    public void addVoucherTableClickListener(MouseAdapter a){
+        tblVoucher.addMouseListener(a);
+    }
+    
     public String getSelectedIDMovies(){
         int row =  tblMovies.getSelectedRow();
         if (row >= 0){
@@ -106,47 +121,73 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
     }
     
     public String getSelectedIDLocations(){
-        int row = jTable2.getSelectedRow();
+        int row = tblLocation.getSelectedRow();
         if (row >= 0){
-            return jTable2.getValueAt(row, 0).toString();
+            return tblLocation.getValueAt(row, 0).toString();
         }else{
             return null;
         }
     }
     
     public String getSelectedIDSchedules(){
-        int row = jTable3.getSelectedRow();
+        int row = tblSchedule.getSelectedRow();
         if (row >= 0){
-            return jTable3.getValueAt(row, 0).toString();
+            return tblSchedule.getValueAt(row, 0).toString();
         }else{
             return null;
         }
     }
 
     public String getSelectedIDAccounts(){
-        int row = jTable4.getSelectedRow();
+        int row = tblAccounts.getSelectedRow();
         if (row >= 0){
-            return jTable4.getValueAt(row, 0).toString();
+            return tblAccounts.getValueAt(row, 0).toString();
         }else{
             return null;
         }
     }
     
     public String getSelectedCodeVoucher(){
-        int row = jTable1.getSelectedRow();
+        int row = tblVoucher.getSelectedRow();
         if (row >= 0){
-            return jTable1.getValueAt(row, 0).toString();
+            return tblVoucher.getValueAt(row, 0).toString();
         }else{
             return null;
         }
     }
     
-    public void addMovieSearchKeyListenerer(KeyAdapter a){
+    public void addMovieSearchKeyListener(KeyAdapter a){
         txtMovieSearch.addKeyListener(a);
     }
+    public void addLocationSearchKeyListener(KeyAdapter a){
+        txtLocationSearch.addKeyListener(a);
+    }
+    public void addAccountSearchKeyListener(KeyAdapter a){
+        txtAccountSearch.addKeyListener(a);
+    }
+    public void addVoucherSearchKeyListener(KeyAdapter a){
+        txtVoucherSearch.addKeyListener(a);
+    }
+    public void addScheduleSearchKeyListener(KeyAdapter a){
+        txtScheduleSearch.addKeyListener(a);
+    }
+    
+    
     
     public String getMovieSearchKey(){
         return txtMovieSearch.getText();
+    }
+    public String getLocationSearchKey(){
+        return txtLocationSearch.getText();
+    }
+    public String getAccountSearchKey(){
+        return txtAccountSearch.getText();
+    }
+    public String getVoucherSearchKey(){
+        return txtVoucherSearch.getText();
+    }
+    public String getScheduleSearchKey(){
+        return txtScheduleSearch.getText();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -168,27 +209,27 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
         poster1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblSchedule = new javax.swing.JTable();
         btnAddSchedule = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        txtScheduleSearch = new javax.swing.JTextField();
         btnDeleteSchedule = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        tblAccounts = new javax.swing.JTable();
         btnAddAccount = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
+        txtAccountSearch = new javax.swing.JTextField();
         btnDeleteAccount = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblLocation = new javax.swing.JTable();
         btnAddLocation = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        txtLocationSearch = new javax.swing.JTextField();
         btnDeleteLocation = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblVoucher = new javax.swing.JTable();
         btnAddVouchers = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtVoucherSearch = new javax.swing.JTextField();
         btnDeleteVouchers = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
@@ -272,7 +313,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Manage Movies", jPanel1);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblSchedule.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -283,7 +324,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(tblSchedule);
 
         btnAddSchedule.setText("Add Schedule");
 
@@ -298,7 +339,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnAddSchedule)
                 .addGap(95, 95, 95)
-                .addComponent(jTextField3)
+                .addComponent(txtScheduleSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDeleteSchedule))
         );
@@ -310,12 +351,12 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddSchedule)
                     .addComponent(btnDeleteSchedule)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtScheduleSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTabbedPane1.addTab("Manage Schedules", jPanel3);
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tblAccounts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -326,7 +367,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane4.setViewportView(jTable4);
+        jScrollPane4.setViewportView(tblAccounts);
 
         btnAddAccount.setText("Add Account");
 
@@ -341,7 +382,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnAddAccount)
                 .addGap(95, 95, 95)
-                .addComponent(jTextField4)
+                .addComponent(txtAccountSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDeleteAccount)
                 .addContainerGap())
@@ -354,12 +395,12 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddAccount)
                     .addComponent(btnDeleteAccount)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtAccountSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTabbedPane1.addTab("Manage Accounts", jPanel4);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblLocation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -370,7 +411,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblLocation);
 
         btnAddLocation.setText("Add Locations");
 
@@ -385,7 +426,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnAddLocation)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2)
+                .addComponent(txtLocationSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDeleteLocation)
                 .addContainerGap())
@@ -398,12 +439,12 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddLocation)
                     .addComponent(btnDeleteLocation)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtLocationSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTabbedPane1.addTab("Manage Locations", jPanel2);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblVoucher.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -414,7 +455,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane5.setViewportView(jTable1);
+        jScrollPane5.setViewportView(tblVoucher);
 
         btnAddVouchers.setText("Add Vouchers");
 
@@ -431,7 +472,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(btnDeleteVouchers)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1)
+                        .addComponent(txtVoucherSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAddVouchers)))
                 .addContainerGap())
@@ -444,7 +485,7 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddVouchers)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtVoucherSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeleteVouchers)))
         );
 
@@ -554,17 +595,17 @@ public class AdminView_MainScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     public javax.swing.JTabbedPane jTabbedPane1;
-    public javax.swing.JTable jTable1;
-    public javax.swing.JTable jTable2;
-    public javax.swing.JTable jTable3;
-    public javax.swing.JTable jTable4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel poster1;
+    public javax.swing.JTable tblAccounts;
+    public javax.swing.JTable tblLocation;
     public javax.swing.JTable tblMovies;
+    public javax.swing.JTable tblSchedule;
+    public javax.swing.JTable tblVoucher;
+    private javax.swing.JTextField txtAccountSearch;
+    private javax.swing.JTextField txtLocationSearch;
     private javax.swing.JTextField txtMovieSearch;
+    private javax.swing.JTextField txtScheduleSearch;
+    private javax.swing.JTextField txtVoucherSearch;
     // End of variables declaration//GEN-END:variables
     
     public void setPoster(int index) {

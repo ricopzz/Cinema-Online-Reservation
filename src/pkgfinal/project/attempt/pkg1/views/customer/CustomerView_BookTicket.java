@@ -78,7 +78,7 @@ public class CustomerView_BookTicket extends javax.swing.JFrame {
         lblLocationName = new javax.swing.JLabel();
         lblAddress = new javax.swing.JLabel();
         btnBookTicket = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
+        lblBalance = new javax.swing.JLabel();
         btnMyAccount = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JSeparator();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -177,7 +177,7 @@ public class CustomerView_BookTicket extends javax.swing.JFrame {
 
         btnBookTicket.setText("Book ticket");
 
-        jLabel9.setText("Balance: 100000");
+        lblBalance.setText("Balance: 100000");
 
         btnMyAccount.setText("My Account");
 
@@ -274,7 +274,7 @@ public class CustomerView_BookTicket extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel9))
+                                .addComponent(lblBalance))
                             .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator3))
                         .addGap(51, 51, 51))))
@@ -304,7 +304,7 @@ public class CustomerView_BookTicket extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
+                    .addComponent(lblBalance))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -554,7 +554,6 @@ public class CustomerView_BookTicket extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -565,6 +564,7 @@ public class CustomerView_BookTicket extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel lblAddress;
+    private javax.swing.JLabel lblBalance;
     private javax.swing.JLabel lblDirector;
     private javax.swing.JLabel lblDuration;
     private javax.swing.JLabel lblGenre;
@@ -594,5 +594,9 @@ public class CustomerView_BookTicket extends javax.swing.JFrame {
     }
     public void setlblAddressText(String text){
         lblAddress.setText(text);
+    }
+
+    public void setBalanceLabel(int balance) {
+        lblBalance.setText("Balance : Rp" + balance);
     }
 }

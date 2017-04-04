@@ -69,10 +69,10 @@ public class AdminController {
         buildAddScheduleListeners();
         buildAddAccountListeners();
         theInterface.tblMovies.setModel(theModel.buildTableModel(theModel.getMoviesResultSet()));
-        theInterface.jTable2.setModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
-        theInterface.jTable3.setModel(theModel.buildTableModel(theModel.getSchedulesResultSet()));
-        theInterface.jTable4.setModel(theModel.buildTableModel(theModel.getAccountsResultSet()));
-        theInterface.jTable1.setModel(theModel.buildTableModel(theModel.getVouchersResultSet()));
+        theInterface.tblLocation.setModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
+        theInterface.tblSchedule.setModel(theModel.buildTableModel(theModel.getSchedulesResultSet()));
+        theInterface.tblAccounts.setModel(theModel.buildTableModel(theModel.getAccountsResultSet()));
+        theInterface.tblVoucher.setModel(theModel.buildTableModel(theModel.getVouchersResultSet()));
         
         makePosters();
         theInterface.setVisible(true);
@@ -138,12 +138,11 @@ public class AdminController {
                 }
             }
         });
-        theInterface.addMovieSearchKeyListenerer(new KeyAdapter() {
+        theInterface.addMovieSearchKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                System.out.println(theInterface.getMovieSearchKey());
                theInterface.tblMovies.setModel(theModel.buildTableModel(theModel.getMoviesSearchResultSet(theInterface.getMovieSearchKey())));
-            
             }
         });
         theInterface.addEditMovieActionListeners(new ActionListener(){
@@ -174,7 +173,7 @@ public class AdminController {
                 String index = theInterface.getSelectedIDLocations();
                 if (index != null){
                     theModel.deleteLocations(theInterface.getSelectedIDLocations());
-                    theInterface.jTable2.setModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
+                    theInterface.tblLocation.setModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
                 }else{
                     JOptionPane.showMessageDialog(null,"No location selected");
                 }   
@@ -202,7 +201,7 @@ public class AdminController {
                     theAddSchedule.setMovieComboBoxModel(movies.toArray(new String[0]));
                     theAddSchedule.setLocationComboBoxModel(locations.toArray(new String[0]));
                     
-                    rs = theModel.getLocationSearchResultSet(locations.get(0));
+                    rs = theModel.getLocationsSearchResultSet(locations.get(0));
                     
                     System.out.println(locations.get(0));
                     int max = 1;
@@ -221,12 +220,19 @@ public class AdminController {
                 }
             }
         });
+        theInterface.addLocationSearchKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+               System.out.println(theInterface.getLocationSearchKey());
+               theInterface.tblLocation.setModel(theModel.buildTableModel(theModel.getLocationsSearchResultSet(theInterface.getLocationSearchKey())));
+            }
+        });
         theInterface.addDeleteScheduleActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 String index = theInterface.getSelectedIDSchedules();
                 if (index != null){
                     theModel.deleteSchedules(theInterface.getSelectedIDSchedules());
-                    theInterface.jTable3.setModel(theModel.buildTableModel(theModel.getSchedulesResultSet()));
+                    theInterface.tblSchedule.setModel(theModel.buildTableModel(theModel.getSchedulesResultSet()));
                 }else{
                     JOptionPane.showMessageDialog(null,"No schedule selected");
                 }
@@ -239,12 +245,19 @@ public class AdminController {
                 theAddAccount.setVisible(true);
             }
         });
+        theInterface.addAccountSearchKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+               System.out.println(theInterface.getAccountSearchKey());
+               theInterface.tblAccounts.setModel(theModel.buildTableModel(theModel.getAccountsSearchResultSet(theInterface.getAccountSearchKey())));
+            }
+        });
         theInterface.addDeleteAccountActionListeners(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 String index = theInterface.getSelectedIDAccounts();
                 if (index != null){
                     theModel.deleteAccount(theInterface.getSelectedIDAccounts());
-                    theInterface.jTable4.setModel(theModel.buildTableModel(theModel.getAccountsResultSet()));
+                    theInterface.tblAccounts.setModel(theModel.buildTableModel(theModel.getAccountsResultSet()));
                 }else{
                     JOptionPane.showMessageDialog(null,"No accounts selected");
                 }
@@ -259,13 +272,20 @@ public class AdminController {
                 theAddVoucher.setVisible(true);
             }
         });
+        theInterface.addVoucherSearchKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+               System.out.println(theInterface.getVoucherSearchKey());
+               theInterface.tblVoucher.setModel(theModel.buildTableModel(theModel.getVouchersSearchResultSet(theInterface.getVoucherSearchKey())));
+            }
+        });
         theInterface.addDeleteVouchersActionListeners(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String code = theInterface.getSelectedCodeVoucher();
                 if (code != null){
                     theModel.deleteVoucher(code);
-                    theInterface.jTable1.setModel(theModel.buildTableModel(theModel.getVouchersResultSet()));
+                    theInterface.tblVoucher.setModel(theModel.buildTableModel(theModel.getVouchersResultSet()));
                 }else{
                     JOptionPane.showMessageDialog(null,"No voucher selected");
                 }
@@ -280,7 +300,7 @@ public class AdminController {
                 
                 if (theAddMovie.complete()){
                     theModel.addMovie(theAddMovie.getMovie());
-                    theInterface.setMovIETabelModel(theModel.buildTableModel(theModel.getMoviesResultSet()));
+                    theInterface.setMovieTabelModel(theModel.buildTableModel(theModel.getMoviesResultSet()));
                     theModel.makeMoviePoster((Integer)theInterface.tblMovies.getValueAt(theInterface.tblMovies.getRowCount()-1, 0));
                     theAddMovie.dispose();
                     
@@ -310,7 +330,7 @@ public class AdminController {
                     int choosenIndex = theEditMovie.getChoosenIndex();
                     theModel.editMovies(choosenIndex, theEditMovie.getMovie());
                 
-                    theInterface.setMovIETabelModel(theModel.buildTableModel(theModel.getMoviesResultSet()));
+                    theInterface.setMovieTabelModel(theModel.buildTableModel(theModel.getMoviesResultSet()));
                     
                     theModel.makeMoviePoster(choosenIndex);
                     
@@ -340,7 +360,7 @@ public class AdminController {
                 int theater_no = theAddLocation.getTheater_No();
                 if (!(locationName.equals("") || address.equals("") || theater_no <0)){
                     theModel.addLocation(locationName, address, theater_no);
-                    theInterface.jTable2.setModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
+                    theInterface.tblLocation.setModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
                     theAddLocation.dispose();
                     buildAddLocationListeners();
                     theInterface.setVisible(true);
@@ -415,7 +435,7 @@ public class AdminController {
                         JOptionPane.showMessageDialog(null, "No such movie");
                     }
                     
-                    rs = theModel.getLocationSearchResultSet(location);
+                    rs = theModel.getLocationsSearchResultSet(location);
                     int locationID = -1;
                     if (rs.next()){
                         locationID = rs.getInt("ID");
@@ -435,7 +455,7 @@ public class AdminController {
                         JOptionPane.showMessageDialog(null, "An error occured, please checkk input");
                     }
                     System.out.println("success");
-                    theInterface.jTable3.setModel(theModel.buildTableModel(theModel.getSchedulesResultSet()));
+                    theInterface.tblSchedule.setModel(theModel.buildTableModel(theModel.getSchedulesResultSet()));
                     theAddSchedule.dispose();
                     theInterface.setVisible(true);
                 } catch (SQLException ex) {
@@ -448,7 +468,7 @@ public class AdminController {
             public void actionPerformed(ActionEvent e) {
                 try {
                     String selectedLocation = theAddSchedule.getLocations();
-                    ResultSet rs = theModel.getLocationSearchResultSet(selectedLocation);
+                    ResultSet rs = theModel.getLocationsSearchResultSet(selectedLocation);
                     int max = 1;
                     int min = 0;
                     if(rs.next()){
@@ -499,7 +519,7 @@ public class AdminController {
                 if (!(name.equals("") || email.equals("") || dateOfBirth.equals("") || username.equals("") || password.equals("")))
                 {
                     theModel.addAccount(name,email,dateOfBirth.toString(),username,password,balance,type);
-                    theInterface.jTable4.setModel(theModel.buildTableModel(theModel.getAccountsResultSet()));
+                    theInterface.tblAccounts.setModel(theModel.buildTableModel(theModel.getAccountsResultSet()));
                     theAddAccount.dispose();
                     theAddAccount = new AdminView_AddAccount();
                     buildAddAccountListeners();
@@ -520,7 +540,7 @@ public class AdminController {
                 for (int x=0;x<amount;x++){
                     if (!theModel.addVoucher(theModel.generateRandomCode(10), nominal)) x--;
                 }
-                theInterface.jTable1.setModel(theModel.buildTableModel(theModel.getVouchersResultSet()));
+                theInterface.tblVoucher.setModel(theModel.buildTableModel(theModel.getVouchersResultSet()));
                 JOptionPane.showMessageDialog(null, "Voucher added");
                 
                 theAddVoucher.dispose();

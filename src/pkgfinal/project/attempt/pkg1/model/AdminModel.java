@@ -237,6 +237,17 @@ public class AdminModel {
         }
     }
     
+    public ResultSet getLocationsSearchResultSet(String searchKey){
+        try {
+            ResultSet rs = null;
+            rs =  stmt.executeQuery("SELECT * FROM Location WHERE ID LIKE '%" + searchKey + "%' OR Name LIKE '" + searchKey +"%'");
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public void addLocation(String name, String address, int theater_no){
         try{
             establishConnection();
@@ -296,6 +307,17 @@ public class AdminModel {
         }
     }
     
+    public ResultSet getSchedulesSearchResultSet(String searchKey){
+        try {
+            ResultSet rs = null;
+            rs =  stmt.executeQuery("SELECT * FROM Schedule WHERE ID LIKE '%" + searchKey + "%' OR Date LIKE '" + searchKey +"%'");
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public void deleteSchedules(String ID){
         try{
             establishConnection();
@@ -345,10 +367,10 @@ public class AdminModel {
         }
     }
 
-    public ResultSet getLocationSearchResultSet(String searchKey) {
+    public ResultSet getAccountsSearchResultSet(String searchKey){
         try {
             ResultSet rs = null;
-            rs =  stmt.executeQuery("SELECT ID, Name, Address, theater_amount Rating FROM Location WHERE ID LIKE '%" + searchKey + "%' OR Name LIKE '" + searchKey +"%'");
+            rs =  stmt.executeQuery("SELECT * FROM Accounts WHERE ID LIKE '%" + searchKey + "%' OR Username LIKE '" + searchKey +"%'");
             return rs;
         } catch (SQLException ex) {
             Logger.getLogger(AdminModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -372,6 +394,17 @@ public class AdminModel {
             Logger.getLogger(AdminModel.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+    
+    public ResultSet getVouchersSearchResultSet(String searchKey){
+        try {
+            ResultSet rs = null;
+            rs =  stmt.executeQuery("SELECT * FROM Vouchers WHERE Code LIKE '%" + searchKey + "%'");
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     public void deleteVoucher(String code){

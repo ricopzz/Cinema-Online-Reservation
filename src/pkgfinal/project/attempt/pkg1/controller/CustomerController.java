@@ -34,8 +34,11 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import pkgfinal.project.attempt.pkg1.controller.AccountController;
+import pkgfinal.project.attempt.pkg1.model.AccountModel;
 import pkgfinal.project.attempt.pkg1.model.CustomerModel;
+import pkgfinal.project.attempt.pkg1.views.AccountView_ForgetPassword;
 import pkgfinal.project.attempt.pkg1.views.AccountView_Login;
+import pkgfinal.project.attempt.pkg1.views.AccountView_SignUp;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Accounts;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_BookTicket;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_ChooseSeat;
@@ -169,6 +172,7 @@ public class CustomerController
                 } catch (SQLException ex) {
                     Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                theTicket.setBalanceLabel(theModel.getBalance(currentUser));
                 theTicket.setVisible(true);
                 
                 theInterface2.dispose();
@@ -188,6 +192,14 @@ public class CustomerController
                 theAccount.setTxtBirthDate(theModel.getDOB(currentUser).toString());
                 theAccount.setTxtEmail(theModel.getEmail(currentUser));
                 theAccount.setTxtBalance(Integer.toString(theModel.getBalance(currentUser)));
+            }
+        });
+        theInterface2.addSignOutListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theInterface2.dispose();
+                AccountController myAccountController = new AccountController(new AccountModel(),
+                new AccountView_Login(), new AccountView_SignUp(), new AccountView_ForgetPassword());
             }
         });
     }
@@ -502,6 +514,14 @@ public class CustomerController
 
             }
         });
+        theTicket.addSignOutListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theTicket.dispose();
+                AccountController myAccountController = new AccountController(new AccountModel(),
+                new AccountView_Login(), new AccountView_SignUp(), new AccountView_ForgetPassword());
+            }
+        });
         
     }
     public void buildChooseSeatActionListener(){
@@ -612,6 +632,7 @@ public class CustomerController
                 } catch (SQLException ex) {
                     Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                theTicket.setBalanceLabel(theModel.getBalance(currentUser));
                 theTicket.setVisible(true);
                 
                 theMovie.dispose();
@@ -632,6 +653,14 @@ public class CustomerController
                 theAccount.setTxtBalance(Integer.toString(theModel.getBalance(currentUser)));
                 buildAccountActionListener();
                 theMovie.dispose();
+            }
+        });
+        theMovie.addSignOutListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theMovie.dispose();
+                AccountController myAccountController = new AccountController(new AccountModel(),
+                new AccountView_Login(), new AccountView_SignUp(), new AccountView_ForgetPassword());
             }
         });
     }
@@ -697,6 +726,7 @@ public class CustomerController
                 } catch (SQLException ex) {
                     Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                theTicket.setBalanceLabel(theModel.getBalance(currentUser));
                 theTicket.setVisible(true);
             }
 
@@ -792,6 +822,7 @@ public class CustomerController
                 } catch (SQLException ex) {
                     Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                theTicket.setBalanceLabel(theModel.getBalance(currentUser));
                 theTicket.setVisible(true);
                 
                 theAccount.dispose();
@@ -822,6 +853,14 @@ public class CustomerController
                 theAddBalance = new CustomerView_AddBalance();
                 buildAddBalanceActionListener();
                 theAddBalance.setVisible(true);
+            }
+        });
+        theAccount.addSignOutListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theAccount.dispose();
+                AccountController myAccountController = new AccountController(new AccountModel(),
+                new AccountView_Login(), new AccountView_SignUp(), new AccountView_ForgetPassword());
             }
         });
     }
