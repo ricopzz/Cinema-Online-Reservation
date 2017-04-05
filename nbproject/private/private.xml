@@ -2,33 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/customer/CustomerView_Cinemas.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/controller/CustomerController.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/model/AdminModel.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_MainScreen.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/model/Movie.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/controller/CashierController.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/customer/CustomerView_Accounts.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/model/AccountModel.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/model/CashierModel.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/model/Location.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/controller/AccountController.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_AddMovie.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_AddAccount.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_AddSchedule.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_EditMovie.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/customer/CustomerView_Interface.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/customer/CustomerView_ChooseSeat.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/admin/AdminView_AddLocation.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/customer/AddBalance.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/customer/CustomerView_Interface_V2.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/customer/CustomerView_Movies.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/customer/CustomerView_HistoryOfPurchase.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/model/CustomerModel.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/controller/AdminController.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/ignoreThis/LoginForm.java</file>
-            <file>file:/Users/User/NetBeansProjects/Final%20Project%20-%20Attempt%201/src/pkgfinal/project/attempt/pkg1/views/customer/CustomerView_BookTicket.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

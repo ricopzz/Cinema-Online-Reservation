@@ -215,7 +215,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="lblMovieName" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="10" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="lblGenre" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblDirector" min="-2" max="-2" attributes="0"/>
@@ -236,7 +236,7 @@
                                   <Component id="lblMovie" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="movieBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblTime" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="timeBox" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -251,6 +251,7 @@
                                   <Component id="lblSeat" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnChooseSeat" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -267,7 +268,7 @@
                               <Component id="lblLocationName" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblAddress" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="69" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

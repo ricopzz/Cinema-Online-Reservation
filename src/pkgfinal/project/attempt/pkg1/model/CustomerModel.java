@@ -81,6 +81,7 @@ public class CustomerModel {
         }
         return nominal;
     }
+    // add the purchase to history table in db
     public void addPurchase(int schedule_id, String username, Date date_of_purchase, Time time_of_purchase, String seat){
         try {
             String query = "INSERT INTO Purchase_History (`Schedule_ID`, `Username`, `Date_Of_Purchase`, `Time_Of_Purchase`, `Seat_No`, `Claimed`) "
@@ -91,6 +92,7 @@ public class CustomerModel {
             Logger.getLogger(CustomerModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    //take all seats that has been choosen frm db
     public ArrayList<String> getTakenSeats(int schedule_id) {
         try {
             ArrayList<String> seats = new ArrayList<String>();
@@ -118,6 +120,7 @@ public class CustomerModel {
         }
         
     }
+    // return movie id rs from location id
     public ResultSet getCurrentShowingMovieIDResultSet(int location_id){
         try{
             String query = "SELECT Movie_ID FROM Schedule WHERE Location_ID = '" + location_id + "'";
@@ -148,7 +151,7 @@ public class CustomerModel {
             return null;
         }
     }
-    public ResultSet getCurrentShowingTheater(int location_id, int movie_id, String time) {
+    public ResultSet getCurrentShowingTheater(int location_id, int movie_id, String time) { // get the current showing theater
         ArrayList<String> theater = new ArrayList<String>();
         try{
             String query = "SELECT Theater_Number FROM Schedule WHERE Movie_ID = '" + movie_id + "' AND Location_ID ='" + location_id+"' AND Time ='"+time+"'";
@@ -171,7 +174,7 @@ public class CustomerModel {
         }
         return 0;
     }
-    public String getMovieNames(Integer index) {
+    public String getMovieNames(Integer index) { // get movie name based by the index
         try {
             String query = "SELECT * FROM Movies WHERE ID = " + index;
             ResultSet rs = stmt.executeQuery(query);
@@ -182,7 +185,7 @@ public class CustomerModel {
         }
         return null;
     }
-    public String getMovieDuration(Integer index) {
+    public String getMovieDuration(Integer index) {// get movie duration based by the index
         try {
             String query = "SELECT * FROM Movies WHERE ID = " + index;
             ResultSet rs = stmt.executeQuery(query);
@@ -194,7 +197,7 @@ public class CustomerModel {
         return null;
     }
     
-    public ResultSet getMoviesData(int ID){
+    public ResultSet getMoviesData(int ID){ // get all of the movies data
         try{
             establishConnection();
             String query = "SELECT  Name, G1, G2, G3, Duration, Director, Trailer_URL, Rating  FROM Movies WHERE ID = " + ID;
@@ -205,7 +208,7 @@ public class CustomerModel {
             return null;
         }
     }
-    public String getLocationNames(int id) {
+    public String getLocationNames(int id) {// get location name based by the index
         try {
             String query = "SELECT * FROM Location WHERE ID = " + id;
             ResultSet rs = stmt.executeQuery(query);
@@ -217,7 +220,7 @@ public class CustomerModel {
         return null;
     }
     // user data
-    public String getName(String username){
+    public String getName(String username){ // return name from database based on username
         try{
             String query = "SELECT * FROM Accounts WHERE Username = '" + username +"'";
             ResultSet rs = stmt.executeQuery(query);
@@ -228,7 +231,7 @@ public class CustomerModel {
             return null;
         }
     }
-    public Date getDOB(String username){
+    public Date getDOB(String username){// return date of birth from database based on username
         try{
             String query = "SELECT * FROM Accounts WHERE Username = '" + username+ "'";
             ResultSet rs = stmt.executeQuery(query);
@@ -239,7 +242,7 @@ public class CustomerModel {
             return null;
         }
     }
-    public String getEmail(String username){
+    public String getEmail(String username){// return email from database based on username
         try{
             String query = "SELECT * FROM Accounts WHERE Username = '" + username +"'";
             ResultSet rs = stmt.executeQuery(query);
@@ -251,7 +254,7 @@ public class CustomerModel {
             return null;
         }
     }
-    public void setBalance(String username, int balance){
+    public void setBalance(String username, int balance){// set account balance
         try{
             String query = "UPDATE Accounts SET Balance='"+ balance +"' WHERE Username='"+username+"'";
             stmt.executeUpdate(query);
@@ -259,7 +262,7 @@ public class CustomerModel {
             ex.printStackTrace();
         }
     }
-    public int getBalance(String username){
+    public int getBalance(String username){// return balance from database based on username
         try{
             String query = "SELECT * FROM Accounts WHERE Username = '" + username +"'";
             ResultSet rs = stmt.executeQuery(query);
@@ -302,7 +305,8 @@ public class CustomerModel {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-    public void makeMoviePoster(int index){
+    
+    public void makeMoviePoster(int index){ // create poster of the movie
         //  ClassLoader classLoader = getClass().getClassLoader();
         File someFile = new File("/Users/User/NetBeansProjects/Final Project - Attempt 1/src/pkgfinal/project/attempt/pkg1/resources/buffer"+index+ ".jpg");
     
@@ -375,7 +379,7 @@ public class CustomerModel {
         }
     }
 
-    public ResultSet getLocationsResultSet(Integer ID) {
+    public ResultSet getLocationsResultSet(Integer ID) { // get location rs based on id
        try{
             establishConnection();
             String query = "SELECT * FROM Location WHERE ID = " + ID;
@@ -387,7 +391,7 @@ public class CustomerModel {
         } 
     }
     
-    public ResultSet getHistoryOfPurchase(String username){
+    public ResultSet getHistoryOfPurchase(String username){ // get history of purchase on each account
         try{
             establishConnection();
             String query = "SELECT * FROM Purchase_History WHERE Username = '" + username+"'";

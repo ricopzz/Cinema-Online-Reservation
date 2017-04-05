@@ -55,9 +55,7 @@ import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Movies;
 public class CustomerController 
 {
     
-    //old
-    //private CustomerView_Interface theInterface;
-    //new
+    // all attributes and objects
     private CustomerView_ChangeEmail theEditEmail;
     private CustomerView_ChangePassword theEditPassword;
     private CustomerView_AddBalance theAddBalance;
@@ -74,9 +72,9 @@ public class CustomerController
     public static void main(String[] args){
         CustomerController m = new CustomerController("yosuatest19",new CustomerView_Interface() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() , new CustomerModel() );
     }
+    //constructor
     public CustomerController(String currentUser, CustomerView_Interface theInterface, CustomerView_ChangeEmail theEditEmail, CustomerView_ChangePassword theEditPassword, CustomerView_AddBalance theAddBalance, CustomerView_ChooseSeat theChooseSeat, CustomerModel theModel){
         this.currentUser = currentUser;
-        //this.theInterface = theInterface;
         this.theEditEmail = theEditEmail;
         this.theEditPassword = theEditPassword;
         this.theAddBalance = theAddBalance;
@@ -85,7 +83,7 @@ public class CustomerController
         start();
     }
     
-    public void start(){
+    public void start(){ // make the default poster
         try {
             theModel.establishConnection();
             makePosters();
