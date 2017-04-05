@@ -32,7 +32,7 @@ public class AccountModel {
     public String getRandomCode() {
         return randomCode;
     }
-
+    
     public void setRandomCode(String randomCode) {
         this.randomCode = randomCode;
     }
@@ -48,9 +48,10 @@ public class AccountModel {
             JOptionPane.showMessageDialog(null, "Error establishing connection to database");
         }
     }
+    
     public boolean login(String username, String password){
         try {
-   
+            // verifies username and password
             ResultSet rs = stmt.executeQuery("SELECT * FROM Accounts WHERE Username='" + username +
                     "' AND Password = '" + password + "'");
             if (rs.next()){
@@ -63,11 +64,13 @@ public class AccountModel {
             return false;
         }
     }
+    
     public boolean signUp(String name,String email,String dateOfBirth,String username,String password,int balance){
         try {
+            // add the information to the database
             String query = "INSERT INTO Accounts (`Username`,`Password`,`Name`,`Email`,`DOB`,`Balance`, Type) VALUES (" +
                 "'"+ username +"', "+"'"+ password +"', "+"'"+ name+"', "+"'"+email +"', "+"'"+ dateOfBirth +"', "+
-                balance+", 'User')";
+                balance+", 'Customer')";
             System.out.println(query);
             stmt.executeUpdate(query);
             return true;
@@ -77,9 +80,12 @@ public class AccountModel {
 
         }
     }
+    
+    
     public String getFullname(String email) {
         ResultSet rs = null;
         try {
+            // gets full name based on the email
             System.out.println(email);
             rs = stmt.executeQuery("SELECT Name FROM Accounts WHERE Email = '" + email +"'");
             System.out.println("ha");
@@ -91,7 +97,9 @@ public class AccountModel {
             return null;
         }
     }
+    
     public String getType(String username){
+        // gets the type of the user
         ResultSet rs = null;
         try {
             rs = stmt.executeQuery("SELECT Type FROM Accounts WHERE Username = '" + username +"'");
@@ -102,7 +110,9 @@ public class AccountModel {
             return null;
         }
     }
+    
     public boolean changePassword(String newPassword, String email) {
+        //changes the password of the given email
         try{
             String query = "UPDATE Accounts SET Password='"+newPassword+"' WHERE Email ='"+ email +"'";
             if (!(stmt.executeUpdate(query) > 0)) return false;

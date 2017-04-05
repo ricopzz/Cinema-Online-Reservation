@@ -326,5 +326,8 @@ public class CashierView_Interface extends javax.swing.JFrame {
         }
     }
 
-   
+    public void setTxtName(String text){
+        txtAdminUsername.setText(text);
+    }
+    
 }

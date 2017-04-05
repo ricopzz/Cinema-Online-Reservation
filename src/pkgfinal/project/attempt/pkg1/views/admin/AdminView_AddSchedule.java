@@ -386,7 +386,6 @@ public class AdminView_AddSchedule extends javax.swing.JFrame {
     }
 
    
-
     public void setTheaterSpinnerModel(SpinnerNumberModel a) {
         sprTheaterNumber.setModel(a);
     }

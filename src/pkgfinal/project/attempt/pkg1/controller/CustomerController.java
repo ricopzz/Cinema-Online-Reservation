@@ -86,25 +86,48 @@ public class CustomerController
     }
     
     public void start(){
-        theModel.establishConnection();
-        buildChooseSeatActionListener();
-        buildAddBalanceActionListener();
-        buildChangeEmailActionListener();
-        buildChangePasswordActionListener();
-        
-        // new
-        buildInterface2ActionListener();
-        theInterface2.setVisible(true);
-        
-        makePosters();
-        
+        try {
+            theModel.establishConnection();
+            makePosters();
+            ResultSet rs = theModel.getCurrentShowingMovieIDResultSet();
+            // sets poster for the interface
+            ArrayList<String> paths = new ArrayList<String>();
+            ArrayList<Integer> id_list = new ArrayList<Integer>();
+            while(rs.next()){
+                int id = rs.getInt("Movie_ID");
+                if (!id_list.contains(id))
+                    id_list.add(id);
+            }
+            for (int x=0;x<id_list.size();x++){
+                System.out.println(id_list.get(x));
+                paths.add("/pkgfinal/project/attempt/pkg1/resources/buffer" + id_list.get(x) +".jpg");
+            }
+            if (paths.size() >= 1){
+                theInterface2.setPoster1(paths.get(0));
+                theInterface2.setMovie1Label(theModel.getMovieNames(id_list.get(0)));
+            }
+            if (paths.size() >= 2){
+                theInterface2.setPoster2(paths.get(1));
+                theInterface2.setMovie2Label(theModel.getMovieNames(id_list.get(1)));
+            }
+            if (paths.size() >= 3){
+                theInterface2.setPoster3(paths.get(2));
+                theInterface2.setMovie3Label(theModel.getMovieNames(id_list.get(2)));
+            }
+            
+            buildInterface2ActionListener();
+            theInterface2.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
        
-   
+    // builds action listeners for the views
     public void buildInterface2ActionListener(){
         theInterface2.addCinemasListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // goes to the cinema view
                 theCinema = new CustomerView_Cinemas();
                 theCinema.setCinemaTableModel(theModel.buildTableModel(theModel.getLocationsResultSet()));
                 buildCinemasActionListeners();
@@ -116,7 +139,9 @@ public class CustomerController
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    
                     theMovie = new CustomerView_Movies();
+                    // sets the name and duration of the movie
                     ResultSet rs = theModel.getCurrentShowingMovieIDResultSet();
                     ArrayList<Integer> id_list = new ArrayList<Integer>();
                     while(rs.next()){
@@ -151,7 +176,6 @@ public class CustomerController
         theInterface2.addTicketsListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
                 theTicket = new CustomerView_BookTicket();
                 buildTicketsActionListeners();
                 try {
@@ -177,13 +201,13 @@ public class CustomerController
                 
                 theInterface2.dispose();
             }
-
-            
+               
         });
         theInterface2.addAccountListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println(currentUser);
+                // goes to the account view and sets the user data for display
                 theInterface2.dispose();
                 buildAccountActionListener();
                 theAccount.setVisible(true);
@@ -204,12 +228,11 @@ public class CustomerController
         });
     }
     
-    public void buildTicketsActionListeners() {
+    public void buildTicketsActionListeners(){
         theTicket.addLocationListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // resets all the boxes
-                
                 theTicket.setMovieComboBoxModel(new DefaultComboBoxModel<>(new String[]{"--"}));
                 theTicket.setTimeComboBoxModel(new DefaultComboBoxModel<>(new String[]{"--"}));
                 theTicket.setTheaterComboBoxModel(new DefaultComboBoxModel<>(new String[]{"--"}));
@@ -372,7 +395,6 @@ public class CustomerController
         theTicket.addTheaterListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                theChooseSeat = new CustomerView_ChooseSeat();
                 int location_id = theTicket.getCurrentLocationID().get(theTicket.getSelectedLocation());
                 int movie_id = theTicket.getCurrentMovieID().get(theTicket.getSelectedMovie());
                 String time = theTicket.getSelectedTime();
@@ -381,26 +403,24 @@ public class CustomerController
                 int schedule_id = theModel.getScheduleID(location_id, movie_id, time, theater);         
                 System.out.println("schedule id" + schedule_id);
                 ArrayList<String> seats = theModel.getTakenSeats(schedule_id);
-                theChooseSeat.setScheduleID(schedule_id);
                 
-                theChooseSeat.setSeats(seats);
+                theChooseSeat = new CustomerView_ChooseSeat();
                 buildChooseSeatActionListener();
-                
+                theChooseSeat.setScheduleID(schedule_id);
+                theChooseSeat.setSeats(seats);
+
                 theTicket.enableChooseSeat(true);
                 
             }
         });
         theTicket.addChooseSeatListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                
                 theChooseSeat.setVisible(true);
-                
             }
         });
         theTicket.addBookTicketListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 if (theTicket.isChooseSeatEnabled()){
                     int schedule_id = theChooseSeat.getScheduleID();
                     String username = currentUser;
@@ -448,7 +468,6 @@ public class CustomerController
                 }else{
                     JOptionPane.showMessageDialog(null, "Please select options");
                 }
-
             }
         });
         
@@ -498,7 +517,6 @@ public class CustomerController
                 }
             }
         });
-        
         theTicket.addAccountListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -524,6 +542,7 @@ public class CustomerController
         });
         
     }
+    
     public void buildChooseSeatActionListener(){
         theChooseSeat.addContinueListener(new ActionListener(){
            public void actionPerformed(ActionEvent e){
@@ -611,7 +630,6 @@ public class CustomerController
         theMovie.addTicketsListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
                 theTicket = new CustomerView_BookTicket();
                 buildTicketsActionListeners();
                 try {
@@ -637,8 +655,6 @@ public class CustomerController
                 
                 theMovie.dispose();
             }
-
-            
         });
         theMovie.addAccountListener(new ActionListener() {
             @Override
@@ -864,6 +880,7 @@ public class CustomerController
             }
         });
     }
+    
     public void buildAddBalanceActionListener(){
         theAddBalance.addContinueListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -891,6 +908,7 @@ public class CustomerController
             }
         });
     }
+    
     public void buildChangeEmailActionListener(){
         theEditEmail.addChangeListener(new ActionListener(){
            public void actionPerformed(ActionEvent e){
@@ -914,6 +932,7 @@ public class CustomerController
             }
         });
     }
+    
     public void buildChangePasswordActionListener(){
         theEditPassword.addChangeListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -939,6 +958,7 @@ public class CustomerController
         });
     }
     
+    
     public String[] toArray (ArrayList<String> a){
         String[] b = new String[a.size()];
         for (int x=0;x<a.size();x++){
@@ -946,6 +966,7 @@ public class CustomerController
         }
         return b;
     }
+    
     public void makePosters(){
         try {
             ResultSet rs = theModel.getCurrentShowingMovieIDResultSet();
@@ -962,6 +983,7 @@ public class CustomerController
             Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     public void openWebpage(URI uri) {
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
@@ -972,6 +994,7 @@ public class CustomerController
             }
         }
     }
+    
     public void openWebpage(URL url) {
         try {
             openWebpage(url.toURI());
@@ -979,4 +1002,5 @@ public class CustomerController
             e.printStackTrace();
         }
     }
+    
 }

@@ -99,7 +99,6 @@ public class AdminModel {
     }
     
     public void makeMoviePoster(int index){
-        //  ClassLoader classLoader = getClass().getClassLoader();
         File someFile = new File("/Users/User/NetBeansProjects/Final Project - Attempt 1/src/pkgfinal/project/attempt/pkg1/resources/buffer"+index+ ".jpg");
     
         if(!(someFile.exists() && !someFile.isDirectory())) { 
@@ -145,7 +144,6 @@ public class AdminModel {
     public void addMovie(Movie m){
         
         try{
-    
             establishConnection();
             String sql = "INSERT INTO Movies (Name, G1, G2, G3, Duration, Director, Trailer_URL, Poster, Rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -157,12 +155,9 @@ public class AdminModel {
             stmt.setString(6, m.getDirector());
             stmt.setString(7, m.getTrailerurl());
             
-
             File image = m.getPoster();
             FileInputStream   fis = new FileInputStream(image);
             stmt.setBinaryStream(8, fis, (int) image.length());
-            
-            
             stmt.setDouble(9, m.getRating());
             stmt.execute();
     
@@ -185,6 +180,7 @@ public class AdminModel {
     
     public ResultSet getScheduleFromMovie(int movieID){
         try {
+            // gets a schedule from the movie id
             String query =  "SELECT * FROM Schedule WHERE Movie_ID = " + movieID;
             ResultSet rs = stmt.executeQuery(query);
             return rs;
@@ -294,9 +290,9 @@ public class AdminModel {
         }
     }
     
-    public void addSchedules(Date date, Time time, int location ,int movie, int theater ) {
+    public void addSchedules(String date, Time time, int location ,int movie, int theater ) {
         try {
-            String query = "INSERT INTO Schedule (Date,Time,Location_ID,Movie_ID,Theater_Number) VALUES ('" + date.toString()+ "','" +time.toString()+"',"+location+"," + movie+","+theater+")";
+            String query = "INSERT INTO Schedule (Date,Time,Location_ID,Movie_ID,Theater_Number) VALUES ('" + date+ "','" +time.toString()+"',"+location+"," + movie+","+theater+")";
             System.out.println(query);
             stmt.executeUpdate(query);
             

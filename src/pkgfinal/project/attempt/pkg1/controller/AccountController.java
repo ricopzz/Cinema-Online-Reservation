@@ -36,12 +36,12 @@ import pkgfinal.project.attempt.pkg1.views.m.CustomerView_ChangePassword;
  */
 public class AccountController {
     private AccountModel theModel;
-    
     private AccountView_Login theLogin;
     private AccountView_SignUp theSignUp;
     private AccountView_ForgetPassword theForgetPassword;
     private SendEmail emailSender = new SendEmail();
 
+    
     public static void main(String[] args){
         try{
          UIManager.setLookAndFeel(
@@ -52,6 +52,8 @@ public class AccountController {
         AccountController myAccountController = new AccountController(new AccountModel(),
                new AccountView_Login(), new AccountView_SignUp(), new AccountView_ForgetPassword());
     }
+    
+    
     public AccountController(AccountModel theModel, AccountView_Login theLogin, AccountView_SignUp theSignUp, AccountView_ForgetPassword theForgetPassword) {
         this.theModel = theModel;
         this.theLogin = theLogin;
@@ -59,6 +61,7 @@ public class AccountController {
         this.theForgetPassword = theForgetPassword;
         start();
     }
+    
     public void start(){
         theModel.establishConnection();
         buildLoginActionListeners();
@@ -66,6 +69,8 @@ public class AccountController {
         buildForgetPasswordActionListeners();
         theLogin.setVisible(true);
     }
+    
+    // builds action listeners for the views
     
     public void buildLoginActionListeners(){
         theLogin.addSignUpListener(new ActionListener() {
@@ -81,18 +86,21 @@ public class AccountController {
             public void actionPerformed(ActionEvent e) {
                 String username = theLogin.getUsername();
                 String password = theLogin.getPassword();
+                // checks if login succesful
                 if(theModel.login(username,password)){
                     JOptionPane.showMessageDialog(null, "Login Succesful");
                     theLogin.dispose();
                     String type = theModel.getType(username);
+                    // opens respective controllers for each user type
                     if (type.equals("Customer")){
                         CustomerController m = new CustomerController(username,new CustomerView_Interface() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() , new CustomerModel() );
                     }else if (type.equals("Admin")){
                         AdminController myAdminController = new AdminController(username,new AdminView_MainScreen(), new AdminView_AddLocation(), new AdminView_AddMovie(),new AdminView_EditMovie(), new AdminView_AddSchedule(), new AdminView_AddAccount(),new AdminView_AddVoucher(), new AdminModel());   
-                    }else{
+                    }else if (type.equals("Cashier")){
                         CashierController myCashier = new CashierController(username,new CashierView_Interface(),new CashierView_VerifyPrint(), new CashierModel());                                
-
-                    }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Error logging in : User type undefined");
+                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "Login failed");
                 };
@@ -110,6 +118,7 @@ public class AccountController {
             }
         });
     }
+    
     public void buildSignUpActionListeners(){
         theSignUp.addContinueListener(new ActionListener() {
             @Override
@@ -120,6 +129,7 @@ public class AccountController {
                 String username = theSignUp.getUsername();
                 String password = theSignUp.getPassword();
                 int balance = 0;
+                // checks if all the fields have been filled
                 if (!(name.equals("") || email.equals("") || dateOfBirth.equals("") || username.equals("") || password.equals(""))){
                     if(theModel.signUp(name,email,dateOfBirth,username,password,balance)){
                         JOptionPane.showMessageDialog(null, "Sign up succesful");
@@ -139,7 +149,9 @@ public class AccountController {
         theForgetPassword.addContinueActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // gets email from the forget password
                 String email = theForgetPassword.getEmail();
+                // sends code for email
                 String code = emailSender.sendEmailRegister(email, theModel.getFullname(email));
                 if (code != null){
                     theModel.setRandomCode(code); 
@@ -147,12 +159,13 @@ public class AccountController {
                     theForgetPassword.setVerificationCodePanelVisible(true);
                 }
             }
-            
         });
         theForgetPassword.addVerifyActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // gets the random code
                 String code = theModel.getRandomCode();
+                // verifies the random code
                 if (theForgetPassword.getVerificationCode().equals(code)){
                     JOptionPane.showMessageDialog(null, "Code verified");
                     theForgetPassword.setVerificationCodePanelVisible(false);
@@ -165,6 +178,7 @@ public class AccountController {
         theForgetPassword.addFinishActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // sets new password
                 String newPassword = theForgetPassword.getNewPassword();
                 String email = theForgetPassword.getEmail();
                 theModel.changePassword(newPassword, email );

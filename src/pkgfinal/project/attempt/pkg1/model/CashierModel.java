@@ -41,7 +41,9 @@ public class CashierModel {
             JOptionPane.showMessageDialog(null, "Error establishing connection to database");
         }
     }
+    
     // gets data from database
+    
     public String getEmailFromUsername(String username){
         ResultSet rs = null;
         
@@ -57,6 +59,7 @@ public class CashierModel {
         }
         
     }
+    
     public String getFullnameFromUsername(String username) {
         ResultSet rs = null;
         try {
@@ -71,6 +74,7 @@ public class CashierModel {
             return null;
         }
     }
+    
     public void setClaimedFromUsername(String username, String seat){
         try {
             stmt.executeUpdate("UPDATE `Purchase_History` SET `Claimed` = '1' WHERE  Username ='" + username +"' AND WHERE Seat_No = '" + seat + "'");
@@ -78,23 +82,24 @@ public class CashierModel {
             Logger.getLogger(CashierModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     // Gets the table model for the purchase table
+    
     public DefaultTableModel getTableModelPurchase(String Username){
         ResultSet rs = null;
         DefaultTableModel d = null;
         try {
-           
             rs = stmt.executeQuery("SELECT * FROM Purchase_History WHERE Username = '" + Username +"' AND Claimed = false");
             d = buildTableModel(rs);
-
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot access database ");
-            
         }
         return d;
     }
+    
     // An all purpose function to build table models based on a resultset
+    
     public DefaultTableModel buildTableModel(ResultSet rs) {
         try {
             DefaultTableModel dtm = new DefaultTableModel();
