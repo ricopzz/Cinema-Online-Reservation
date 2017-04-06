@@ -44,7 +44,6 @@ import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_BookTicket;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_ChooseSeat;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Cinemas;
 import pkgfinal.project.attempt.pkg1.views.m.*;
-import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Interface;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Interface_V2;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Movies;
 
@@ -70,11 +69,12 @@ public class CustomerController
     
     private String currentUser = "";
     public static void main(String[] args){
-        CustomerController m = new CustomerController("yosuatest19",new CustomerView_Interface() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() , new CustomerModel() );
+        CustomerController m = new CustomerController("yosuatest19",new CustomerView_Interface_V2() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() , new CustomerModel() );
     }
     //constructor
-    public CustomerController(String currentUser, CustomerView_Interface theInterface, CustomerView_ChangeEmail theEditEmail, CustomerView_ChangePassword theEditPassword, CustomerView_AddBalance theAddBalance, CustomerView_ChooseSeat theChooseSeat, CustomerModel theModel){
+    public CustomerController(String currentUser, CustomerView_Interface_V2 theInterface, CustomerView_ChangeEmail theEditEmail, CustomerView_ChangePassword theEditPassword, CustomerView_AddBalance theAddBalance, CustomerView_ChooseSeat theChooseSeat, CustomerModel theModel){
         this.currentUser = currentUser;
+        this.theInterface2 = theInterface;
         this.theEditEmail = theEditEmail;
         this.theEditPassword = theEditPassword;
         this.theAddBalance = theAddBalance;
@@ -85,37 +85,23 @@ public class CustomerController
     
     public void start(){ // make the default poster
         try {
-            theModel.establishConnection();
-            makePosters();
-            ResultSet rs = theModel.getCurrentShowingMovieIDResultSet();
-            // sets poster for the interface
             ArrayList<String> paths = new ArrayList<String>();
-            ArrayList<Integer> id_list = new ArrayList<Integer>();
-            while(rs.next()){
-                int id = rs.getInt("Movie_ID");
-                if (!id_list.contains(id))
-                    id_list.add(id);
-            }
-            for (int x=0;x<id_list.size();x++){
-                System.out.println(id_list.get(x));
-                paths.add("/pkgfinal/project/attempt/pkg1/resources/buffer" + id_list.get(x) +".jpg");
-            }
+            paths.add("/pkgfinal/project/attempt/pkg1/resources/ad1.jpg");
+            paths.add("/pkgfinal/project/attempt/pkg1/resources/ad2.jpg");
+            paths.add("/pkgfinal/project/attempt/pkg1/resources/ad3.jpg");
             if (paths.size() >= 1){
                 theInterface2.setPoster1(paths.get(0));
-                theInterface2.setMovie1Label(theModel.getMovieNames(id_list.get(0)));
             }
             if (paths.size() >= 2){
                 theInterface2.setPoster2(paths.get(1));
-                theInterface2.setMovie2Label(theModel.getMovieNames(id_list.get(1)));
             }
             if (paths.size() >= 3){
                 theInterface2.setPoster3(paths.get(2));
-                theInterface2.setMovie3Label(theModel.getMovieNames(id_list.get(2)));
             }
-            
+            theInterface2.setName("Welcome, "+currentUser);
             buildInterface2ActionListener();
             theInterface2.setVisible(true);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

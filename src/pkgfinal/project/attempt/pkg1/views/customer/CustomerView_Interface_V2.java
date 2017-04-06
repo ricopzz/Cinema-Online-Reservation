@@ -51,9 +51,6 @@ public class CustomerView_Interface_V2 extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         btnMyAccount = new javax.swing.JButton();
-        lblMovie1 = new javax.swing.JTextField();
-        lblMovie2 = new javax.swing.JTextField();
-        lblMovie3 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -75,11 +72,11 @@ public class CustomerView_Interface_V2 extends javax.swing.JFrame {
         txtSearch.setText("Search by Movie");
         txtSearch.setToolTipText("Search by Movie");
 
-        jLabel2.setText("Currently Showing");
+        jLabel2.setText("Ads");
 
         btnSignOut.setText("Sign Out");
 
-        jLabel3.setText("Welcome, Yosua");
+        jLabel3.setText("Username");
 
         poster1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         poster1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,15 +90,6 @@ public class CustomerView_Interface_V2 extends javax.swing.JFrame {
         poster2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnMyAccount.setText("My Account");
-
-        lblMovie1.setText("[No movie showing]");
-        lblMovie1.setEnabled(false);
-
-        lblMovie2.setText("[No movie showing]");
-        lblMovie2.setEnabled(false);
-
-        lblMovie3.setText("[No movie showing]");
-        lblMovie3.setEnabled(false);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -153,20 +141,11 @@ public class CustomerView_Interface_V2 extends javax.swing.JFrame {
                             .addComponent(jSeparator3))
                         .addGap(51, 51, 51))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblMovie1)
-                            .addComponent(poster1, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
+                        .addComponent(poster1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(58, 58, 58)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(poster2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblMovie2)
-                                .addGap(59, 59, 59)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(poster3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMovie3))
+                        .addComponent(poster2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                        .addComponent(poster3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43))))
         );
         layout.setVerticalGroup(
@@ -198,21 +177,13 @@ public class CustomerView_Interface_V2 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(poster1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblMovie1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(poster1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(poster2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblMovie2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(poster3, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblMovie3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(65, Short.MAX_VALUE))
+                            .addComponent(poster2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(poster3, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         pack();
@@ -305,14 +276,8 @@ public class CustomerView_Interface_V2 extends javax.swing.JFrame {
         poster3 .setIcon(new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(270, 400, Image.SCALE_DEFAULT)));
     }
     
-    public void setMovie1Label(String a){
-        lblMovie1.setText(a);
-    }
-    public void setMovie2Label(String a){
-        lblMovie2.setText(a);
-    }
-    public void setMovie3Label(String a){
-        lblMovie3.setText(a);
+    public void setUsername(String text){
+        jLabel3.setText(text);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCinemas;
@@ -331,9 +296,6 @@ public class CustomerView_Interface_V2 extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextField lblMovie1;
-    private javax.swing.JTextField lblMovie2;
-    private javax.swing.JTextField lblMovie3;
     private javax.swing.JLabel poster1;
     private javax.swing.JLabel poster2;
     private javax.swing.JLabel poster3;

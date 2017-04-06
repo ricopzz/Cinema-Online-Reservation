@@ -26,7 +26,7 @@ import pkgfinal.project.attempt.pkg1.views.admin.AdminView_MainScreen;
 import pkgfinal.project.attempt.pkg1.views.cashier.CashierView_Interface;
 import pkgfinal.project.attempt.pkg1.views.cashier.CashierView_VerifyPrint;
 import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_ChooseSeat;
-import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Interface;
+import pkgfinal.project.attempt.pkg1.views.customer.CustomerView_Interface_V2;
 import pkgfinal.project.attempt.pkg1.views.m.CustomerView_AddBalance;
 import pkgfinal.project.attempt.pkg1.views.m.CustomerView_ChangeEmail;
 import pkgfinal.project.attempt.pkg1.views.m.CustomerView_ChangePassword;
@@ -93,7 +93,7 @@ public class AccountController {
                     String type = theModel.getType(username);
                     // opens respective controllers for each user type
                     if (type.equals("Customer")){
-                        CustomerController m = new CustomerController(username,new CustomerView_Interface() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() , new CustomerModel() );
+                        CustomerController m = new CustomerController(username,new CustomerView_Interface_V2() ,new CustomerView_ChangeEmail() , new CustomerView_ChangePassword() , new CustomerView_AddBalance() ,new CustomerView_ChooseSeat() , new CustomerModel() );
                     }else if (type.equals("Admin")){
                         AdminController myAdminController = new AdminController(username,new AdminView_MainScreen(), new AdminView_AddLocation(), new AdminView_AddMovie(),new AdminView_EditMovie(), new AdminView_AddSchedule(), new AdminView_AddAccount(),new AdminView_AddVoucher(), new AdminModel());   
                     }else if (type.equals("Cashier")){
